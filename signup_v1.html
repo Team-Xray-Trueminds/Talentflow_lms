@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sign Up | TalentFlow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "primary-container": "#0047ab",
+                        "tertiary-fixed-dim": "#2addcd",
+                        "error": "#ba1a1a",
+                        "on-background": "#191c1e",
+                        "primary": "#00327d",
+                        "on-surface": "#191c1e",
+                        "on-secondary-fixed": "#0b1c30",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#2559bd",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "secondary": "#505f76",
+                        "on-primary-fixed-variant": "#00419e",
+                        "inverse-surface": "#2d3133",
+                        "on-primary-container": "#a5bdff",
+                        "surface-container": "#eceef0",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#b1c5ff",
+                        "on-tertiary-fixed": "#00201d",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary": "#003e38",
+                        "secondary-fixed": "#d3e4fe",
+                        "primary-fixed": "#dae2ff",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "surface": "#f7f9fb",
+                        "on-tertiary-container": "#13d4c4",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e6e8ea",
+                        "on-tertiary-fixed-variant": "#005049",
+                        "tertiary-fixed": "#57fae9",
+                        "tertiary-container": "#005750",
+                        "on-error": "#ffffff",
+                        "outline-variant": "#c3c6d5",
+                        "on-secondary-container": "#54647a",
+                        "surface-dim": "#d8dadc",
+                        "outline": "#737784",
+                        "on-surface-variant": "#434653",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "surface-container-highest": "#e0e3e5",
+                        "primary-fixed-dim": "#b1c5ff",
+                        "on-primary-fixed": "#001946",
+                        "secondary-container": "#d0e1fb",
+                        "surface-variant": "#e0e3e5",
+                        "background": "#f7f9fb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .brand-logo { font-family: 'Manrope', sans-serif; }
+        .glass-nav { backdrop-filter: blur(20px); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-container selection:text-white">
+<!-- TopNavBar (Suppressed as per "Destination Rule" for Transactional Screens, but explicitly requested in task) -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)]">
+<div class="flex justify-between items-center w-full px-8 py-4 max-w-screen-2xl mx-auto">
+<div class="text-2xl font-extrabold text-blue-800 tracking-tighter">TalentFlow</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-slate-500 font-medium hover:text-blue-600 transition-all duration-300" href="#">Programs</a>
+<a class="text-slate-500 font-medium hover:text-blue-600 transition-all duration-300" href="#">Mentorship</a>
+<a class="text-slate-500 font-medium hover:text-blue-600 transition-all duration-300" href="#">Research</a>
+<a class="text-slate-500 font-medium hover:text-blue-600 transition-all duration-300" href="#">Insights</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2.5 rounded-lg bg-surface-container-highest text-on-primary-fixed-variant font-semibold hover:bg-surface-container-high transition-all">Sign In</button>
+</div>
+</div>
+</nav>
+<main class="min-h-screen pt-20 flex">
+<!-- Left Column: Architectural Visual -->
+<div class="hidden lg:block w-1/2 relative overflow-hidden">
+<img alt="Architectural structure" class="absolute inset-0 w-full h-full object-cover" data-alt="Monochromatic modern skyscraper with sharp geometric angles and glass reflecting a clear blue sky, professional architectural photography style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJgOLp5ENMaPMuhEYoXwSXMuerv9gL7scytOl7Fk8GlLTjjuUeNkZP1DIijsB6rwiufOYBMF8N8nT_QuLGVF4TBEaNTMNklZSFdAvv7dGxF0FzEtU_VjXBC4fr9zgUjWaCJZ8BDeuGdCZ151B2xZmi_8hnVW9C9ya8BM0BhWoBPF7wqMv-ofoBZPFsKerKsyDiGRvXZuWXfSSuRry6xfAWC9I_BZ-Ym0-EttLv1z2_3xzpkWiealV1l3UN2oLe-Lmk5agoQOmv0y0"/>
+<div class="absolute inset-0 bg-primary/40 backdrop-multiply"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent"></div>
+<div class="absolute bottom-20 left-16 right-16">
+<div class="inline-block p-1 mb-6 bg-tertiary-fixed rounded-lg">
+<span class="px-3 py-1 text-on-tertiary-fixed text-[10px] font-bold uppercase tracking-[0.2em]">Curated Growth</span>
+</div>
+<h2 class="text-5xl font-extrabold text-white leading-tight mb-6 tracking-tight">
+                    Master the architecture of digital spaces.
+                </h2>
+<p class="text-white/80 text-xl font-light leading-relaxed max-w-lg">
+                    Join a community of elite curators designing the next generation of professional talent flows.
+                </p>
+<div class="mt-12 flex items-center space-x-4">
+<div class="flex -space-x-3">
+<img alt="User 1" class="w-10 h-10 rounded-full border-2 border-primary" data-alt="portrait of a professional woman in business attire" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVxrI9I5n58GFjq4GFTGavFlXmZe1bnwXPHtwHXeUg1aK1lVc7QKPvWr4O3EaYIjo56Qyp-AehpphzpbwI3peCA6mH3SMiUQnPK5y_zNT1ZmR_FblJnP7oSIdV4oTn4k_dpA6R5o9EVH256JTlGMsvpDvLW7E2Kt-iJ4839-mW_cxwIDVedGKFpDZyRrVl92Y3swdRuk9oj5AeAYnCk74RmRPjXJAt7mbdlVteunFv_yurekYAEQqpvZMJ4eMQZz3sBVC1ru3TwM0"/>
+<img alt="User 2" class="w-10 h-10 rounded-full border-2 border-primary" data-alt="portrait of a professional man in business attire" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOob43RVwc0CW12KB2DOBUtlHf-ew8BT46J0LkWSlklYMWRvTXlfGxTj8f_hGk8DCjxYTFV0FYgMSdkIchWPU2n2hN7odES9Y79DF2NjAD-N8AdXIh5Jqwuyr3gqbeQ6gQO9lHGathfnZ8t7xnUX7qARnkKnypxwL4TgPHwGE30jrZpU1GLNKHnIrF5FFm7Q1ZpHlQVl4KPpTMjINcfIXSwtWpEM4tMy34N59zfkcEZQrDOxVXaSd1q8rnaMb9573149iRc69wJQw"/>
+<img alt="User 3" class="w-10 h-10 rounded-full border-2 border-primary" data-alt="portrait of a young female professional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuSaxmsWaDeDfuFTFA6AOZfuiXWOiOZdbCDtc0TRm4vIvUnDcFYgxg-3GiykXQ6piGpupz92uli7GK-c88t_Bj236Eo0Jt4a3znXGpG2Abdywt_o3WxZdqHHQPHQcAQhhSSicLVV4oImwIvwoZMKi-0fUx9CbJsM4L2uLsI-eJ-r83k0tRbZ6kFQrc-HDWjTEkPsQUEG_jFBZK2FMzgroFpsZNaPaj4lKpHFBNQUodcY_ojab8pK4UaOyEVjPt82HwOmam6WsYV6E"/>
+</div>
+<span class="text-white/60 text-sm font-medium">Joined by 2,400+ curators this month</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Registration Card -->
+<div class="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-24 bg-surface">
+<div class="w-full max-w-md">
+<div class="mb-10">
+<h1 class="text-3xl font-extrabold text-on-surface mb-2 tracking-tight">Create your account</h1>
+<p class="text-on-surface-variant font-medium">Join Kinetic Academy and start your journey.</p>
+</div>
+<!-- Social Sign-on -->
+<div class="grid grid-cols-2 gap-4 mb-8">
+<button class="flex items-center justify-center gap-3 px-4 py-3 rounded-lg bg-surface-container-lowest border border-outline-variant/20 hover:bg-surface-container-low transition-colors group">
+<svg class="w-5 h-5" viewbox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path></svg>
+<span class="text-sm font-semibold text-on-surface">Google</span>
+</button>
+<button class="flex items-center justify-center gap-3 px-4 py-3 rounded-lg bg-surface-container-lowest border border-outline-variant/20 hover:bg-surface-container-low transition-colors group">
+<svg class="w-5 h-5 fill-on-surface" viewbox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg>
+<span class="text-sm font-semibold text-on-surface">GitHub</span>
+</button>
+</div>
+<div class="relative flex items-center mb-8">
+<div class="flex-grow border-t border-outline-variant/30"></div>
+<span class="flex-shrink mx-4 text-xs font-bold text-outline uppercase tracking-widest">Or continue with email</span>
+<div class="flex-grow border-t border-outline-variant/30"></div>
+</div>
+<!-- Form -->
+<form class="space-y-5">
+<div>
+<label class="block text-sm font-semibold text-on-surface-variant mb-2">Full Name</label>
+<input class="w-full px-4 py-3 rounded-lg bg-surface-container-highest border-none focus:ring-2 focus:ring-surface-tint text-on-surface transition-all outline-none" placeholder="John Doe" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-semibold text-on-surface-variant mb-2">Email Address</label>
+<input class="w-full px-4 py-3 rounded-lg bg-surface-container-highest border-none focus:ring-2 focus:ring-surface-tint text-on-surface transition-all outline-none" placeholder="john@example.com" type="email"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-semibold text-on-surface-variant mb-2">Your Role</label>
+<select class="w-full px-4 py-3 rounded-lg bg-surface-container-highest border-none focus:ring-2 focus:ring-surface-tint text-on-surface transition-all outline-none appearance-none">
+<option>FE Developer</option>
+<option>BE Developer</option>
+<option>UI Designer</option>
+<option>Admin</option>
+</select>
+</div>
+<div class="flex flex-col justify-end">
+<div class="flex items-center space-x-1.5 px-4 py-3 rounded-lg bg-surface-container-low border-none">
+<span class="material-symbols-outlined text-tertiary text-sm">verified</span>
+<span class="text-xs font-bold text-tertiary">Verified Curator</span>
+</div>
+</div>
+</div>
+<div>
+<label class="block text-sm font-semibold text-on-surface-variant mb-2">Password</label>
+<div class="relative">
+<input class="w-full px-4 py-3 rounded-lg bg-surface-container-highest border-none focus:ring-2 focus:ring-surface-tint text-on-surface transition-all outline-none" placeholder="••••••••" type="password"/>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 text-outline cursor-pointer hover:text-on-surface">
+<span class="material-symbols-outlined">visibility_off</span>
+</div>
+</div>
+<div class="mt-3 flex gap-1">
+<div class="h-1 flex-1 bg-tertiary-container rounded-full"></div>
+<div class="h-1 flex-1 bg-tertiary-container rounded-full"></div>
+<div class="h-1 flex-1 bg-tertiary-container rounded-full"></div>
+<div class="h-1 flex-1 bg-surface-container-highest rounded-full"></div>
+</div>
+<p class="mt-2 text-[10px] text-tertiary-fixed-dim font-bold uppercase tracking-wider">Strong Security</p>
+</div>
+<div>
+<label class="block text-sm font-semibold text-on-surface-variant mb-2">Confirm Password</label>
+<input class="w-full px-4 py-3 rounded-lg bg-surface-container-highest border-none focus:ring-2 focus:ring-surface-tint text-on-surface transition-all outline-none" placeholder="••••••••" type="password"/>
+</div>
+<div class="flex items-start gap-3 py-2">
+<input class="mt-1 w-4 h-4 rounded text-primary focus:ring-primary border-outline-variant" type="checkbox"/>
+<label class="text-xs text-on-surface-variant leading-relaxed">
+                            By creating an account, I agree to the <a class="text-primary font-bold hover:underline" href="#">Terms of Service</a> and <a class="text-primary font-bold hover:underline" href="#">Privacy Policy</a>.
+                        </label>
+</div>
+<button class="w-full py-4 rounded-lg bg-gradient-to-r from-primary to-primary-container text-white font-bold text-lg shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all" type="submit">
+                        Create Account
+                    </button>
+</form>
+<div class="mt-8 text-center">
+<p class="text-sm font-medium text-on-surface-variant">
+                        Already have an account? 
+                        <a class="text-primary font-extrabold ml-1 hover:underline" href="#">Log in</a>
+</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-50 dark:bg-slate-950 w-full py-16 px-8 border-t-0">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-screen-2xl mx-auto items-center">
+<div class="space-y-6">
+<div class="text-lg font-black text-slate-900 dark:text-slate-50">TalentFlow</div>
+<p class="font-['Inter'] text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                    © 2024 TalentFlow. All rights reserved. Built for the Architectural Curator.
+                </p>
+</div>
+<div class="flex flex-wrap gap-x-12 gap-y-4 md:justify-end">
+<a class="text-slate-400 dark:text-slate-600 font-['Inter'] text-xs uppercase tracking-widest hover:text-blue-900 transition-colors" href="#">Academic Integrity</a>
+<a class="text-slate-400 dark:text-slate-600 font-['Inter'] text-xs uppercase tracking-widest hover:text-blue-900 transition-colors" href="#">Privacy Policy</a>
+<a class="text-slate-400 dark:text-slate-600 font-['Inter'] text-xs uppercase tracking-widest hover:text-blue-900 transition-colors" href="#">Mentor Terms</a>
+<a class="text-slate-400 dark:text-slate-600 font-['Inter'] text-xs uppercase tracking-widest hover:text-blue-900 transition-colors" href="#">Contact Support</a>
+</div>
+</div>
+<div class="mt-12 bg-slate-200 dark:bg-slate-900 h-[1px] w-full opacity-20 max-w-screen-2xl mx-auto"></div>
+</footer>
+</body></html>
