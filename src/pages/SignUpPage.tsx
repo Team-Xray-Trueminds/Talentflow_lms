@@ -64,24 +64,24 @@ export default function SignUpPage() {
 
       <main className="min-h-screen pt-20 flex bg-surface">
         {/* Left Column: Architectural Visual */}
-        <div className="hidden lg:block w-1/2 relative overflow-hidden bg-primary">
+        <div className="hidden lg:block w-1/2 relative overflow-hidden bg-[#00327D]">
           <img
             alt="Architectural structure"
             className="absolute inset-0 w-full h-full object-cover"
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJgOLp5ENMaPMuhEYoXwSXMuerv9gL7scytOl7Fk8GlLTjjuUeNkZP1DIijsB6rwiufOYBMF8N8nT_QuLGVF4TBEaNTMNklZSFdAvv7dGxF0FzEtU_VjXBC4fr9zgUjWaCJZ8BDeuGdCZ151B2xZmi_8hnVW9C9ya8BM0BhWoBPF7wqMv-ofoBZPFsKerKsyDiGRvXZuWXfSSuRry6xfAWC9I_BZ-Ym0-EttLv1z2_3xzpkWiealV1l3UN2oLe-Lmk5agoQOmv0y0"
           />
-          <div className="absolute inset-0 bg-primary/40 backdrop-multiply"></div>
-          <div className="absolute inset-0 bg-linear-to-t from-primary/90 via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-[#00327D]/40 backdrop-multiply"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-[#00327D]/90 via-transparent to-transparent"></div>
           <div className="absolute bottom-20 left-16 right-16">
             <div className="inline-block p-1 mb-6 bg-tertiary-fixed rounded-lg">
               <span className="px-3 py-1 text-on-tertiary-fixed text-[10px] font-bold uppercase tracking-[0.2em]">
                 Curated Growth
               </span>
             </div>
-            <h2 className="text-5xl font-extrabold text-white leading-tight mb-6 tracking-tight font-headline">
+            <h2 className="text-5xl font-extrabold text-white leading-tight mb-6 tracking-tight font-headline animate-fade-in-up">
               Master the architecture of digital spaces.
             </h2>
-            <p className="text-white/80 text-xl font-light leading-relaxed max-w-lg">
+            <p className="text-white/80 text-xl font-light leading-relaxed max-w-lg mb-8 animate-fade-in-up animate-stagger-1 text-[#DAE2FF]">
               Join a community of elite curators designing the next generation of professional talent
               flows.
             </p>
@@ -121,7 +121,7 @@ export default function SignUpPage() {
             </div>
 
             {/* Social Sign-on */}
-            <div className="grid grid-cols-2 gap-4 mb-8">
+            <div className="grid grid-cols-2 gap-4 mb-8 animate-fade-in-up animate-stagger-1">
               <SocialAuthButton>
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
                   <path
@@ -141,13 +141,13 @@ export default function SignUpPage() {
                     fill="#EA4335"
                   ></path>
                 </svg>
-                <span className="text-sm font-semibold text-on-surface">Google</span>
+                <span className="text-sm font-semibold text-[#191C1E]">Google</span>
               </SocialAuthButton>
               <SocialAuthButton>
                 <svg className="w-5 h-5 fill-on-surface" viewBox="0 0 24 24">
                   <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
                 </svg>
-                <span className="text-sm font-semibold text-on-surface">GitHub</span>
+                <span className="text-sm font-semibold text-[#191C1E]">GitHub</span>
               </SocialAuthButton>
             </div>
 
@@ -155,12 +155,12 @@ export default function SignUpPage() {
 
             {/* Form */}
             <form className="space-y-5" onSubmit={handleSubmit}>
-              <div>
-                <label className="block text-sm font-semibold text-on-surface-variant mb-2">
+              <div className="animate-fade-in-up animate-stagger-2">
+                <label className="block text-sm font-semibold text-[#434653] mb-2">
                   Full Name
                 </label>
                 <input
-                  className="w-full px-4 py-3 rounded-lg bg-surface-container-highest border-none focus:ring-2 focus:ring-surface-tint text-on-surface transition-all outline-none"
+                  className="w-full px-4 py-3 rounded-lg bg-[#E0E3E5] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none"
                   placeholder="John Doe"
                   type="text"
                   name="fullName"
@@ -170,12 +170,12 @@ export default function SignUpPage() {
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-on-surface-variant mb-2">
+              <div className="animate-fade-in-up animate-stagger-2">
+                <label className="block text-sm font-semibold text-[#434653] mb-2">
                   Email Address
                 </label>
                 <input
-                  className="w-full px-4 py-3 rounded-lg bg-surface-container-highest border-none focus:ring-2 focus:ring-surface-tint text-on-surface transition-all outline-none"
+                  className="w-full px-4 py-3 rounded-lg bg-[#E0E3E5] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none"
                   placeholder="john@example.com"
                   type="email"
                   name="email"
@@ -191,7 +191,7 @@ export default function SignUpPage() {
                     Your Role
                   </label>
                   <select
-                    className="w-full px-4 py-3 rounded-lg bg-surface-container-highest border-none focus:ring-2 focus:ring-surface-tint text-on-surface transition-all outline-none appearance-none cursor-pointer"
+                    className="w-full px-4 py-3 rounded-lg bg-[#E0E3E5] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none appearance-none cursor-pointer"
                     name="role"
                     value={formData.role}
                     onChange={handleChange}
@@ -215,7 +215,7 @@ export default function SignUpPage() {
                 </label>
                 <div className="relative">
                   <input
-                    className="w-full px-4 py-3 rounded-lg bg-surface-container-highest border-none focus:ring-2 focus:ring-surface-tint text-on-surface transition-all outline-none"
+                    className="w-full px-4 py-3 rounded-lg bg-[#E0E3E5] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none"
                     placeholder="••••••••"
                     type={showPassword ? 'text' : 'password'}
                     name="password"
@@ -259,7 +259,7 @@ export default function SignUpPage() {
                 </label>
                 <div className="relative">
                   <input
-                    className="w-full px-4 py-3 rounded-lg bg-surface-container-highest border-none focus:ring-2 focus:ring-surface-tint text-on-surface transition-all outline-none"
+                    className="w-full px-4 py-3 rounded-lg bg-[#E0E3E5] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none"
                     placeholder="••••••••"
                     type={showConfirmPassword ? 'text' : 'password'}
                     name="confirmPassword"
@@ -290,7 +290,7 @@ export default function SignUpPage() {
                   onChange={handleChange}
                   required
                 />
-                <label className="text-xs text-on-surface-variant leading-relaxed" htmlFor="terms">
+                <label className="text-xs text-[#434653] leading-relaxed" htmlFor="terms">
                   By creating an account, I agree to the{' '}
                   <a
                     className="text-[#00419E] font-bold hover:underline"

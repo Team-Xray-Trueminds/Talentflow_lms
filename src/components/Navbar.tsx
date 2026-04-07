@@ -13,11 +13,11 @@ type NavbarProps = {
 
 export default function Navbar({ links = [], rightSlot }: NavbarProps) {
   return (
-    <header className="fixed top-0 z-50 w-full bg-surface/70 backdrop-blur-[20px] shadow-ambient">
+    <header className="fixed top-0 z-50 w-full bg-[#F7F9FB]/70 backdrop-blur-[20px] shadow-ambient">
       <div className="flex justify-between items-center w-full px-6 md:px-8 py-4 md:py-6 max-w-7xl mx-auto">
         <Link
           to="/"
-          className="text-xl md:text-2xl text-[#0047AB] font-black tracking-tight text-primary font-headline"
+          className="text-xl md:text-2xl text-[#0047AB] font-black tracking-tight font-headline"
         >
           TalentFlow
         </Link>
@@ -28,7 +28,7 @@ export default function Navbar({ links = [], rightSlot }: NavbarProps) {
               <Link
                 key={link.label}
                 to={link.to}
-                  className="text-on-surface-variant text-sm md:text-base font-medium hover:text-[#0047AB] transition-colors duration-300 font-headline"
+                  className="text-[#434653] text-sm md:text-base font-medium hover:text-[#0047AB] transition-colors duration-300 font-headline animate-fade-in-up"
               >
                 {link.label}
               </Link>

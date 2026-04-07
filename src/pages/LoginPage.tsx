@@ -17,7 +17,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="bg-surface text-on-surface min-h-screen flex flex-col">
+    <div className="bg-[#F7F9FB] text-[#191C1E] min-h-screen flex flex-col">
       <Navbar
         links={[
           { label: 'About', to: '/' },
@@ -29,12 +29,12 @@ export default function LoginPage() {
         <div className="absolute top-[-10%] left-[-5%] w-100 h-100 rounded-full bg-secondary-fixed/30 blur-[120px] -z-10"></div>
         <div className="absolute bottom-[-10%] right-[-5%] w-125 h-125 rounded-full bg-primary-fixed/20 blur-[150px] -z-10"></div>
 
-        <div className="w-full max-w-115 bg-surface-container-lowest rounded-xl shadow-ambient p-8 md:p-10 flex flex-col">
+        <div className="w-full max-w-115 bg-white rounded-xl shadow-ambient p-8 md:p-10 flex flex-col animate-scale-in">
           <div className="mb-8">
             <h1 className="font-headline text-3xl md:text-4xl font-extrabold tracking-tight text-on-surface mb-2">
               Welcome Back
             </h1>
-            <p className="text-on-surface-variant text-sm font-medium">
+            <p className="text-[#434653] text-sm font-medium">
               Sign in to continue your growth journey.
             </p>
           </div>
@@ -50,7 +50,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full h-12 px-4 bg-surface-container-highest border-none rounded-lg focus:ring-2 focus:ring-surface-tint text-on-surface transition-all placeholder:text-outline-variant"
+                className="w-full h-12 px-4 bg-[#E0E3E5] border-none rounded-lg focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all placeholder:text-[#C3C6D5]"
               />
             </div>
 
@@ -73,7 +73,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full h-12 px-4 bg-surface-container-highest border-none rounded-lg focus:ring-2 focus:ring-surface-tint text-on-surface transition-all placeholder:text-outline-variant"
+                  className="w-full h-12 px-4 bg-[#E0E3E5] border-none rounded-lg focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all placeholder:text-[#C3C6D5]"
                 />
                 <button
                   type="button"
@@ -112,7 +112,7 @@ export default function LoginPage() {
             </SocialAuthButton>
           </div>
 
-          <p className="text-center text-sm text-on-surface-variant">
+          <p className="text-center text-sm text-[#434653]">
             New to TalentFlow?{' '}
             <Link to="/signup" className="text-[#4473D8] font-semibold hover:underline">
               Create an account

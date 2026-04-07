@@ -31,21 +31,21 @@ const LandingPage: React.FC = () => {
         {/* Hero Section */}
         <section className="max-w-7xl mx-auto px-8 py-16 grid lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 bg-secondary-container px-4 py-1.5 rounded-full">
-              <span className="material-symbols-outlined text-primary text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>architecture</span>
-              <span className="text-on-secondary-fixed-variant bg-[#B1C5FF] p-2 rounded-full text-sm font-bold tracking-wide uppercase">Premier Growth Platform</span>
+            <div className="inline-flex items-center gap-2 bg-[#D0E1FB] px-4 py-1.5 rounded-full animate-fade-in-up">
+              <span className="material-symbols-outlined text-[#00327D] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>architecture</span>
+              <span className="text-[#38485D] bg-[#B1C5FF] p-2 rounded-full text-sm font-bold tracking-wide uppercase">Premier Growth Platform</span>
             </div>
-            <h1 className="text-6xl font-extrabold text-on-surface leading-[1.1] font-headline tracking-tighter">
-              Architecting the future of <span className="text-primary text-[#0047AB] italic">career mentorship</span> and growth.
+            <h1 className="text-6xl font-extrabold text-[#191C1E] leading-[1.1] font-headline tracking-tighter animate-fade-in-up animate-stagger-1">
+              Architecting the future of <span className="text-[#0047AB] italic">career mentorship</span> and growth.
             </h1>
-            <p className="text-xl text-on-surface-variant leading-relaxed max-w-lg">
+            <p className="text-xl text-[#434653] leading-relaxed max-w-lg animate-fade-in-up animate-stagger-2">
               TalentFlow provides the blueprints for professional evolution. We connect visionaries with curated expertise to build the next generation of global industry leaders.
             </p>
-            <div className="flex items-center gap-4 pt-4">
-              <button className="bg-[#002C70] from-primary to-primary-container text-white px-8 py-4 rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transition-all">
+            <div className="flex items-center gap-4 pt-4 animate-fade-in-up animate-stagger-3">
+              <button className="bg-[#002C70] text-white px-8 py-4 rounded-lg font-bold text-lg shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 transition-all">
                 Get Started
               </button>
-              <button className="flex items-center text-[#002C70] gap-2 text-primary font-bold px-8 py-4 rounded-lg hover:bg-surface-container-high transition-colors">
+              <button className="flex items-center text-[#002C70] gap-2 font-bold px-8 py-4 rounded-lg hover:bg-[#E6E8EA] transition-colors">
                 <span className="material-symbols-outlined">play_circle</span>
                 The TalentFlow Vision
               </button>
@@ -114,8 +114,8 @@ const LandingPage: React.FC = () => {
         {/* Bento Highlights Section */}
         <section className="max-w-7xl mx-auto px-8 py-24">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold font-headline mb-4">Precision Engineering for Potential</h2>
-            <p className="text-on-surface-variant max-w-2xl mx-auto">We replace generic advice with architectural precision, ensuring every career move is supported by data and world-class mentorship.</p>
+            <h2 className="text-4xl font-bold font-headline mb-4 animate-fade-in-up">Precision Engineering for Potential</h2>
+            <p className="text-[#434653] max-w-2xl mx-auto animate-fade-in-up animate-stagger-1">We replace generic advice with architectural precision, ensuring every career move is supported by data and world-class mentorship.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Large Feature Card */}
