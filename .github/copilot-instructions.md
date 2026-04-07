@@ -15,3 +15,18 @@ When developing pages and components, you MUST follow the design system defined 
 - **Components:** Primary buttons with gradient + no border. Input fields: `surface-container-highest` background, `surface-tint` focus ring. No `<hr>` dividers; use whitespace or color shifts.
 
 Before implementing any page or component, review [docs/design.md](../docs/design.md) to ensure compliance with the design system.
+
+## Compliance Enforcement Rules
+
+Use these implementation rules to keep pages consistent:
+
+- Reuse shared primitives first: prefer shared components in `src/components/` (for navigation, footer, auth UI, and repeated form patterns) before adding page-local markup.
+- Avoid hard-coded visual values for core UI: use design tokens (`primary`, `surface-*`, `on-surface-*`, `outline-variant`) instead of raw hex colors for recurring surfaces, text, and actions.
+- Keep auth pages structurally aligned: Login and Sign Up should share the same header/footer primitives, input treatment, divider treatment, and CTA style.
+- Enforce no-line boundaries: do not add solid border separators for layout grouping; use tonal surface shifts, spacing, or ghost borders only when accessibility requires.
+- Keep shadows consistent: use ambient shadow treatment (`shadow-ambient`) for floating surfaces; avoid one-off shadow values unless explicitly required by design.
+- For new pages/components, include a short self-check in your implementation process:
+	1. Uses shared primitives where available
+	2. Uses tokenized colors and spacing
+	3. No prohibited solid line separators
+	4. Matches design.md interaction and typography rules
