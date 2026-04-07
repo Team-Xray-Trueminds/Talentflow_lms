@@ -1,28 +1,31 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 const LandingPage: React.FC = () => {
   return (
     <>
-      {/* TopNavBar (Shared Component) */}
-      <nav className="fixed top-0 w-full z-50 bg-[#f7f9fb]/70 dark:bg-[#191c1e]/70 backdrop-blur-xl shadow-[0px_12px_32px_rgba(25,28,30,0.06)]">
-        <div className="flex justify-between items-center max-w-7xl mx-auto px-8 py-4">
-          <div className="text-2xl font-black text-[#00327d] dark:text-[#ffffff] tracking-tighter font-headline">
-            TalentFlow
-          </div>
-          <div className="hidden md:flex items-center space-x-8">
-            <a className="text-[#434653] dark:text-[#c3c6d5] font-medium hover:text-[#0047AB] transition-colors duration-300 font-headline" href="#">Platform</a>
-            <a className="text-[#434653] dark:text-[#c3c6d5] font-medium hover:text-[#0047AB] transition-colors duration-300 font-headline" href="#">Mentorship</a>
-            <a className="text-[#434653] dark:text-[#c3c6d5] font-medium hover:text-[#0047AB] transition-colors duration-300 font-headline" href="#">Insights</a>
-            <a className="text-[#434653] dark:text-[#c3c6d5] font-medium hover:text-[#0047AB] transition-colors duration-300 font-headline" href="#">About</a>
-          </div>
-          <div className="flex items-center space-x-6">
-            <button className="text-[#434653] dark:text-[#c3c6d5] font-medium hover:text-[#0047AB] transition-all">Sign In</button>
-            <button className="bg-gradient-to-r from-primary to-primary-container text-white px-6 py-2.5 rounded-lg font-bold scale-95 transition-transform duration-200 hover:scale-100">
+      <Navbar
+        links={[
+          { label: 'Platform', to: '/' },
+          { label: 'Mentorship', to: '/' },
+          { label: 'Insights', to: '/' },
+          { label: 'About', to: '/' },
+        ]}
+        rightSlot={
+          <>
+            <Link to="/login" className="text-[#434653] dark:text-[#c3c6d5] font-medium hover:text-[#0047AB] transition-all">
+              Sign In
+            </Link>
+            <Link
+              to="/login"
+              className="bg-linear-to-r from-primary to-primary-container text-white px-6 py-2.5 rounded-lg font-bold scale-95 transition-transform duration-200 hover:scale-100"
+            >
               Get Started
-            </button>
-          </div>
-        </div>
-      </nav>
+            </Link>
+          </>
+        }
+      />
       <main className="pt-24 min-h-screen">
         {/* Hero Section */}
         <section className="max-w-7xl mx-auto px-8 py-16 grid lg:grid-cols-2 gap-16 items-center">
@@ -38,7 +41,7 @@ const LandingPage: React.FC = () => {
               TalentFlow provides the blueprints for professional evolution. We connect visionaries with curated expertise to build the next generation of global industry leaders.
             </p>
             <div className="flex items-center gap-4 pt-4">
-              <button className="bg-gradient-to-r from-primary to-primary-container text-white px-8 py-4 rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transition-all">
+              <button className="bg-linear-to-r from-primary to-primary-container text-white px-8 py-4 rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transition-all">
                 Get Started
               </button>
               <button className="flex items-center gap-2 text-primary font-bold px-8 py-4 rounded-lg hover:bg-surface-container-high transition-colors">
@@ -124,10 +127,10 @@ const LandingPage: React.FC = () => {
                 <p className="text-on-surface-variant max-w-md leading-relaxed">Our proprietary algorithms analyze your trajectory and skills to architect a mentorship journey tailored to your specific architectural career goals.</p>
               </div>
               <div className="mt-12 flex gap-4 overflow-hidden">
-                <div className="w-24 h-24 bg-surface-container rounded-lg flex-shrink-0"></div>
-                <div className="w-24 h-24 bg-surface-container-high rounded-lg flex-shrink-0"></div>
-                <div className="w-24 h-24 bg-surface-container-highest rounded-lg flex-shrink-0"></div>
-                <div className="w-24 h-24 bg-primary-fixed rounded-lg flex-shrink-0"></div>
+                <div className="w-24 h-24 bg-surface-container rounded-lg shrink-0"></div>
+                <div className="w-24 h-24 bg-surface-container-high rounded-lg shrink-0"></div>
+                <div className="w-24 h-24 bg-surface-container-highest rounded-lg shrink-0"></div>
+                <div className="w-24 h-24 bg-primary-fixed rounded-lg shrink-0"></div>
               </div>
             </div>
             {/* Vertical Card */}

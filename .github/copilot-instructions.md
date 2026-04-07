@@ -1,0 +1,1 @@
+Always use context7 for documentation lookups
