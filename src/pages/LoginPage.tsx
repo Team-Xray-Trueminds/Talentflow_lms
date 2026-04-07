@@ -25,11 +25,11 @@ export default function LoginPage() {
         ]}
       />
 
-      <main className="grow flex items-center justify-center px-4 pt-20 md:pt-20 pb-20 md:pb-12 relative overflow-hidden">
+      <main className="grow flex items-center mt-12 justify-center px-4 pt-20 md:pt-20 pb-20 md:pb-12 relative overflow-hidden">
         <div className="absolute top-[-10%] left-[-5%] w-100 h-100 rounded-full bg-secondary-fixed/30 blur-[120px] -z-10"></div>
         <div className="absolute bottom-[-10%] right-[-5%] w-125 h-125 rounded-full bg-primary-fixed/20 blur-[150px] -z-10"></div>
 
-        <div className="w-full max-w-115 bg-white rounded-xl shadow-ambient p-8 md:p-10 flex flex-col animate-scale-in">
+        <div className="w-full max-w-115 bg-white rounded-xl shadow-ambient p-8 md:py-16 flex flex-col animate-scale-in">
           <div className="mb-8">
             <h1 className="font-headline text-3xl md:text-4xl font-extrabold tracking-tight text-on-surface mb-2">
               Welcome Back
