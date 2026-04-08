@@ -61,7 +61,7 @@ export default function SuccessModal({ isOpen, onClose, email }: SuccessModalPro
               Your email <span className="text-[#191C1E] font-bold">{email}</span> has been successfully verified.
             </p>
             <p className="text-sm text-[#74777F]">
-              Welcome to the elite community of Talent curators. Your professional journey starts now.
+              Welcome to the elite community of Talent Flow professionals. Your professional journey starts now.
             </p>
           </div>
 

@@ -85,7 +85,7 @@ export default function SignUpPage() {
               Master the architecture of digital spaces.
             </h2>
             <p className="text-white/80 text-xl font-light leading-relaxed max-w-lg mb-8 animate-fade-in-up animate-stagger-1 text-[#DAE2FF]">
-              Join a community of elite curators designing the next generation of professional talent
+              Join a community of elite professionals designing the next generation of industry talent
               flows.
             </p>
             <div className="mt-12 flex items-center space-x-4">
@@ -106,7 +106,7 @@ export default function SignUpPage() {
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuSaxmsWaDeDfuFTFA6AOZfuiXWOiOZdbCDtc0TRm4vIvUnDcFYgxg-3GiykXQ6piGpupz92uli7GK-c88t_Bj236Eo0Jt4a3znXGpG2Abdywt_o3WxZdqHHQPHQcAQhhSSicLVV4oImwIvwoZMKi-0fUx9CbJsM4L2uLsI-eJ-r83k0tRbZ6kFQrc-HDWjTEkPsQUEG_jFBZK2FMzgroFpsZNaPaj4lKpHFBNQUodcY_ojab8pK4UaOyEVjPt82HwOmam6WsYV6E"
                 />
               </div>
-              <span className="text-white/60 text-sm font-medium">Joined by 2,400+ curators this month</span>
+              <span className="text-white/60 text-sm font-medium">Joined by 2,400+ members this month</span>
             </div>
           </div>
         </div>
@@ -206,7 +206,7 @@ export default function SignUpPage() {
                 <div className="flex flex-col justify-end">
                   <div className="flex items-center space-x-1.5 px-4 py-3 rounded-lg bg-surface-container-low shadow-ambient">
                     <span className="material-symbols-outlined text-[#005049] text-sm">verified</span>
-                    <span className="text-xs font-bold text-[#005049]">Verified Curator</span>
+                    <span className="text-xs font-bold text-[#005049]">Verified Member</span>
                   </div>
                 </div>
               </div>
