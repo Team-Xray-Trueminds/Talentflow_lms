@@ -3,6 +3,42 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import AppFooter from '../components/AppFooter';
 
+const CountUp: React.FC<{ end: number; suffix?: string }> = ({ end, suffix = '' }) => {
+  const [count, setCount] = React.useState(0);
+  const elementRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          let startTime: number | null = null;
+          const duration = 2000;
+
+          const step = (timestamp: number) => {
+            if (!startTime) startTime = timestamp;
+            const progress = Math.min((timestamp - startTime) / duration, 1);
+            setCount(Math.floor(progress * end));
+            if (progress < 1) {
+              requestAnimationFrame(step);
+            }
+          };
+          requestAnimationFrame(step);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [end]);
+
+  return <span ref={elementRef}>{count}{suffix}</span>;
+};
+
 const LandingPage: React.FC = () => {
   return (
     <>
@@ -50,20 +86,7 @@ const LandingPage: React.FC = () => {
                 The TalentFlow Vision
               </button>
             </div>
-            <div className="pt-8 text-[#002C70] grid grid-cols-3 gap-8">
-              <div>
-                <div className="text-3xl font-black text-primary font-headline">15k+</div>
-                <div className="text-sm text-on-surface-variant font-medium">Global Mentors</div>
-              </div>
-              <div>
-                <div className="text-3xl font-black text-primary font-headline">94%</div>
-                <div className="text-sm text-on-surface-variant font-medium">Growth Rate</div>
-              </div>
-              <div>
-                <div className="text-3xl font-black text-primary font-headline">200+</div>
-                <div className="text-sm text-on-surface-variant font-medium">Enterprises</div>
-              </div>
-            </div>
+
           </div>
           <div className="relative">
             {/* Architectural Visual (Bento/Card Mashup) */}
@@ -98,16 +121,42 @@ const LandingPage: React.FC = () => {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary-container/5 rounded-full blur-[100px] -z-10"></div>
           </div>
         </section>
-        {/* Trusted Partners (Subtle Tonal Shift) */}
-        <section className="bg-[#B1C5FF]-container-low py-16">
-          <div className="max-w-7xl mx-auto px-8">
-            <p className="text-center text-2xl font-bold tracking-widest text-on-surface-variant uppercase mb-12">Architecting growth for world-class teams</p>
-            <div className="flex flex-wrap justify-center items-center gap-16 opacity-50 grayscale contrast-125">
-              <span className="text-3xl font-black font-headline tracking-tighter">NEXUS</span>
-              <span className="text-3xl font-black font-headline tracking-tighter">ORION</span>
-              <span className="text-3xl font-black font-headline tracking-tighter">LUMINA</span>
-              <span className="text-3xl font-black font-headline tracking-tighter">STRATOS</span>
-              <span className="text-3xl font-black font-headline tracking-tighter">APEX</span>
+        {/* Trusted Partners & Stats Section */}
+        <section className="bg-[#002C70] text-white py-24 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-white rounded-full blur-[120px]"></div>
+            <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-blue-400 rounded-full blur-[100px]"></div>
+          </div>
+          
+          <div className="max-w-7xl mx-auto px-8 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-20 border-b border-white/10 pb-20">
+              <div className="text-center space-y-2">
+                <div className="text-6xl font-black font-headline tracking-tight">
+                  <CountUp end={15} suffix="k+" />
+                </div>
+                <div className="text-blue-100/60 font-bold uppercase tracking-[0.2em] text-xs">Global Mentors</div>
+              </div>
+              <div className="text-center space-y-2">
+                <div className="text-6xl font-black font-headline tracking-tight">
+                  <CountUp end={94} suffix="%" />
+                </div>
+                <div className="text-blue-100/60 font-bold uppercase tracking-[0.2em] text-xs">Growth Rate</div>
+              </div>
+              <div className="text-center space-y-2">
+                <div className="text-6xl font-black font-headline tracking-tight">
+                  <CountUp end={200} suffix="+" />
+                </div>
+                <div className="text-blue-100/60 font-bold uppercase tracking-[0.2em] text-xs">Enterprises</div>
+              </div>
+            </div>
+
+            <p className="text-center text-sm font-bold tracking-[0.3em] text-blue-100/40 uppercase mb-12">Architecting growth for world-class teams</p>
+            <div className="flex flex-wrap justify-center items-center gap-x-20 gap-y-10 opacity-40 grayscale brightness-200">
+              <span className="text-2xl font-black font-headline tracking-tighter">NEXUS</span>
+              <span className="text-2xl font-black font-headline tracking-tighter">ORION</span>
+              <span className="text-2xl font-black font-headline tracking-tighter">LUMINA</span>
+              <span className="text-2xl font-black font-headline tracking-tighter">STRATOS</span>
+              <span className="text-2xl font-black font-headline tracking-tighter">APEX</span>
             </div>
           </div>
         </section>
