@@ -2,38 +2,38 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 
-export default function ProfileSetupPage() {
+export default function InstructorProfileSetupPage() {
   const [formData, setFormData] = useState({
     headline: '',
-    experienceLevel: 'Entry Level',
-    careerGoals: '',
-    github: '',
+    expertiseArea: '',
+    bio: '', // Teaching Philosophy
     linkedin: '',
-    portfolio: ''
+    portfolio: '',
+    credentials: ''
   })
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault()
-    window.location.href = '/learner/dashboard'
+    window.location.href = '/instructor/dashboard'
   }
 
   return (
     <div className="flex bg-[#F7F9FB] min-h-screen">
-      <Sidebar forceRole="Learner" />
+      <Sidebar forceRole="Instructor" />
 
       <main className="grow p-6 md:p-12 max-w-5xl mx-auto w-full">
         {/* Header Content */}
         <div className="flex flex-col md:flex-row justify-between items-start mb-8 md:mb-12 gap-4">
           <div className="animate-fade-in-up">
             <h1 className="text-3xl md:text-4xl font-extrabold text-[#191C1E] tracking-tight font-headline mb-2 leading-tight">
-              Define your Path
+              Configure your Studio
             </h1>
             <p className="text-[#434653] font-medium text-base md:text-lg">
-              Share your career ambitions and define your learning trajectory.
+              Set your teaching credentials and curate your unique educator profile.
             </p>
           </div>
           <Link
-            to="/learner/dashboard"
+            to="/instructor/dashboard"
             className="text-[#00419E] font-bold hover:underline py-2 md:py-2"
           >
             Skip for now
@@ -41,12 +41,15 @@ export default function ProfileSetupPage() {
         </div>
 
         {/* Profile Card */}
-        <div className="bg-white rounded-[24px] md:rounded-3xl shadow-ambient overflow-hidden animate-scale-in border border-[#C3C6D5]/20">
+        <div className="bg-white rounded-[24px] md:rounded-3xl shadow-ambient overflow-hidden animate-scale-in">
           {/* Cover Placeholder */}
           <div className="h-32 md:h-40 bg-linear-to-r from-[#00327D] to-[#2559BD] relative">
             <div className="absolute -bottom-12 md:-bottom-16 left-6 md:left-12 w-24 md:w-32 h-24 md:h-32 rounded-2xl md:rounded-3xl border-[6px] md:border-8 border-white bg-[#E0E3E5] flex items-center justify-center overflow-hidden shadow-lg group cursor-pointer">
               <span className="material-symbols-outlined text-3xl md:text-4xl text-[#434653] group-hover:scale-110 transition-transform">add_a_photo</span>
               <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" />
+            </div>
+            <div className="absolute top-4 right-4 px-3 py-1 bg-white/20 backdrop-blur-md text-white text-[10px] font-black uppercase rounded-lg tracking-widest">
+                Verified Educator
             </div>
           </div>
 
@@ -56,11 +59,11 @@ export default function ProfileSetupPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               <div className="space-y-2">
                 <label className="text-xs font-black uppercase tracking-wider text-[#434653]">
-                  Professional Title
+                  Teaching Headline
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Aspiring UI Architect"
+                  placeholder="e.g. Senior Architecture Lead"
                   className="w-full px-5 py-4 rounded-xl bg-[#F2F4F6] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none"
                   value={formData.headline}
                   onChange={e => setFormData({ ...formData, headline: e.target.value })}
@@ -69,34 +72,31 @@ export default function ProfileSetupPage() {
 
               <div className="space-y-2">
                 <label className="text-xs font-black uppercase tracking-wider text-[#434653]">
-                  Experience Level
+                  Core Expertise
                 </label>
-                <select 
-                  className="w-full px-5 py-4 rounded-xl bg-[#F2F4F6] text-[#191C1E] border-none focus:ring-2 focus:ring-[#2559BD] transition-all outline-none"
-                  value={formData.experienceLevel}
-                  onChange={e => setFormData({ ...formData, experienceLevel: e.target.value })}
-                >
-                  <option>Entry Level</option>
-                  <option>Intermediate</option>
-                  <option>Advanced</option>
-                  <option>Expert</option>
-                </select>
+                <input
+                  type="text"
+                  placeholder="e.g. System Design, Urbanism"
+                  className="w-full px-5 py-4 rounded-xl bg-[#F2F4F6] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none"
+                  value={formData.expertiseArea}
+                  onChange={e => setFormData({ ...formData, expertiseArea: e.target.value })}
+                />
               </div>
             </div>
 
-            {/* Career Ambition */}
+            {/* Teaching Philosophy */}
             <div className="space-y-2">
               <div className="flex justify-between items-end">
                 <label className="text-xs font-black uppercase tracking-wider text-[#434653]">
-                  Career Ambition
+                  Teaching Philosophy
                 </label>
               </div>
               <textarea
-                placeholder="What do you hope to achieve in the next 12 months?"
+                placeholder="How do you guide students to mastery?"
                 rows={4}
                 className="w-full px-5 py-4 rounded-xl bg-[#F2F4F6] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none resize-none"
-                value={formData.careerGoals}
-                onChange={e => setFormData({ ...formData, careerGoals: e.target.value })}
+                value={formData.bio}
+                onChange={e => setFormData({ ...formData, bio: e.target.value })}
               />
             </div>
 
@@ -108,15 +108,7 @@ export default function ProfileSetupPage() {
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#434653] text-[20px]">link</span>
                   <input
                     type="text"
-                    placeholder="LinkedIn"
-                    className="w-full pl-12 pr-5 py-4 rounded-xl bg-[#F2F4F6] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none"
-                  />
-                </div>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#434653] text-[20px]">code</span>
-                  <input
-                    type="text"
-                    placeholder="GitHub"
+                    placeholder="LinkedIn Profile"
                     className="w-full pl-12 pr-5 py-4 rounded-xl bg-[#F2F4F6] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none"
                   />
                 </div>
@@ -124,7 +116,15 @@ export default function ProfileSetupPage() {
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#434653] text-[20px]">language</span>
                   <input
                     type="text"
-                    placeholder="Portfolio"
+                    placeholder="Personal Portfolio"
+                    className="w-full pl-12 pr-5 py-4 rounded-xl bg-[#F2F4F6] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none"
+                  />
+                </div>
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#434653] text-[20px]">history_edu</span>
+                  <input
+                    type="text"
+                    placeholder="Academic Credentials"
                     className="w-full pl-12 pr-5 py-4 rounded-xl bg-[#F2F4F6] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none"
                   />
                 </div>
@@ -137,12 +137,12 @@ export default function ProfileSetupPage() {
                 type="submit"
                 className="order-1 md:order-2 w-full md:w-auto px-10 py-4 rounded-xl bg-linear-to-r from-[#00327D] to-[#2559BD] text-white font-bold text-lg shadow-xl shadow-[#00327D]/20 hover:scale-[1.02] active:scale-95 transition-all"
               >
-                Enter Path
+                Activate Studio
               </button>
                <button
                 type="button"
                 className="order-2 md:order-1 px-8 py-4 rounded-xl font-bold text-[#434653] hover:bg-[#F2F4F6] transition-all"
-                onClick={() => setFormData({ headline: '', experienceLevel: 'Entry Level', careerGoals: '', github: '', linkedin: '', portfolio: '' })}
+                onClick={() => setFormData({ headline: '', expertiseArea: '', bio: '', linkedin: '', portfolio: '', credentials: '' })}
               >
                 Reset Fields
               </button>

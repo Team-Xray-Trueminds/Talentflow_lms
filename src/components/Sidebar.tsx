@@ -88,7 +88,7 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
       <nav className="grow">
         {isInstructor ? (
           <>
-            <SidebarGroup label="Management" isInstructor={true}>
+            <SidebarGroup label="Curator Studio" isInstructor={true}>
               <SidebarItem 
                 icon="dashboard" 
                 label="Dashboard" 
@@ -97,96 +97,96 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
                 isInstructor={true}
               />
               <SidebarItem 
-                icon="school" 
-                label="My Courses" 
+                icon="architecture" 
+                label="Curriculum" 
                 to="/instructor/courses" 
                 active={location.pathname === '/instructor/courses'}
                 isInstructor={true}
               />
-            </SidebarGroup>
-            
-            <SidebarGroup label="Academic" isInstructor={true}>
               <SidebarItem 
-                icon="architecture" 
-                label="Academic Explorer" 
-                to="/curriculum" 
-                active={location.pathname === '/curriculum'}
+                icon="group" 
+                label="Faculty" 
+                to="/instructor/reviews" 
+                active={location.pathname === '/instructor/reviews'}
                 isInstructor={true}
               />
               <SidebarItem 
-                icon="assignment" 
-                label="Assignments" 
-                to="/assignments" 
-                active={location.pathname === '/assignments'}
+                icon="school" 
+                label="Students" 
+                to="/instructor/gradebook" 
+                active={location.pathname === '/instructor/gradebook'}
+                isInstructor={true}
+              />
+            </SidebarGroup>
+            
+            <SidebarGroup label="Insights" isInstructor={true}>
+              <SidebarItem 
+                icon="analytics" 
+                label="Reports" 
+                to="/instructor/analytics" 
+                active={location.pathname === '/instructor/analytics'}
                 isInstructor={true}
               />
             </SidebarGroup>
 
             <SidebarGroup label="Operations" isInstructor={true}>
               <SidebarItem 
-                icon="payments" 
-                label="Revenue & Stats" 
-                to="/performance" 
-                active={location.pathname === '/performance'}
-                isInstructor={true}
-              />
-              <SidebarItem 
-                icon="chat" 
-                label="Student Messages" 
-                to="/messages" 
-                active={location.pathname === '/messages'}
-                isInstructor={true}
-              />
-              <SidebarItem 
                 icon="settings" 
-                label="Studio Settings" 
-                to="/settings" 
-                active={location.pathname.startsWith('/settings')}
+                label="Settings" 
+                to={isInstructor ? "/settings/instructor-setup" : "/settings/profile-setup"} 
+                active={location.pathname === (isInstructor ? "/settings/instructor-setup" : "/settings/profile-setup")} 
+                isInstructor={true}
+              />
+              <SidebarItem 
+                icon="help" 
+                label="Support" 
+                to="/instructor/support" 
+                active={location.pathname === '/instructor/support'}
                 isInstructor={true}
               />
             </SidebarGroup>
           </>
         ) : (
           <>
-            <SidebarGroup label="Learning Path">
+            <SidebarGroup label="Curator Portal">
               <SidebarItem 
                 icon="dashboard" 
-                label="Dashboard" 
+                label="Overview" 
                 to={dashboardPath} 
                 active={location.pathname === dashboardPath} 
               />
               <SidebarItem 
                 icon="school" 
-                label="Program Catalog" 
+                label="Catalog" 
                 to="/learner/courses" 
                 active={location.pathname === '/learner/courses'} 
               />
               <SidebarItem 
                 icon="menu_book" 
-                label="Academic Explorer" 
-                to="/curriculum" 
-                active={location.pathname === '/curriculum'} 
+                label="My Learning" 
+                to="/learner/my-learning" 
+                active={location.pathname === '/learner/my-learning'} 
               />
-            </SidebarGroup>
-
-            <SidebarGroup label="Growth Tools">
               <SidebarItem 
                 icon="groups" 
-                label="Mentors" 
+                label="Instructors" 
                 to="/mentors" 
                 active={location.pathname === '/mentors'} 
               />
               <SidebarItem 
-                icon="analytics" 
-                label="Insights" 
+                icon="terminal" 
+                label="Resources" 
                 to="/insights" 
                 active={location.pathname === '/insights'} 
               />
+            </SidebarGroup>
+
+            <SidebarGroup label="Personal">
               <SidebarItem 
                 icon="settings" 
                 label="Account Settings" 
-                to="/settings/profile-setup" 
-                active={location.pathname.startsWith('/settings')} 
+                to={isInstructor ? "/settings/instructor-setup" : "/settings/profile-setup"} 
+                active={location.pathname === (isInstructor ? "/settings/instructor-setup" : "/settings/profile-setup")} 
               />
             </SidebarGroup>
           </>
@@ -196,7 +196,7 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
       <div className={`mt-auto space-y-2 pt-6 border-t shrink-0 ${themeClasses.border}`}>
         <SidebarItem 
           icon="help" 
-          label="Help Center" 
+          label="Support" 
           to="/help" 
           active={location.pathname === '/help'}
           isInstructor={isInstructor}

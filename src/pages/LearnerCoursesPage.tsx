@@ -4,6 +4,7 @@ import Sidebar from '../components/Sidebar'
 
 export default function LearnerCoursesPage() {
   const [selectedTrack, setSelectedTrack] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
 
   const tracks = [
     { title: 'UI Architecture', icon: 'architecture', count: '12 Courses' },
@@ -15,16 +16,19 @@ export default function LearnerCoursesPage() {
   ]
 
   const courses = [
-    { title: 'Architectural Systems in Product Design', category: 'UI Architecture', level: 'Intermediate', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCk5utjN07mkZOhvtLZIyLzTlvKn2L4iPZCxU2HE03HITuSyf687NvYeKy1N3BB3ni_PXK6x68sbgc75rNQ2L2yaSJm-G8klfuPjgpLJwHX36NoMakdz6P_Z2afHIAebaZV13Q7a3n9L2hbMhTqfjyw74ubS7f51FH_QDX66YnHaXq9NSQwc_7KrIjpQkDJ-Yp3aaAhNu-vnGsNf7SIO4uN_S4bTdHe0MSfe9aqNGnaSUESsnPKSC5Ebl9BWs9kMIL9tpe4Ug-K6OI' },
-    { title: 'The Urban Blueprint: Scale & Strategy', category: 'System Design', level: 'Advanced', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB06ZF4rJWSKN23zp2wWsqwcW2AAK2QkSoDP8VJd3XcOmygrHupDSMRzlmq1pV7oIZmyGUWmoHieax_B0EhzWAKlA3mVAirTYUI7btKWWdLkEFw7NS5SmkEjHY-urpnaWWOzby9uwXtVCfd0xjLeIluwlQol8d9sOChqyuzLcu8hwIJZKuYVi7WMjsB_7DuwjZ7MBOWgf9H2W7DOYgCqdKZeTdDRVZqyp5Ox8q3TvJ3ndRGc5lXidkY5yfCJZDARcfbOl7kxPydQ1M' },
-    { title: 'Micro-Interactions & Tonal Depth', category: 'Visual Logic', level: 'Foundational', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCVxrI9I5n58GFjq4GFTGavFlXmZe1bnwXPHtwHXeUg1aK1lVc7QKPvWr4O3EaYIjo56Qyp-AehpphzpbwI3peCA6mH3SMiUQnPK5y_zNT1ZmR_FblJnP7oSIdV4oTn4k_dpA6R5o9EVH256JTlGMsvpDvLW7E2Kt-iJ4839-mW_cxwIDVedGKFpDZyRrVl92Y3swdRuk9oj5AeAYnCk74RmRPjXJAt7mbdlVteunFv_yurekYAEQqpvZMJ4eMQZz3sBVC1ru3TwM0' },
-    { title: 'Information Scaffolding & Hierarchy', category: 'UI Architecture', level: 'Advanced', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBOob43RVwc0CW12KB2DOBUtlHf-ew8BT46J0LkWSlklYMWRvTXlfGxTj8f_hGk8DCjxYTFV0FYgMSdkIchWPU2n2hN7odES9Y79DF2NjAD-N8AdXIh5Jqwuyr3gqbeQ6gQO9lHGathfnZ8t7xnUX7qARnkKnypxwL4TgPHwGE30jrZpU1GLNKHnIrF5FFm7Q1ZpHlQVl4KPpTMjINcfIXSwtWpEM4tMy34N59zfkcEZQrDOxVXaSd1q8rnaMb9573149iRc69wJQw' },
-    { title: 'Sustainable Growth & Design Ethics', category: 'Product Strategy', level: 'Master', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCuSaxmsWaDeDfuFTFA6AOZfuiXWOiOZdbCDtc0TRm4vIvUnDcFYgxg-3GiykXQ6piGpupz92uli7GK-c88t_Bj236Eo0Jt4a3znXGpG2Abdywt_o3WxZdqHHQPHQcAQhhSSicLVV4oImwIvwoZMKi-0fUx9CbJsM4L2uLsI-eJ-r83k0tRbZ6kFQrc-HDWjTEkPsQUEG_jFBZK2FMzgroFpsZNaPaj4lKpHFBNQUodcY_ojab8pK4UaOyEVjPt82HwOmam6WsYV6E' }
+    { title: 'Modern UI Design Principles', category: 'UI Architecture', level: 'Intermediate', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCk5utjN07mkZOhvtLZIyLzTlvKn2L4iPZCxU2HE03HITuSyf687NvYeKy1N3BB3ni_PXK6x68sbgc75rNQ2L2yaSJm-G8klfuPjgpLJwHX36NoMakdz6P_Z2afHIAebaZV13Q7a3n9L2hbMhTqfjyw74ubS7f51FH_QDX66YnHaXq9NSQwc_7KrIjpQkDJ-Yp3aaAhNu-vnGsNf7SIO4uN_S4bTdHe0MSfe9aqNGnaSUESsnPKSC5Ebl9BWs9kMIL9tpe4Ug-K6OI' },
+    { title: 'Advanced React for Architects', category: 'Frontend Engineering', level: 'Advanced', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB06ZF4rJWSKN23zp2wWsqwcW2AAK2QkSoDP8VJd3XcOmygrHupDSMRzlmq1pV7oIZmyGUWmoHieax_B0EhzWAKlA3mVAirTYUI7btKWWdLkEFw7NS5SmkEjHY-urpnaWWOzby9uwXtVCfd0xjLeIluwlQol8d9sOChqyuzLcu8hwIJZKuYVi7WMjsB_7DuwjZ7MBOWgf9H2W7DOYgCqdKZeTdDRVZqyp5Ox8q3TvJ3ndRGc5lXidkY5yfCJZDARcfbOl7kxPydQ1M' },
+    { title: 'Sustainable Urban Frameworks', category: 'System Design', level: 'Advanced', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCVxrI9I5n58GFjq4GFTGavFlXmZe1bnwXPHtwHXeUg1aK1lVc7QKPvWr4O3EaYIjo56Qyp-AehpphzpbwI3peCA6mH3SMiUQnPK5y_zNT1ZmR_FblJnP7oSIdV4oTn4k_dpA6R5o9EVH256JTlGMsvpDvLW7E2Kt-iJ4839-mW_cxwIDVedGKFpDZyRrVl92Y3swdRuk9oj5AeAYnCk74RmRPjXJAt7mbdlVteunFv_yurekYAEQqpvZMJ4eMQZz3sBVC1ru3TwM0' },
+    { title: 'Visualizing Large Data Sets', category: 'Visual Logic', level: 'Master', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBOob43RVwc0CW12KB2DOBUtlHf-ew8BT46J0LkWSlklYMWRvTXlfGxTj8f_hGk8DCjxYTFV0FYgMSdkIchWPU2n2hN7odES9Y79DF2NjAD-N8AdXIh5Jqwuyr3gqbeQ6gQO9lHGathfnZ8t7xnUX7qARnkKnypxwL4TgPHwGE30jrZpU1GLNKHnIrF5FFm7Q1ZpHlQVl4KPpTMjINcfIXSwtWpEM4tMy34N59zfkcEZQrDOxVXaSd1q8rnaMb9573149iRc69wJQw' },
+    { title: 'The Psychology of Space', category: 'UI Architecture', level: 'Foundational', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCuSaxmsWaDeDfuFTFA6AOZfuiXWOiOZdbCDtc0TRm4vIvUnDcFYgxg-3GiykXQ6piGpupz92uli7GK-c88t_Bj236Eo0Jt4a3znXGpG2Abdywt_o3WxZdqHHQPHQcAQhhSSicLVV4oImwIvwoZMKi-0fUx9CbJsM4L2uLsI-eJ-r83k0tRbZ6kFQrc-HDWjTEkPsQUEG_jFBZK2FMzgroFpsZNaPaj4lKpHFBNQUodcY_ojab8pK4UaOyEVjPt82HwOmam6WsYV6E' },
+    { title: 'TypeScript for Design Systems', category: 'Frontend Engineering', level: 'Advanced', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCuSaxmsWaDeDfuFTFA6AOZfuiXWOiOZdbCDtc0TRm4vIvUnDcFYgxg-3GiykXQ6piGpupz92uli7GK-c88t_Bj236Eo0Jt4a3znXGpG2Abdywt_o3WxZdqHHQPHQcAQhhSSicLVV4oImwIvwoZMKi-0fUx9CbJsM4L2uLsI-eJ-r83k0tRbZ6kFQrc-HDWjTEkPsQUEG_jFBZK2FMzgroFpsZNaPaj4lKpHFBNQUodcY_ojab8pK4UaOyEVjPt82HwOmam6WsYV6E' }
   ]
 
-  const filteredCourses = selectedTrack 
-    ? courses.filter(c => c.category === selectedTrack)
-    : courses
+  const filteredCourses = courses.filter(c => {
+    const matchesTrack = selectedTrack ? c.category === selectedTrack : true
+    const matchesSearch = c.title.toLowerCase().includes(searchQuery.toLowerCase())
+    return matchesTrack && matchesSearch
+  })
 
   return (
     <div className="flex bg-[#F7F9FB] min-h-screen font-body text-[#191C1E]">
@@ -33,11 +37,15 @@ export default function LearnerCoursesPage() {
         {/* Top bar Profile Summary (Link 8 High-Fidelity) */}
         <div className="px-10 py-8 flex justify-between items-center bg-[#F7F9FB]">
            <div className="flex items-center gap-3">
-              <span className="text-xs font-black uppercase tracking-widest text-[#74777F]">Learning Academy</span>
+              <span className="text-xs font-black uppercase tracking-widest text-[#74777F]">Curator Portal</span>
               <span className="w-1 h-1 bg-[#C3C6D5] rounded-full"></span>
-              <span className="text-xs font-bold text-[#434653]">Professional Growth</span>
+              <span className="text-xs font-bold text-[#434653]">Manage your growth</span>
            </div>
-           <div className="flex items-center gap-4">
+           <div className="flex items-center gap-6">
+              <Link to="/learner/notifications" className="relative group p-2 hover:bg-white rounded-xl transition-all">
+                <span className="material-symbols-outlined text-[#434653] group-hover:text-[#00419E]">notifications</span>
+                <span className="absolute top-2 right-2 w-2 h-2 bg-[#BA1A1A] rounded-full border-2 border-[#F7F9FB]"></span>
+              </Link>
               <div className="text-right">
                 <p className="text-sm font-black text-[#191C1E]">Alex Rivera</p>
                 <p className="text-[10px] font-bold text-[#434653] uppercase tracking-wider">Talent Flow Catalyst</p>
@@ -53,11 +61,29 @@ export default function LearnerCoursesPage() {
           {/* Hero Section */}
           <div className="mb-16 animate-fade-in-up">
             <h1 className="text-[3.5rem] font-black leading-[1.1] tracking-[-0.03em] font-headline mb-6 text-[#191C1E]">
-              Course Catalog
+              Curated Wisdom for Modern Builders.
             </h1>
-            <p className="text-lg font-medium text-[#434653] max-w-2xl leading-relaxed">
-              Master the intersection of architectural precision and digital product strategy through our expert-led programs.
+            <p className="text-lg font-medium text-[#434653] max-w-2xl leading-relaxed mb-10">
+              A workspace designed for high-stakes career development and professional mastery in architecture and design.
             </p>
+            <div className="relative max-w-2xl group animate-scale-in">
+               <span className="absolute left-6 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#74777F] group-focus-within:text-[#00419E] transition-colors">search</span>
+               <input 
+                 type="text" 
+                 placeholder="Search specific courses or methodologies..." 
+                 className="w-full pl-16 pr-6 py-6 bg-white rounded-[24px] shadow-ambient border-none outline-none focus:ring-2 focus:ring-[#00327D]/10 text-lg font-medium placeholder:text-[#C3C6D5] transition-all"
+                 value={searchQuery}
+                 onChange={(e) => setSearchQuery(e.target.value)}
+               />
+               {searchQuery && (
+                 <button 
+                   onClick={() => setSearchQuery('')}
+                   className="absolute right-6 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#74777F] hover:text-[#BA1A1A] transition-colors"
+                 >
+                   close
+                 </button>
+               )}
+            </div>
           </div>
 
           {/* Choose Track Section */}
@@ -137,7 +163,7 @@ export default function LearnerCoursesPage() {
                           ))}
                         </div>
                         <button className="flex items-center gap-2 text-sm font-black text-[#00327D] group">
-                          Enter Track
+                          Enroll Now
                           <span className="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
                         </button>
                       </div>
@@ -184,7 +210,7 @@ export default function LearnerCoursesPage() {
           {[
             { icon: 'dashboard', label: 'Overview', to: '/learner/dashboard' },
             { icon: 'school', label: 'Catalog', to: '/learner/courses', active: true },
-            { icon: 'groups', label: 'Mentors', to: '#' },
+            { icon: 'menu_book', label: 'Learning', to: '/learner/my-learning' },
             { icon: 'person', label: 'Profile', to: '/settings/profile-setup' }
           ].map((nav, i) => (
             <Link key={i} to={nav.to} className={`flex flex-col items-center gap-1.5 transition-all ${nav.active ? 'text-[#00327D]' : 'text-[#737784]'}`}>

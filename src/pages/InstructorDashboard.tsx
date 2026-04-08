@@ -8,9 +8,9 @@ export default function InstructorDashboard() {
   ]
 
   const activities = [
-    { user: 'Elena Vance', action: 'submitted Final Portfolio', time: '24 minutes ago', course: 'Advanced UI Systems', icon: 'description' },
-    { user: 'Marcus Thorne', action: 'commented', time: '1 hour ago', course: 'Product Strategy 101', comment: '"Could we explore more about the MVP phase in tomorrow\'s session?"', icon: 'chat_bubble' },
-    { user: 'Sarah Jenkins', action: 'joined the cohort', time: '3 hours ago', course: 'Advanced UI Systems', icon: 'person_add' }
+    { user: 'Elena Vance', action: 'submitted Final Portfolio', time: '12 minutes ago', course: 'Advanced UI Systems', icon: 'description', attachment: 'portfolio_v2.pdf', status: 'Pending Review' },
+    { user: 'Marcus Thorne', action: 'commented', time: '45 minutes ago', course: 'Module 4: Grids', comment: '"The section on asymmetrical balance really clicked for me!"', icon: 'chat_bubble' },
+    { user: 'Sarah Chen', action: 'completed', time: '2 hours ago', course: 'Visual Design Principles', icon: 'workspace_premium', status: 'Certificate Issued' }
   ]
 
   return (
@@ -22,12 +22,12 @@ export default function InstructorDashboard() {
           <div className="flex items-center gap-4 text-sm font-bold text-[#434653]">
             <span className="text-[#00419E]">Resource Hub</span>
             <span className="text-[#C3C6D5]">/</span>
-            <span>Help Center</span>
+            <span>Community</span>
           </div>
           <div className="flex items-center gap-4">
              <div className="text-right">
                 <p className="text-sm font-black text-[#191C1E]">Instructor Julian</p>
-                <p className="text-[10px] font-bold text-[#434653] uppercase tracking-wider">Arch-Lead</p>
+                <p className="text-[10px] font-bold text-[#434653] uppercase tracking-wider">Senior Instructor</p>
              </div>
              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-md">
                 <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOob43RVwc0CW12KB2DOBUtlHf-ew8BT46J0LkWSlklYMWRvTXlfGxTj8f_hGk8DCjxYTFV0FYgMSdkIchWPU2n2hN7odES9Y79DF2NjAD-N8AdXIh5Jqwuyr3gqbeQ6gQO9lHGathfnZ8t7xnUX7qARnkKnypxwL4TgPHwGE30jrZpU1GLNKHnIrF5FFm7Q1ZpHlQVl4KPpTMjINcfIXSwtWpEM4tMy34N59zfkcEZQrDOxVXaSd1q8rnaMb9573149iRc69wJQw" alt="Avatar" className="w-full h-full object-cover" />
@@ -37,11 +37,17 @@ export default function InstructorDashboard() {
 
         {/* Hero Welcome */}
         <div className="mb-12 animate-fade-in-up">
-           <h1 className="text-4xl md:text-5xl font-extrabold text-[#191C1E] tracking-tight font-headline mb-4">
-             Good morning, Welcome back, Instructor Julian
-           </h1>
-           <p className="text-[#434653] text-lg font-medium">
-             Your architectural studio is showing <span className="text-[#00419E] font-black">strong momentum</span> this week.
+           <div className="flex justify-between items-end mb-4">
+             <h1 className="text-4xl md:text-5xl font-extrabold text-[#191C1E] tracking-tight font-headline">
+               Good morning, Instructor Julian
+             </h1>
+             <div className="text-right hidden md:block">
+               <p className="text-[10px] font-black uppercase tracking-widest text-[#74777F]">Current Date</p>
+               <p className="text-sm font-bold text-[#191C1E]">October 24, 2023</p>
+             </div>
+           </div>
+           <p className="text-[#434653] text-lg font-medium leading-relaxed max-w-2xl">
+              Here is what is happening with your courses today. Your architectural studio is showing <span className="text-[#00419E] font-black">strong momentum</span> this week.
            </p>
         </div>
 
@@ -145,6 +151,19 @@ export default function InstructorDashboard() {
                           <p className="text-[10px] text-[#74777F] font-bold uppercase tracking-wider mt-1">
                              {act.time} <span className="text-[#C3C6D5] mx-1">•</span> {act.course}
                           </p>
+                          {act.attachment && (
+                            <div className="mt-3 flex items-center gap-2 p-3 bg-[#F2F4F6] rounded-xl text-xs font-bold text-[#00327D] border border-[#00327D]/5">
+                               <span className="material-symbols-outlined text-[16px]">description</span>
+                               {act.attachment}
+                            </div>
+                          )}
+                          {act.status && (
+                            <div className={`mt-2 inline-block px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
+                              act.status === 'Pending Review' ? 'bg-[#FFDAD6] text-[#BA1A1A]' : 'bg-[#57FAE9]/20 text-[#005049]'
+                            }`}>
+                               {act.status}
+                            </div>
+                          )}
                           {act.comment && (
                             <div className="mt-3 p-3 bg-[#F2F4F6] rounded-xl italic text-xs text-[#434653] font-medium leading-relaxed">
                                {act.comment}

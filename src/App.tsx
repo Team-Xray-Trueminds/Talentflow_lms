@@ -10,6 +10,10 @@ import LearnerCoursesPage from './pages/LearnerCoursesPage'
 import InstructorDashboard from './pages/InstructorDashboard'
 import InstructorMyCoursesPage from './pages/InstructorMyCoursesPage'
 import AcademicTracksPage from './pages/InstructorCoursesPage'
+import NotificationsPage from './pages/NotificationsPage'
+import MyLearningPage from './pages/MyLearningPage'
+import InstructorProfileSetupPage from './pages/InstructorProfileSetupPage'
+import InstructorGradebookPage from './pages/InstructorGradebookPage'
 import AdminDashboard from './pages/AdminDashboard'
 
 function App() {
@@ -22,11 +26,15 @@ function App() {
         <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/settings/profile-setup" element={<ProfileSetupPage />} />
+        <Route path="/settings/instructor-setup" element={<InstructorProfileSetupPage />} />
         <Route path="/learner/dashboard" element={<LearnerDashboard />} />
         <Route path="/learner/courses" element={<LearnerCoursesPage />} />
+        <Route path="/learner/notifications" element={<NotificationsPage />} />
+        <Route path="/learner/my-learning" element={<MyLearningPage />} />
         <Route path="/curriculum" element={<AcademicTracksPage />} />
         <Route path="/instructor/dashboard" element={<InstructorDashboard />} />
         <Route path="/instructor/courses" element={<InstructorMyCoursesPage />} />
+        <Route path="/instructor/gradebook" element={<InstructorGradebookPage />} />
         <Route path="/instructor/academic-oversight" element={<AcademicTracksPage />} />
         <Route path="/admin" element={<AdminDashboard />} />
       </Routes>

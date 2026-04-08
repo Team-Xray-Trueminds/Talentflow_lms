@@ -1,4 +1,5 @@
 import Sidebar from '../components/Sidebar'
+import { Link } from 'react-router-dom'
 
 export default function LearnerDashboard() {
   const announcements = [
@@ -24,26 +25,26 @@ export default function LearnerDashboard() {
       <Sidebar />
       
       <main className="grow p-10 max-w-[1600px] mx-auto w-full">
-        {/* Top Navigation / Breadcrumbs */}
+        {/* Top bar Profile Summary (Link 8 High-Fidelity) */}
         <div className="flex justify-between items-center mb-10">
-          <div className="flex items-center gap-4 text-sm font-bold text-[#434653]">
-            <span className="text-[#00419E]">Dashboard</span>
-            <span className="text-[#C3C6D5]">/</span>
-            <span>Courses</span>
-            <span className="text-[#C3C6D5]">/</span>
-            <span>Mentorship</span>
-            <span className="text-[#C3C6D5]">/</span>
-            <span>Resources</span>
-          </div>
-          <div className="flex items-center gap-4">
-             <div className="text-right">
+           <div className="flex items-center gap-3">
+              <span className="text-xs font-black uppercase tracking-widest text-[#74777F]">Curator Portal</span>
+              <span className="w-1 h-1 bg-[#C3C6D5] rounded-full"></span>
+              <span className="text-xs font-bold text-[#434653]">Manage your growth</span>
+           </div>
+           <div className="flex items-center gap-6">
+              <Link to="/learner/notifications" className="relative group p-2 hover:bg-white rounded-xl transition-all">
+                <span className="material-symbols-outlined text-[#434653] group-hover:text-[#00419E]">notifications</span>
+                <span className="absolute top-2 right-2 w-2 h-2 bg-[#BA1A1A] rounded-full border-2 border-[#F7F9FB]"></span>
+              </Link>
+              <div className="text-right">
                 <p className="text-sm font-black text-[#191C1E]">Alex Rivera</p>
-                <p className="text-[10px] font-bold text-[#434653] uppercase tracking-wider">UI Design Path</p>
-             </div>
-             <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-md">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk5utjN07mkZOhvtLZIyLzTlvKn2L4iPZCxU2HE03HITuSyf687NvYeKy1N3BB3ni_PXK6x68sbgc75rNQ2L2yaSJm-G8klfuPjgpLJwHX36NoMakdz6P_Z2afHIAebaZV13Q7a3n9L2hbMhTqfjyw74ubS7f51FH_QDX66YnHaXq9NSQwc_7KrIjpQkDJ-Yp3aaAhNu-vnGsNf7SIO4uN_S4bTdHe0MSfe9aqNGnaSUESsnPKSC5Ebl9BWs9kMIL9tpe4Ug-K6OI" alt="Avatar" className="w-full h-full object-cover" />
-             </div>
-          </div>
+                <p className="text-[10px] font-bold text-[#434653] uppercase tracking-wider">Talent Flow Catalyst</p>
+              </div>
+              <div className="w-10 h-10 rounded-full bg-[#E0E3E5] overflow-hidden border-2 border-white shadow-sm transition-transform hover:scale-105 cursor-pointer">
+                 <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk5utjN07mkZOhvtLZIyLzTlvKn2L4iPZCxU2HE03HITuSyf687NvYeKy1N3BB3ni_PXK6x68sbgc75rNQ2L2yaSJm-G8klfuPjgpLJwHX36NoMakdz6P_Z2afHIAebaZV13Q7a3n9L2hbMhTqfjyw74ubS7f51FH_QDX66YnHaXq9NSQwc_7KrIjpQkDJ-Yp3aaAhNu-vnGsNf7SIO4uN_S4bTdHe0MSfe9aqNGnaSUESsnPKSC5Ebl9BWs9kMIL9tpe4Ug-K6OI" alt="Alex" className="w-full h-full object-cover" />
+              </div>
+           </div>
         </div>
 
         {/* Hero Welcome */}
@@ -185,6 +186,20 @@ export default function LearnerDashboard() {
             </div>
           </div>
         </div>
+        {/* Mobile Navigation */}
+        <nav className="lg:hidden fixed bottom-6 left-6 right-6 bg-white/90 backdrop-blur-2xl border border-[#C3C6D5]/15 h-20 rounded-[24px] shadow-2xl flex items-center justify-around px-4 z-50">
+          {[
+            { icon: 'dashboard', label: 'Overview', to: '/learner/dashboard', active: true },
+            { icon: 'school', label: 'Catalog', to: '/learner/courses' },
+            { icon: 'menu_book', label: 'Learning', to: '/learner/my-learning' },
+            { icon: 'person', label: 'Profile', to: '/settings/profile-setup' }
+          ].map((nav, i) => (
+            <Link key={i} to={nav.to} className={`flex flex-col items-center gap-1.5 transition-all ${nav.active ? 'text-[#00327D]' : 'text-[#737784]'}`}>
+              <span className={`material-symbols-outlined text-[26px] ${nav.active ? 'fill-1' : ''}`}>{nav.icon}</span>
+              <span className="text-[10px] font-black tracking-tight uppercase">{nav.label}</span>
+            </Link>
+          ))}
+        </nav>
       </main>
     </div>
   )

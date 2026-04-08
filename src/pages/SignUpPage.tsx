@@ -54,14 +54,6 @@ export default function SignUpPage() {
           { label: 'Research', to: '/' },
           { label: 'Insights', to: '/' },
         ]}
-        rightSlot={
-          <Link
-            to="/login"
-            className="px-6 py-2.5 rounded-lg bg-surface-container-highest text-on-primary-fixed-variant font-semibold hover:bg-surface-container-high transition-all"
-          >
-            Sign In
-          </Link>
-        }
       />
 
       <main className="min-h-screen pt-20 flex bg-surface">
