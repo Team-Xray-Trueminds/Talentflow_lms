@@ -56,7 +56,7 @@ export default function Sidebar() {
       ]
 
   return (
-    <aside className="w-80 h-screen sticky top-0 bg-[#F2F4F6] border-r border-[#C3C6D5]/15 flex flex-col p-6 z-10">
+    <aside className="hidden lg:flex w-80 h-screen sticky top-0 bg-[#F2F4F6] border-r border-[#C3C6D5]/15 flex-col p-6 z-10">
       <div className="mb-12 px-4">
         <h2 className="text-2xl font-black text-[#00327D] font-headline tracking-tighter">
           The Curator
