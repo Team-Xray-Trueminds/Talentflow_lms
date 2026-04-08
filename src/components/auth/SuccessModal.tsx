@@ -67,7 +67,7 @@ export default function SuccessModal({ isOpen, onClose, email }: SuccessModalPro
 
           <div className="mt-10 w-full space-y-4">
             <Link
-              to="/profile-setup"
+              to="/settings/profile-setup"
               className="block w-full py-4 rounded-xl bg-linear-to-r from-[#00419E] to-[#608DF4] text-white font-bold text-lg shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all text-center"
             >
               Continue to Setup

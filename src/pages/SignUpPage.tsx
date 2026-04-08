@@ -29,8 +29,11 @@ export default function SignUpPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Handle signup logic
+    // Simulate signup logic and persist role
+    localStorage.setItem('userRole', formData.role)
     console.log('Sign up attempted:', formData)
+    // Redirect to verification
+    window.location.href = '/verify-email'
   }
 
   const getPasswordStrength = () => {
@@ -196,9 +199,8 @@ export default function SignUpPage() {
                     value={formData.role}
                     onChange={handleChange}
                   >
-                    <option>FE Developer</option>
-                    <option>BE Developer</option>
-                    <option>UI Designer</option>
+                    <option>Learner</option>
+                    <option>Instructor</option>
                   </select>
                 </div>
                 <div className="flex flex-col justify-end">

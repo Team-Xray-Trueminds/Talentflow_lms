@@ -27,6 +27,17 @@ export default function ProfileSetupPage() {
     setFormData(prev => ({ ...prev, skills: prev.skills.filter(s => s !== skill) }))
   }
 
+  const getDashboardPath = () => {
+    const role = localStorage.getItem('userRole')
+    return role === 'Instructor' ? '/instructor/dashboard' : '/learner/dashboard'
+  }
+
+  const handleSave = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Simulate save
+    window.location.href = getDashboardPath()
+  }
+
   return (
     <div className="flex bg-[#F7F9FB] min-h-screen">
       <Sidebar />
@@ -43,7 +54,7 @@ export default function ProfileSetupPage() {
             </p>
           </div>
           <Link
-            to="/"
+            to={getDashboardPath()}
             className="text-[#00419E] font-bold hover:underline py-2"
           >
             Skip for now
@@ -60,7 +71,7 @@ export default function ProfileSetupPage() {
             </div>
           </div>
 
-          <form className="pt-24 pb-12 px-12 space-y-10">
+          <form className="pt-24 pb-12 px-12 space-y-10" onSubmit={handleSave}>
             {/* Basic Info Group */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-2">
