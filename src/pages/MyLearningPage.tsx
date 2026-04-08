@@ -113,7 +113,12 @@ export default function MyLearningPage() {
                     <h3 className="font-bold text-[#191C1E] line-clamp-1 mb-2">{course.title}</h3>
                     <div className="flex justify-between items-center mt-auto pt-4 border-t border-[#C3C6D5]/10">
                       <span className="text-[10px] font-black uppercase text-[#005049] bg-[#57FAE9]/20 px-2 py-1 rounded-md">{course.score} Score</span>
-                      <span className="text-[10px] font-bold text-[#74777F]">{course.date}</span>
+                      <Link 
+                        to={`/certificate/${course.title.toLowerCase().replace(/\s+/g, '-')}`} 
+                        className="text-[10px] font-black uppercase text-[#00327D] hover:underline"
+                      >
+                        View Certificate
+                      </Link>
                     </div>
                   </div>
                 ))}

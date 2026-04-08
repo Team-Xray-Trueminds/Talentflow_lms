@@ -15,6 +15,7 @@ import MyLearningPage from './pages/MyLearningPage'
 import InstructorProfileSetupPage from './pages/InstructorProfileSetupPage'
 import InstructorGradebookPage from './pages/InstructorGradebookPage'
 import AdminDashboard from './pages/AdminDashboard'
+import CertificatePage from './pages/CertificatePage'
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/learner/courses" element={<LearnerCoursesPage />} />
         <Route path="/learner/notifications" element={<NotificationsPage />} />
         <Route path="/learner/my-learning" element={<MyLearningPage />} />
+        <Route path="/certificate/:courseId" element={<CertificatePage />} />
         <Route path="/curriculum" element={<AcademicTracksPage />} />
         <Route path="/instructor/dashboard" element={<InstructorDashboard />} />
         <Route path="/instructor/courses" element={<InstructorMyCoursesPage />} />
