@@ -33,7 +33,7 @@ const LandingPage: React.FC = () => {
           <div className="space-y-8">
             <div className="inline-flex items-center gap-2 bg-[#D0E1FB] px-4 py-1.5 rounded-full animate-fade-in-up">
               <span className="material-symbols-outlined text-[#00327D] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>architecture</span>
-              <span className="text-[#38485D] bg-[#B1C5FF] p-2 rounded-full text-sm font-bold tracking-wide uppercase">Premier Growth Platform</span>
+              <span className="text-[#38485D] p-2 rounded-full text-sm font-bold tracking-wide uppercase">Premier Growth Platform</span>
             </div>
             <h1 className="text-6xl font-extrabold text-[#191C1E] leading-[1.1] font-headline tracking-tighter animate-fade-in-up animate-stagger-1">
               Architecting the future of <span className="text-[#0047AB] italic">career mentorship</span> and growth.

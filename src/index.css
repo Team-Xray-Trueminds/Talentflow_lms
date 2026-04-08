@@ -45,4 +45,26 @@
 			transform: scale(1);
 		}
 	}
+
+	@keyframes bounceSubtle {
+		0%, 100% {
+			transform: translateX(-50%) translateY(-50%) scale(1);
+		}
+		50% {
+			transform: translateX(-50%) translateY(-55%) scale(1.05);
+		}
+	}
+
+	.animate-bounce-subtle {
+		animation: bounceSubtle 3s ease-in-out infinite;
+	}
+
+	@keyframes shimmer {
+		0% { transform: translateX(-100%) skewX(-12deg); }
+		100% { transform: translateX(200%) skewX(-12deg); }
+	}
+
+	.animate-shimmer {
+		animation: shimmer 2.5s infinite;
+	}
 }
