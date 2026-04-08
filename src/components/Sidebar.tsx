@@ -8,18 +8,26 @@ interface SidebarItemProps {
   isSubItem?: boolean
 }
 
-function SidebarItem({ icon, label, to, active, isSubItem }: SidebarItemProps) {
+function SidebarItem({ icon, label, to, active, isSubItem, isInstructor }: SidebarItemProps & { isInstructor?: boolean }) {
+  const activeClasses = isInstructor
+    ? 'bg-white/15 text-[#57FAE9] shadow-lg translate-x-1'
+    : 'bg-white text-[#00327D] shadow-ambient translate-x-1'
+  
+  const inactiveClasses = isInstructor
+    ? 'text-[#D3E4FE]/70 hover:bg-white/5 hover:text-white'
+    : 'text-[#434653] hover:bg-white/50 hover:text-[#00327D]'
+
+  const indicatorColor = isInstructor ? 'bg-[#57FAE9]' : 'bg-[#00327D]'
+
   return (
     <Link
       to={to}
       className={`relative flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 group overflow-hidden ${
-        active
-          ? 'bg-white text-[#00327D] shadow-ambient translate-x-1'
-          : 'text-[#434653] hover:bg-white/50 hover:text-[#00327D]'
+        active ? activeClasses : inactiveClasses
       } ${isSubItem ? 'ml-6 opacity-80 hover:opacity-100' : ''}`}
     >
       {active && (
-        <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-6 bg-[#00327D] rounded-r-full animate-fade-in ${isSubItem ? 'h-4' : 'h-6'}`}></div>
+        <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-6 rounded-r-full animate-fade-in ${indicatorColor} ${isSubItem ? 'h-4' : 'h-6'}`}></div>
       )}
       <span className={`material-symbols-outlined transition-transform duration-300 ${active ? 'fill-1 scale-110' : 'group-hover:scale-110'} ${isSubItem ? 'text-[18px]' : 'text-[22px]'}`}>
         {icon}
@@ -31,10 +39,10 @@ function SidebarItem({ icon, label, to, active, isSubItem }: SidebarItemProps) {
   )
 }
 
-function SidebarGroup({ label, children }: { label: string; children: React.ReactNode }) {
+function SidebarGroup({ label, children, isInstructor }: { label: string; children: React.ReactNode; isInstructor?: boolean }) {
   return (
     <div className="mb-8">
-      <p className="px-4 text-[9px] font-black uppercase tracking-[0.25em] text-[#74777F] mb-3">{label}</p>
+      <p className={`px-4 text-[9px] font-black uppercase tracking-[0.25em] mb-3 ${isInstructor ? 'text-[#D3E4FE]/40' : 'text-[#74777F]'}`}>{label}</p>
       <div className="space-y-1">
         {children}
       </div>
@@ -42,64 +50,164 @@ function SidebarGroup({ label, children }: { label: string; children: React.Reac
   )
 }
 
-export default function Sidebar() {
+export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Learner' }) {
   const location = useLocation()
-  const role = localStorage.getItem('userRole')
+  const storedRole = localStorage.getItem('userRole')
+  // Use forceRole prop if provided, otherwise fallback to path detection, then finally localStorage
+  const pathRole = location.pathname.startsWith('/instructor') ? 'Instructor' : (location.pathname.startsWith('/learner') ? 'Learner' : null);
+  const role = forceRole || pathRole || storedRole || 'Learner'
   const isInstructor = role === 'Instructor'
   const dashboardPath = isInstructor ? '/instructor/dashboard' : '/learner/dashboard'
 
+  const themeClasses = isInstructor 
+    ? {
+        aside: 'bg-[#001946] text-white',
+        border: 'border-white/10'
+      }
+    : {
+        aside: 'bg-[#F2F4F6] text-[#191C1E]',
+        border: 'border-[#C3C6D5]/30'
+      }
+
   return (
-    <aside className="hidden lg:flex w-80 h-screen sticky top-0 bg-[#F2F4F6] flex-col p-6 z-10 overflow-y-auto scrollbar-hide">
+    <aside className={`hidden lg:flex w-80 h-screen sticky top-0 flex-col p-6 z-10 transition-colors duration-500 overflow-y-auto scrollbar-hide ${themeClasses.aside}`}>
       <div className="mb-12 px-4 shrink-0">
-        <h2 className="text-2xl font-black text-[#00327D] font-headline tracking-tighter">
-          Talent Flow
-        </h2>
-        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#434653] mt-1">
-          Professional Suite
+        <div className="flex items-center justify-between mb-1">
+          <h2 className={`text-2xl font-black font-headline tracking-tighter ${isInstructor ? 'text-white' : 'text-[#00327D]'}`}>
+            Talent Flow
+          </h2>
+          <div className={`px-2 py-0.5 rounded-md text-[8px] font-black uppercase tracking-widest ${isInstructor ? 'bg-[#57FAE9] text-[#001946]' : 'bg-[#00327D] text-white'}`}>
+            {role === 'Instructor' ? 'Studio' : 'Path'}
+          </div>
+        </div>
+        <p className={`text-[10px] font-black uppercase tracking-[0.2em] mt-1 ${isInstructor ? 'text-[#D3E4FE]/80' : 'text-[#434653]'}`}>
+          {isInstructor ? 'Professional Educator Suite' : 'Career Growth Platform'}
         </p>
       </div>
 
       <nav className="grow">
         {isInstructor ? (
           <>
-            <SidebarGroup label="Management">
-              <SidebarItem icon="dashboard" label="Dashboard" to={dashboardPath} active={location.pathname === dashboardPath} />
-              <SidebarItem icon="school" label="My Courses" to="/instructor/courses" active={location.pathname === '/instructor/courses'} />
+            <SidebarGroup label="Management" isInstructor={true}>
+              <SidebarItem 
+                icon="dashboard" 
+                label="Dashboard" 
+                to={dashboardPath} 
+                active={location.pathname === dashboardPath}
+                isInstructor={true}
+              />
+              <SidebarItem 
+                icon="school" 
+                label="My Courses" 
+                to="/instructor/courses" 
+                active={location.pathname === '/instructor/courses'}
+                isInstructor={true}
+              />
             </SidebarGroup>
             
-            <SidebarGroup label="Academic">
-              <SidebarItem icon="architecture" label="Academic Explorer" to="/curriculum" active={location.pathname === '/curriculum'} />
-              <SidebarItem icon="assignment" label="Assignments" to="/assignments" active={location.pathname === '/assignments'} />
+            <SidebarGroup label="Academic" isInstructor={true}>
+              <SidebarItem 
+                icon="architecture" 
+                label="Academic Explorer" 
+                to="/curriculum" 
+                active={location.pathname === '/curriculum'}
+                isInstructor={true}
+              />
+              <SidebarItem 
+                icon="assignment" 
+                label="Assignments" 
+                to="/assignments" 
+                active={location.pathname === '/assignments'}
+                isInstructor={true}
+              />
             </SidebarGroup>
 
-            <SidebarGroup label="Operations">
-              <SidebarItem icon="trending_up" label="Performance" to="/performance" active={location.pathname === '/performance'} />
-              <SidebarItem icon="chat" label="Messages" to="/messages" active={location.pathname === '/messages'} />
-              <SidebarItem icon="settings" label="Settings" to="/settings" active={location.pathname.startsWith('/settings')} />
+            <SidebarGroup label="Operations" isInstructor={true}>
+              <SidebarItem 
+                icon="payments" 
+                label="Revenue & Stats" 
+                to="/performance" 
+                active={location.pathname === '/performance'}
+                isInstructor={true}
+              />
+              <SidebarItem 
+                icon="chat" 
+                label="Student Messages" 
+                to="/messages" 
+                active={location.pathname === '/messages'}
+                isInstructor={true}
+              />
+              <SidebarItem 
+                icon="settings" 
+                label="Studio Settings" 
+                to="/settings" 
+                active={location.pathname.startsWith('/settings')}
+                isInstructor={true}
+              />
             </SidebarGroup>
           </>
         ) : (
           <>
             <SidebarGroup label="Learning Path">
-              <SidebarItem icon="dashboard" label="Dashboard" to={dashboardPath} active={location.pathname === dashboardPath} />
-              <SidebarItem icon="school" label="Program Catalog" to="/learner/courses" active={location.pathname === '/learner/courses'} />
-              <SidebarItem icon="menu_book" label="Academic Explorer" to="/curriculum" active={location.pathname === '/curriculum'} />
+              <SidebarItem 
+                icon="dashboard" 
+                label="Dashboard" 
+                to={dashboardPath} 
+                active={location.pathname === dashboardPath} 
+              />
+              <SidebarItem 
+                icon="school" 
+                label="Program Catalog" 
+                to="/learner/courses" 
+                active={location.pathname === '/learner/courses'} 
+              />
+              <SidebarItem 
+                icon="menu_book" 
+                label="Academic Explorer" 
+                to="/curriculum" 
+                active={location.pathname === '/curriculum'} 
+              />
             </SidebarGroup>
 
             <SidebarGroup label="Growth Tools">
-              <SidebarItem icon="groups" label="Mentors" to="/mentors" active={location.pathname === '/mentors'} />
-              <SidebarItem icon="analytics" label="Insights" to="/insights" active={location.pathname === '/insights'} />
-              <SidebarItem icon="settings" label="Account" to="/settings/profile-setup" active={location.pathname.startsWith('/settings')} />
+              <SidebarItem 
+                icon="groups" 
+                label="Mentors" 
+                to="/mentors" 
+                active={location.pathname === '/mentors'} 
+              />
+              <SidebarItem 
+                icon="analytics" 
+                label="Insights" 
+                to="/insights" 
+                active={location.pathname === '/insights'} 
+              />
+              <SidebarItem 
+                icon="settings" 
+                label="Account Settings" 
+                to="/settings/profile-setup" 
+                active={location.pathname.startsWith('/settings')} 
+              />
             </SidebarGroup>
           </>
         )}
       </nav>
 
-      <div className="mt-auto space-y-2 pt-6 border-t border-[#C3C6D5]/30 shrink-0">
-        <SidebarItem icon="help" label="Help Center" to="/help" active={location.pathname === '/help'} />
+      <div className={`mt-auto space-y-2 pt-6 border-t shrink-0 ${themeClasses.border}`}>
+        <SidebarItem 
+          icon="help" 
+          label="Help Center" 
+          to="/help" 
+          active={location.pathname === '/help'}
+          isInstructor={isInstructor}
+        />
         <Link
           to="/login"
-          className="flex items-center gap-3 px-4 py-3 rounded-xl text-[#BA1A1A] hover:bg-[#FFDAD6] transition-all duration-200"
+          className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+            isInstructor 
+              ? 'text-[#FF8A8A] hover:bg-white/5' 
+              : 'text-[#BA1A1A] hover:bg-[#FFDAD6]'
+          }`}
         >
           <span className="material-symbols-outlined text-[20px]">logout</span>
           <span className="text-sm font-bold tracking-tight">Logout</span>
