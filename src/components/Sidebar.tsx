@@ -117,6 +117,13 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
                 active={location.pathname === '/instructor/gradebook'}
                 isInstructor={true}
               />
+              <SidebarItem 
+                icon="mail" 
+                label="Messages" 
+                to="/instructor/messages" 
+                active={location.pathname === '/instructor/messages'}
+                isInstructor={true}
+              />
             </SidebarGroup>
             
             <SidebarGroup label="Insights" isInstructor={true}>
@@ -172,6 +179,12 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
                 label="Instructors" 
                 to="/mentors" 
                 active={location.pathname === '/mentors'} 
+              />
+              <SidebarItem 
+                icon="mail" 
+                label="Messages" 
+                to="/learner/messages" 
+                active={location.pathname === '/learner/messages'}
               />
               <SidebarItem 
                 icon="terminal" 
