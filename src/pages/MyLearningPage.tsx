@@ -1,6 +1,13 @@
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 
+const progressFlow = {
+  title: 'Progress Page',
+  action: 'View % completion per course and overall',
+  system: 'Aggregate progress data',
+  destination: '— or Certificate',
+}
+
 export default function MyLearningPage() {
   const activeCourses = [
     { 
@@ -62,6 +69,32 @@ export default function MyLearningPage() {
           </header>
 
           <div className="space-y-16">
+            <section className="animate-fade-in-up">
+              <div className="rounded-[32px] bg-white p-8 shadow-ambient">
+                <div>
+                  <div>
+                    <h2 className="text-2xl font-black tracking-tight text-[#191C1E]">
+                      {progressFlow.title}
+                    </h2>
+                    <div className="mt-5 grid gap-4 md:grid-cols-3">
+                      <div className="rounded-[20px] bg-[#F7F9FB] p-4">
+                        <p className="text-[10px] font-black uppercase tracking-[0.28em] text-[#64748B]">User Action</p>
+                        <p className="mt-2 text-sm font-bold text-[#191C1E]">{progressFlow.action}</p>
+                      </div>
+                      <div className="rounded-[20px] bg-[#F7F9FB] p-4">
+                        <p className="text-[10px] font-black uppercase tracking-[0.28em] text-[#64748B]">System Response</p>
+                        <p className="mt-2 text-sm font-bold text-[#191C1E]">{progressFlow.system}</p>
+                      </div>
+                      <div className="rounded-[20px] bg-[#F7F9FB] p-4">
+                        <p className="text-[10px] font-black uppercase tracking-[0.28em] text-[#64748B]">Destination</p>
+                        <p className="mt-2 text-sm font-bold text-[#00327D]">{progressFlow.destination}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
             {/* Active Section */}
             <section className="animate-fade-in-up animate-stagger-1">
               <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-[#00327D] mb-8 flex items-center gap-2">

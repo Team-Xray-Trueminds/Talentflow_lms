@@ -55,16 +55,10 @@ export default function LoginPage() {
             </div>
 
             <div className="space-y-2">
-              <div className="flex justify-between items-center">
+              <div className="flex items-center">
                 <label className="text-xs font-semibold uppercase tracking-wider text-on-surface-variant ml-1">
                   Password
                 </label>
-                <Link
-                  to="/forgot-password"
-                  className="text-xs font-semibold text-[#2559BD] hover:text-primary transition-colors"
-                >
-                  Forgot Password?
-                </Link>
               </div>
               <div className="relative">
                 <input
@@ -84,6 +78,14 @@ export default function LoginPage() {
                     {showPassword ? 'visibility_off' : 'visibility'}
                   </span>
                 </button>
+              </div>
+              <div className="flex justify-end">
+                <Link
+                  to="/forgot-password"
+                  className="text-xs font-semibold text-[#2559BD] hover:text-primary transition-colors"
+                >
+                  Forgot Password?
+                </Link>
               </div>
             </div>
 

@@ -16,7 +16,11 @@ import AdminInstructorProfilePage from './pages/AdminInstructorProfilePage';
 import AdminAddInstructorPage from './pages/AdminAddInstructorPage';
 import AdminUserDetailPage from './pages/AdminUserDetailPage';
 import NotificationsPage from './pages/NotificationsPage'
+import DiscussionsPage from './pages/DiscussionsPage'
 import MyLearningPage from './pages/MyLearningPage'
+import AssignmentsPage from './pages/AssignmentsPage'
+import SubmissionsPage from './pages/SubmissionsPage'
+import CertificatesPage from './pages/CertificatesPage'
 import InstructorProfileSetupPage from './pages/InstructorProfileSetupPage'
 import InstructorGradebookPage from './pages/InstructorGradebookPage'
 import CertificatePage from './pages/CertificatePage'
@@ -46,6 +50,11 @@ function App() {
         <Route path="/learner/course-preview/:id" element={<LearnerCoursePreviewPage />} />
         <Route path="/learner/assignment/:id" element={<LearnerAssignmentPage />} />
         <Route path="/learner/notifications" element={<NotificationsPage />} />
+        <Route path="/learner/discussions" element={<DiscussionsPage />} />
+        <Route path="/learner/progress" element={<MyLearningPage />} />
+        <Route path="/learner/assignments" element={<AssignmentsPage />} />
+        <Route path="/learner/submissions" element={<SubmissionsPage />} />
+        <Route path="/learner/certificates" element={<CertificatesPage />} />
         <Route path="/learner/my-learning" element={<MyLearningPage />} />
         <Route path="/learner/messages" element={<MessagesPage />} />
         <Route path="/certificate/:courseId" element={<CertificatePage />} />

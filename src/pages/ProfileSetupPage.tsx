@@ -2,15 +2,96 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 
+const notificationItems = [
+  {
+    key: 'mentorMessages',
+    title: 'Mentor Messages',
+    note: 'Receive updates when a mentor replies or reviews your work.',
+  },
+  {
+    key: 'assignmentReminders',
+    title: 'Assignment Reminders',
+    note: 'Stay ahead of upcoming deadlines and milestone checkpoints.',
+  },
+  {
+    key: 'weeklyDigest',
+    title: 'Weekly Performance Digest',
+    note: 'Get a concise summary of progress, ranking, and study momentum.',
+  },
+] as const
+
+const workspacePreferenceItems = [
+  'Compact dashboard density',
+  'Enable mentor availability indicators',
+  'Show streak and rank insights',
+] as const
+
+type NotificationKey = (typeof notificationItems)[number]['key']
+type WorkspacePreference = (typeof workspacePreferenceItems)[number]
+
+type ProfileFormState = {
+  fullName: string
+  email: string
+  role: string
+  timezone: string
+  bio: string
+  skills: string[]
+  notifications: Record<NotificationKey, boolean>
+  preferences: Record<WorkspacePreference, boolean>
+}
+
+const initialState: ProfileFormState = {
+  fullName: 'Alex Rivera',
+  email: 'alex.rivera@talentflow.io',
+  role: 'Learner',
+  timezone: 'Africa/Lagos (GMT+1)',
+  bio: '',
+  skills: ['UI/UX Strategy', 'Product Thinking', 'Design Systems', 'Research Ops'],
+  notifications: {
+    mentorMessages: true,
+    assignmentReminders: true,
+    weeklyDigest: false,
+  },
+  preferences: {
+    'Compact dashboard density': true,
+    'Enable mentor availability indicators': false,
+    'Show streak and rank insights': true,
+  },
+}
+
+function Checkbox({
+  checked,
+  onClick,
+}: {
+  checked: boolean
+  onClick: () => void
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={checked}
+      className={`grid h-6 w-6 place-items-center rounded-md border transition ${
+        checked
+          ? 'border-[#2559BD] bg-[#2559BD] text-white'
+          : 'border-[#C3C6D5] bg-white text-transparent'
+      }`}
+    >
+      <span className="material-symbols-outlined text-[16px]">check</span>
+    </button>
+  )
+}
+
 export default function ProfileSetupPage() {
-  const [formData, setFormData] = useState({
-    headline: '',
-    experienceLevel: 'Entry Level',
-    careerGoals: '',
-    github: '',
-    linkedin: '',
-    portfolio: ''
-  })
+  const [formData, setFormData] = useState<ProfileFormState>(initialState)
+
+  const updateField = <K extends keyof ProfileFormState>(key: K, value: ProfileFormState[K]) => {
+    setFormData((current) => ({ ...current, [key]: value }))
+  }
+
+  const handleReset = () => {
+    setFormData(initialState)
+  }
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault()
@@ -18,136 +99,340 @@ export default function ProfileSetupPage() {
   }
 
   return (
-    <div className="flex bg-[#F7F9FB] min-h-screen">
+    <div className="flex min-h-screen bg-[#F7F9FB] text-[#191C1E]">
       <Sidebar forceRole="Learner" />
 
-      <main className="grow p-6 md:p-12 max-w-5xl mx-auto w-full">
-        {/* Header Content */}
-        <div className="flex flex-col md:flex-row justify-between items-start mb-8 md:mb-12 gap-4">
-          <div className="animate-fade-in-up">
-            <h1 className="text-3xl md:text-4xl font-extrabold text-[#191C1E] tracking-tight font-headline mb-2 leading-tight">
-              Define your Path
-            </h1>
-            <p className="text-[#434653] font-medium text-base md:text-lg">
-              Share your career ambitions and define your learning trajectory.
-            </p>
-          </div>
-          <Link
-            to="/learner/dashboard"
-            className="text-[#00419E] font-bold hover:underline py-2 md:py-2"
-          >
-            Skip for now
-          </Link>
-        </div>
-
-        {/* Profile Card */}
-        <div className="bg-white rounded-[24px] md:rounded-3xl shadow-ambient overflow-hidden animate-scale-in border border-[#C3C6D5]/20">
-          {/* Cover Placeholder */}
-          <div className="h-32 md:h-40 bg-linear-to-r from-[#00327D] to-[#2559BD] relative">
-            <div className="absolute -bottom-12 md:-bottom-16 left-6 md:left-12 w-24 md:w-32 h-24 md:h-32 rounded-2xl md:rounded-3xl border-[6px] md:border-8 border-white bg-[#E0E3E5] flex items-center justify-center overflow-hidden shadow-lg group cursor-pointer">
-              <span className="material-symbols-outlined text-3xl md:text-4xl text-[#434653] group-hover:scale-110 transition-transform">add_a_photo</span>
-              <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" />
+      <main className="grow w-full px-4 py-6 md:px-8 lg:px-10">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.35em] text-[#2559BD]/70">
+                Profile Control Center
+              </p>
+              <h1 className="mt-3 text-3xl font-black tracking-tight text-[#191C1E] md:text-5xl">
+                Profile Setup
+              </h1>
+              <p className="mt-3 max-w-2xl text-sm leading-7 text-[#434653] md:text-base">
+                Tune your learner identity, notification settings, and workspace behavior from one
+                clean control surface.
+              </p>
             </div>
+
+            <Link
+              to="/learner/dashboard"
+              className="inline-flex items-center justify-center rounded-2xl border border-[#C3C6D5] bg-white px-5 py-3 text-sm font-bold text-[#2559BD] transition hover:border-[#2559BD]/40 hover:bg-[#F2F4F6]"
+            >
+              Skip for now
+            </Link>
           </div>
 
-          <form className="pt-20 md:pt-24 pb-8 md:pb-12 px-6 md:px-12 space-y-8 md:space-y-10" onSubmit={handleSave}>
-            
-            {/* Primary Fields */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-              <div className="space-y-2">
-                <label className="text-xs font-black uppercase tracking-wider text-[#434653]">
-                  Professional Title
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. Aspiring UI Architect"
-                  className="w-full px-5 py-4 rounded-xl bg-[#F2F4F6] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none"
-                  value={formData.headline}
-                  onChange={e => setFormData({ ...formData, headline: e.target.value })}
-                />
-              </div>
+          <div className="overflow-hidden rounded-[32px] border border-[#DDE3EC] bg-white shadow-[0_24px_60px_rgba(15,23,42,0.08)]">
+            <div className="grid gap-0 xl:grid-cols-[320px_1fr]">
+              <aside className="border-b border-[#E3E8F0] bg-[linear-gradient(180deg,#00327D_0%,#2559BD_100%)] p-6 xl:border-b-0 xl:border-r">
+                <div className="rounded-[28px] border border-white/10 bg-white/10 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="text-[10px] font-black uppercase tracking-[0.35em] text-white/70">
+                        Identity Core
+                      </p>
+                      <h2 className="mt-3 text-2xl font-black tracking-tight text-white">
+                        {formData.fullName}
+                      </h2>
+                      <p className="mt-2 text-sm text-white/75">Learner • UI/UX Track</p>
+                    </div>
+                    <div className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.25em] text-white">
+                      Synced
+                    </div>
+                  </div>
 
-              <div className="space-y-2">
-                <label className="text-xs font-black uppercase tracking-wider text-[#434653]">
-                  Experience Level
-                </label>
-                <select 
-                  className="w-full px-5 py-4 rounded-xl bg-[#F2F4F6] text-[#191C1E] border-none focus:ring-2 focus:ring-[#2559BD] transition-all outline-none"
-                  value={formData.experienceLevel}
-                  onChange={e => setFormData({ ...formData, experienceLevel: e.target.value })}
-                >
-                  <option>Entry Level</option>
-                  <option>Intermediate</option>
-                  <option>Advanced</option>
-                  <option>Expert</option>
-                </select>
-              </div>
-            </div>
+                  <div className="mt-8 flex justify-center">
+                    <div className="relative h-32 w-32 rounded-[28px] border border-white/25 bg-white/15 p-1 shadow-xl">
+                      <div className="flex h-full w-full items-center justify-center rounded-[24px] border border-white/10 bg-[#0B1733]/50 text-4xl font-black text-white">
+                        AR
+                      </div>
+                      <button
+                        type="button"
+                        className="absolute -bottom-2 -right-2 grid h-11 w-11 place-items-center rounded-2xl border border-white/20 bg-white text-[#2559BD] shadow-lg transition hover:bg-[#F2F4F6]"
+                      >
+                        <span className="material-symbols-outlined text-lg">photo_camera</span>
+                      </button>
+                    </div>
+                  </div>
 
-            {/* Career Ambition */}
-            <div className="space-y-2">
-              <div className="flex justify-between items-end">
-                <label className="text-xs font-black uppercase tracking-wider text-[#434653]">
-                  Career Ambition
-                </label>
-              </div>
-              <textarea
-                placeholder="What do you hope to achieve in the next 12 months?"
-                rows={4}
-                className="w-full px-5 py-4 rounded-xl bg-[#F2F4F6] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none resize-none"
-                value={formData.careerGoals}
-                onChange={e => setFormData({ ...formData, careerGoals: e.target.value })}
-              />
-            </div>
-
-            {/* Social & Portfolio Links */}
-            <div className="pt-6 border-t border-[#C3C6D5]/30">
-              <h3 className="text-lg font-bold text-[#191C1E] mb-6 font-headline">Professional Ecosystem</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#434653] text-[20px]">link</span>
-                  <input
-                    type="text"
-                    placeholder="LinkedIn"
-                    className="w-full pl-12 pr-5 py-4 rounded-xl bg-[#F2F4F6] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none"
-                  />
+                  <div className="mt-8 space-y-4">
+                    <div className="rounded-2xl border border-white/10 bg-white/10 p-4">
+                      <p className="text-[10px] font-black uppercase tracking-[0.28em] text-white/65">
+                        Workspace
+                      </p>
+                      <p className="mt-2 text-sm font-bold text-white">Product Design Lab</p>
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-white/10 p-4">
+                      <p className="text-[10px] font-black uppercase tracking-[0.28em] text-white/65">
+                        Plan
+                      </p>
+                      <p className="mt-2 text-sm font-bold text-white">Professional Mentorship</p>
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-white/10 p-4">
+                      <p className="text-[10px] font-black uppercase tracking-[0.28em] text-white/65">
+                        Security
+                      </p>
+                      <p className="mt-2 text-sm font-bold text-[#9BF2C8]">
+                        No unusual sign-in activity
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#434653] text-[20px]">code</span>
-                  <input
-                    type="text"
-                    placeholder="GitHub"
-                    className="w-full pl-12 pr-5 py-4 rounded-xl bg-[#F2F4F6] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none"
-                  />
-                </div>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#434653] text-[20px]">language</span>
-                  <input
-                    type="text"
-                    placeholder="Portfolio"
-                    className="w-full pl-12 pr-5 py-4 rounded-xl bg-[#F2F4F6] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none"
-                  />
-                </div>
-              </div>
-            </div>
+              </aside>
 
-            {/* Action Buttons */}
-            <div className="pt-4 md:pt-8 flex flex-col md:flex-row justify-end gap-3 md:gap-4">
-              <button
-                type="submit"
-                className="order-1 md:order-2 w-full md:w-auto px-10 py-4 rounded-xl bg-linear-to-r from-[#00327D] to-[#2559BD] text-white font-bold text-lg shadow-xl shadow-[#00327D]/20 hover:scale-[1.02] active:scale-95 transition-all"
-              >
-                Enter Path
-              </button>
-               <button
-                type="button"
-                className="order-2 md:order-1 px-8 py-4 rounded-xl font-bold text-[#434653] hover:bg-[#F2F4F6] transition-all"
-                onClick={() => setFormData({ headline: '', experienceLevel: 'Entry Level', careerGoals: '', github: '', linkedin: '', portfolio: '' })}
-              >
-                Reset Fields
-              </button>
+              <form className="space-y-6 p-6 md:p-8 lg:p-10" onSubmit={handleSave}>
+                <section className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
+                  <article className="rounded-[28px] border border-[#E3E8F0] bg-[#FBFCFE] p-6">
+                    <div className="flex items-center gap-3">
+                      <span className="material-symbols-outlined text-[#2559BD]">badge</span>
+                      <h2 className="text-xl font-black tracking-tight text-[#191C1E]">Public Profile</h2>
+                    </div>
+
+                    <div className="mt-6 grid gap-5 md:grid-cols-2">
+                      <label className="space-y-2">
+                        <span className="text-xs font-black uppercase tracking-[0.2em] text-[#434653]">
+                          Full Name
+                        </span>
+                        <input
+                          className="w-full rounded-2xl border border-[#D7DDEA] bg-white px-4 py-3 text-[#191C1E] outline-none transition placeholder:text-slate-500 focus:border-[#2559BD] focus:shadow-[0_0_0_3px_rgba(37,89,189,0.12)]"
+                          value={formData.fullName}
+                          onChange={(e) => updateField('fullName', e.target.value)}
+                        />
+                      </label>
+
+                      <label className="space-y-2">
+                        <span className="text-xs font-black uppercase tracking-[0.2em] text-[#434653]">
+                          Email Address
+                        </span>
+                        <input
+                          className="w-full rounded-2xl border border-[#D7DDEA] bg-white px-4 py-3 text-[#191C1E] outline-none transition placeholder:text-slate-500 focus:border-[#2559BD] focus:shadow-[0_0_0_3px_rgba(37,89,189,0.12)]"
+                          value={formData.email}
+                          onChange={(e) => updateField('email', e.target.value)}
+                        />
+                      </label>
+
+                      <label className="space-y-2">
+                        <span className="text-xs font-black uppercase tracking-[0.2em] text-[#434653]">
+                          Role
+                        </span>
+                        <input
+                          className="w-full rounded-2xl border border-[#D7DDEA] bg-white px-4 py-3 text-[#191C1E] outline-none transition placeholder:text-slate-500 focus:border-[#2559BD] focus:shadow-[0_0_0_3px_rgba(37,89,189,0.12)]"
+                          value={formData.role}
+                          onChange={(e) => updateField('role', e.target.value)}
+                        />
+                      </label>
+
+                      <label className="space-y-2">
+                        <span className="text-xs font-black uppercase tracking-[0.2em] text-[#434653]">
+                          Timezone
+                        </span>
+                        <input
+                          className="w-full rounded-2xl border border-[#D7DDEA] bg-white px-4 py-3 text-[#191C1E] outline-none transition placeholder:text-slate-500 focus:border-[#2559BD] focus:shadow-[0_0_0_3px_rgba(37,89,189,0.12)]"
+                          value={formData.timezone}
+                          onChange={(e) => updateField('timezone', e.target.value)}
+                        />
+                      </label>
+                    </div>
+
+                    <label className="mt-6 block space-y-2">
+                      <span className="text-xs font-black uppercase tracking-[0.2em] text-[#434653]">
+                        Professional Bio
+                      </span>
+                      <textarea
+                        rows={5}
+                        placeholder="Describe your learning goals, current focus, and the kind of projects you want to build."
+                        className="min-h-[160px] w-full rounded-[24px] border border-[#D7DDEA] bg-white px-5 py-4 text-[#191C1E] outline-none transition placeholder:text-slate-500 focus:border-[#2559BD] focus:shadow-[0_0_0_3px_rgba(37,89,189,0.12)]"
+                        value={formData.bio}
+                        onChange={(e) => updateField('bio', e.target.value)}
+                      />
+                    </label>
+
+                    <div className="mt-6">
+                      <p className="text-xs font-black uppercase tracking-[0.2em] text-[#434653]">
+                        Top Skills
+                      </p>
+                      <div className="mt-4 flex flex-wrap gap-3">
+                        {formData.skills.map((skill, index) => (
+                          <button
+                            key={skill}
+                            type="button"
+                            className={`rounded-full border px-4 py-2 text-sm font-bold transition ${
+                              index === 0
+                                ? 'border-[#2559BD]/20 bg-[#EAF0FF] text-[#2559BD]'
+                                : 'border-[#D7DDEA] bg-white text-[#434653] hover:border-[#2559BD]/25'
+                            }`}
+                          >
+                            {skill}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </article>
+
+                  <article className="rounded-[28px] border border-[#E3E8F0] bg-white p-6">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <span className="material-symbols-outlined text-[#2559BD]">shield_lock</span>
+                        <h2 className="text-xl font-black tracking-tight text-[#191C1E]">
+                          Security Center
+                        </h2>
+                      </div>
+                      <span className="rounded-full bg-[#DCF6E8] px-3 py-1 text-[10px] font-black uppercase tracking-[0.24em] text-[#0F8A5F]">
+                        Protected
+                      </span>
+                    </div>
+
+                    <div className="mt-6 space-y-4">
+                      {[
+                        {
+                          icon: 'password',
+                          title: 'Password',
+                          detail: 'Last updated 18 days ago',
+                        },
+                        {
+                          icon: 'phonelink_lock',
+                          title: 'Two-factor authentication',
+                          detail: 'App-based verification enabled',
+                        },
+                        {
+                          icon: 'admin_panel_settings',
+                          title: 'Account protection',
+                          detail: 'Advanced sign-in review and session monitoring',
+                        },
+                      ].map((item) => (
+                        <button
+                          key={item.title}
+                          type="button"
+                          className="flex w-full items-center justify-between rounded-[22px] border border-[#E3E8F0] bg-[#FBFCFE] px-4 py-4 text-left transition hover:border-[#2559BD]/25 hover:bg-[#F7F9FB]"
+                        >
+                          <div className="flex items-center gap-4">
+                            <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[#EAF0FF] text-[#2559BD]">
+                              <span className="material-symbols-outlined">{item.icon}</span>
+                            </span>
+                            <div>
+                              <p className="text-sm font-bold text-[#191C1E]">{item.title}</p>
+                              <p className="mt-1 text-xs leading-5 text-[#6B7280]">{item.detail}</p>
+                            </div>
+                          </div>
+                          <span className="material-symbols-outlined text-slate-400">
+                            chevron_right
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="mt-6 rounded-[24px] bg-[linear-gradient(135deg,#00327D,#2559BD)] p-5">
+                      <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white/70">
+                        Session Health
+                      </p>
+                      <p className="mt-3 text-lg font-black text-white">
+                        Latest active device: Lagos, Nigeria
+                      </p>
+                      <p className="mt-2 text-sm leading-6 text-white/75">
+                        Continuous review is enabled and no abnormal behavior has been detected.
+                      </p>
+                    </div>
+                  </article>
+                </section>
+
+                <section className="grid gap-6 xl:grid-cols-[1fr_360px]">
+                  <article className="rounded-[28px] border border-[#E3E8F0] bg-white p-6">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                      <div>
+                        <h2 className="text-xl font-black tracking-tight text-[#191C1E]">
+                          Notification Settings
+                        </h2>
+                        <p className="mt-2 text-sm leading-6 text-[#6B7280]">
+                          Control which updates reach you first and how loud the platform should be.
+                        </p>
+                      </div>
+                      <span className="rounded-full bg-[#EAF0FF] px-3 py-1 text-[10px] font-black uppercase tracking-[0.25em] text-[#2559BD]">
+                        3 Channels
+                      </span>
+                    </div>
+
+                    <div className="mt-6 space-y-4">
+                      {notificationItems.map((item) => (
+                        <div
+                          key={item.key}
+                          className="flex items-start justify-between gap-4 rounded-[22px] border border-[#E3E8F0] bg-[#FBFCFE] px-5 py-4"
+                        >
+                          <div>
+                            <p className="text-sm font-bold text-[#191C1E]">{item.title}</p>
+                            <p className="mt-1 text-sm leading-6 text-[#6B7280]">{item.note}</p>
+                          </div>
+                          <Checkbox
+                            checked={formData.notifications[item.key]}
+                            onClick={() =>
+                              updateField('notifications', {
+                                ...formData.notifications,
+                                [item.key]: !formData.notifications[item.key],
+                              })
+                            }
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </article>
+
+                  <article className="rounded-[28px] border border-[#E3E8F0] bg-white p-6">
+                    <h2 className="text-xl font-black tracking-tight text-[#191C1E]">
+                      Workspace Preferences
+                    </h2>
+
+                    <div className="mt-6 space-y-4">
+                      {workspacePreferenceItems.map((item) => (
+                        <div
+                          key={item}
+                          className="flex items-center justify-between gap-4 rounded-[20px] border border-[#E3E8F0] bg-[#FBFCFE] px-4 py-4"
+                        >
+                          <span className="text-sm font-medium text-[#2F3441]">{item}</span>
+                          <Checkbox
+                            checked={formData.preferences[item]}
+                            onClick={() =>
+                              updateField('preferences', {
+                                ...formData.preferences,
+                                [item]: !formData.preferences[item],
+                              })
+                            }
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </article>
+                </section>
+
+                <div className="flex flex-col gap-4 border-t border-[#E3E8F0] pt-6 sm:flex-row sm:items-center sm:justify-between">
+                  <button
+                    type="button"
+                    onClick={handleReset}
+                    className="rounded-2xl border border-[#D7DDEA] bg-white px-6 py-3.5 text-sm font-bold text-[#434653] transition hover:border-[#2559BD]/30 hover:text-[#191C1E]"
+                  >
+                    Reset Changes
+                  </button>
+
+                  <div className="flex flex-col gap-4 sm:flex-row">
+                    <button
+                      type="button"
+                      className="rounded-2xl bg-[#F2F4F6] px-6 py-3.5 text-sm font-bold text-[#191C1E] transition hover:bg-[#E7EBF0]"
+                    >
+                      Save Draft
+                    </button>
+                    <button
+                      type="submit"
+                      className="rounded-2xl bg-[linear-gradient(90deg,#00327D,#2559BD)] px-6 py-3.5 text-sm font-black text-white shadow-[0_12px_28px_rgba(37,89,189,0.2)] transition hover:scale-[1.01]"
+                    >
+                      Save Settings
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
       </main>
     </div>

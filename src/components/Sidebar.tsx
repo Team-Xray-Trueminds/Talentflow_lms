@@ -59,6 +59,8 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
   const isInstructor = role === 'Instructor'
   const isAdmin = role === 'Admin'
   const dashboardPath = isAdmin ? '/admin/dashboard' : (isInstructor ? '/instructor/dashboard' : '/learner/dashboard')
+  const assignmentMenuOpen =
+    location.pathname === '/learner/assignments' || location.pathname === '/learner/submissions'
 
   const themeClasses = isAdmin 
     ? {
@@ -211,13 +213,6 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
                 active={location.pathname === (isInstructor ? "/settings/instructor-setup" : "/settings/profile-setup")} 
                 isInstructor={true}
               />
-              <SidebarItem 
-                icon="help" 
-                label="Support" 
-                to="/instructor/support" 
-                active={location.pathname === '/instructor/support'}
-                isInstructor={true}
-              />
             </SidebarGroup>
           </>
         ) : (
@@ -241,23 +236,63 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
                 to="/learner/my-learning" 
                 active={location.pathname === '/learner/my-learning'} 
               />
+              <div className="space-y-1">
+                <Link
+                  to="/learner/assignments"
+                  className={`relative flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 group overflow-hidden ${
+                    assignmentMenuOpen
+                      ? 'bg-white text-[#00327D] shadow-ambient translate-x-1'
+                      : 'text-[#434653] hover:bg-white/50 hover:text-[#00327D]'
+                  }`}
+                >
+                  {assignmentMenuOpen && (
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-6 rounded-r-full animate-fade-in bg-[#00327D]"></div>
+                  )}
+                  <div className="flex items-center gap-3">
+                    <span className={`material-symbols-outlined transition-transform duration-300 ${assignmentMenuOpen ? 'fill-1 scale-110' : 'group-hover:scale-110'} text-[22px]`}>
+                      assignment
+                    </span>
+                    <span className={`text-sm tracking-tight transition-all ${assignmentMenuOpen ? 'font-black' : 'font-bold'}`}>
+                      Assignment
+                    </span>
+                  </div>
+                  <span className={`material-symbols-outlined text-[18px] transition-transform duration-300 ${assignmentMenuOpen ? 'rotate-180' : ''}`}>
+                    expand_more
+                  </span>
+                </Link>
+                {assignmentMenuOpen && (
+                  <SidebarItem
+                    icon="assignment_turned_in"
+                    label="Submission"
+                    to="/learner/submissions"
+                    active={location.pathname === '/learner/submissions'}
+                    isSubItem={true}
+                  />
+                )}
+              </div>
               <SidebarItem 
-                icon="groups" 
-                label="Instructors" 
-                to="/mentors" 
-                active={location.pathname === '/mentors'} 
+                icon="donut_large" 
+                label="Progress" 
+                to="/learner/progress" 
+                active={location.pathname === '/learner/progress'}
               />
               <SidebarItem 
-                icon="mail" 
-                label="Messages" 
-                to="/learner/messages" 
-                active={location.pathname === '/learner/messages'}
+                icon="forum" 
+                label="Discussions" 
+                to="/learner/discussions" 
+                active={location.pathname === '/learner/discussions'}
               />
               <SidebarItem 
-                icon="terminal" 
-                label="Resources" 
-                to="/insights" 
-                active={location.pathname === '/insights'} 
+                icon="notifications" 
+                label="Notifications" 
+                to="/learner/notifications" 
+                active={location.pathname === '/learner/notifications'}
+              />
+              <SidebarItem 
+                icon="workspace_premium" 
+                label="Certificate" 
+                to="/learner/certificates" 
+                active={location.pathname === '/learner/certificates'} 
               />
             </SidebarGroup>
 
@@ -274,13 +309,6 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
       </nav>
 
       <div className={`mt-auto space-y-2 pt-6 border-t shrink-0 ${themeClasses.border}`}>
-        <SidebarItem 
-          icon="help" 
-          label="Support" 
-          to="/help" 
-          active={location.pathname === '/help'}
-          isInstructor={isInstructor}
-        />
         <Link
           to="/login"
           className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
