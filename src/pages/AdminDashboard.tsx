@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Sidebar from "../components/layout/Sidebar";
+import Sidebar from "../components/Sidebar";
 import TopBar from "../components/layout/TopBar";
 import BottomNav from "../components/layout/BottomNav";
 import MetricCard from "../components/MetricCard";
@@ -71,18 +71,18 @@ const metrics: MetricConfig[] = [
 ];
 
 const AdminDashboard = () => {
-    const [instructors, setInstructors] = useState<Instructor[]>([
+    const [instructors] = useState<Instructor[]>([
         { id: '1', name: 'Dr. Sarah Chen', email: 'sarah.chen@talentflow.edu', expertise: 'System Architecture', status: 'active' },
         { id: '2', name: 'Prof. James Wilson', email: 'j.wilson@talentflow.edu', expertise: 'Data Engineering', status: 'active' }
     ]);
 
     return (
-        <div className="bg-surface text-on-surface">
+        <div className="bg-[#F8FAFC] min-h-screen text-on-surface">
             {/* Side Navigation */}
             <Sidebar />
 
             {/* Main Workspace Content */}
-            <main className="pl-0 md:pl-64 min-h-screen pb-24 md:pb-0">
+            <main className="pl-0 lg:pl-80 min-h-screen pb-24 md:pb-0">
                 {/* Top Navigation */}
                 <TopBar />
 

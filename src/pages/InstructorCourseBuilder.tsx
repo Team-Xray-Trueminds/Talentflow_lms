@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import BottomNav from '../components/layout/BottomNav';
 
 const InstructorCourseBuilder = () => {
     const navigate = useNavigate();
@@ -31,49 +32,26 @@ const InstructorCourseBuilder = () => {
             />
             
             {/* 1. EDITORIAL HEADER */}
-            <header className="h-20 bg-[#F7F9FB]/80 backdrop-blur-xl sticky top-0 z-50 flex items-center justify-between px-10 w-full shrink-0">
-                <div className="flex items-center gap-12">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gradient-to-tr from-[#00327D] to-[#2559BD] rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
-                            <span className="material-symbols-outlined text-white text-2xl">layers</span>
+            <header className="h-16 md:h-20 bg-[#F7F9FB]/80 backdrop-blur-xl sticky top-0 z-50 flex items-center justify-between px-4 md:px-10 w-full shrink-0 border-b border-[#E0E3E5]/20">
+                <div className="flex items-center gap-4 md:gap-12">
+                    <div className="flex items-center gap-2 md:gap-3">
+                        <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-tr from-[#00327D] to-[#2559BD] rounded-lg md:rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
+                            <span className="material-symbols-outlined text-white text-xl md:text-2xl">layers</span>
                         </div>
-                        <span className="text-xl font-black tracking-tighter text-[#1C1B1F] font-manrope">Talent Flow</span>
+                        <span className="text-lg md:text-xl font-black tracking-tighter text-[#1C1B1F] font-manrope">Talent Flow</span>
                     </div>
-                    
-                    <nav className="hidden lg:flex items-center gap-8">
-                        {[
-                            { label: 'Dashboard', path: '/instructor/dashboard' },
-                            { label: 'Curriculum', path: '/instructor/courses' },
-                            { label: 'Gradebook', path: '/instructor/gradebook' },
-                            { label: 'Analytics', path: '/instructor/analytics' }
-                        ].map((item) => (
-                            <Link 
-                                key={item.label} 
-                                to={item.path}
-                                className="text-xs font-bold text-[#434653] hover:text-[#00327D] transition-colors bg-transparent border-none cursor-pointer uppercase tracking-widest no-underline"
-                            >
-                                {item.label}
-                            </Link>
-                        ))}
-                    </nav>
                 </div>
                 
-                <div className="flex items-center gap-6">
-                    <button 
-                        onClick={() => navigate('/learner/course-player')}
-                        className="text-xs font-bold text-[#434653] hover:text-[#191C1E] bg-transparent border-none cursor-pointer transition-colors uppercase tracking-widest"
-                    >
-                        Preview View
-                    </button>
-                    <button className="bg-gradient-to-r from-[#00327D] to-[#2559BD] text-white px-8 py-3 rounded-xl font-bold text-xs hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-primary/20 border-none cursor-pointer">
-                        Publish Course
+                <div className="flex items-center gap-2 md:gap-6">
+                    <button className="bg-gradient-to-r from-[#00327D] to-[#2559BD] text-white px-4 md:px-8 py-2 md:py-3 rounded-lg md:rounded-xl font-bold text-[10px] md:text-xs hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-primary/20 border-none cursor-pointer">
+                        Publish
                     </button>
                 </div>
             </header>
 
             {/* ... Stepper ... */}
-            <section className="bg-white border-b border-[#E0E3E5]/40 py-4 px-10">
-                <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <section className="bg-white border-b border-[#E0E3E5]/40 py-4 px-4 md:px-10 overflow-x-auto no-scrollbar">
+                <div className="max-w-7xl mx-auto flex items-center justify-between min-w-[600px] md:min-w-0">
                     {[
                         { label: 'Details', icon: 'info', status: 'ACTIVE' },
                         { label: 'Curriculum', icon: 'account_tree', status: 'PENDING' },
@@ -104,10 +82,10 @@ const InstructorCourseBuilder = () => {
             </section>
 
             {/* 3. LAYOUT WRAPPER */}
-            <div className="max-w-[1440px] mx-auto w-full px-10 flex gap-12 flex-1 pt-12 pb-24">
+            <div className="max-w-[1440px] mx-auto w-full px-4 md:px-10 flex flex-col lg:flex-row gap-12 flex-1 pt-8 md:pt-12 pb-32">
                 
                 {/* 4. LEFT NAVIGATION SIDEBAR */}
-                <aside className="w-56 shrink-0 space-y-10">
+                <aside className="w-full lg:w-56 shrink-0 space-y-10">
                     <div>
                         <h3 className="text-[10px] font-black uppercase tracking-[0.25em] text-[#737784] mb-6">Talent Flow Builder</h3>
                         <nav className="space-y-1">
@@ -151,7 +129,7 @@ const InstructorCourseBuilder = () => {
                 {/* 5. MAIN CONTENT WORKSPACE */}
                 <main className="flex-1 space-y-10">
                     <header>
-                        <h1 className="text-4xl font-black tracking-tighter text-[#1C1B1F] font-manrope mb-2">Course Identity</h1>
+                        <h1 className="text-3xl md:text-4xl font-black tracking-tighter text-[#1C1B1F] font-manrope mb-2">Course Identity</h1>
                         <p className="text-[#434653] text-[15px] font-medium leading-relaxed max-w-xl">
                             Establish the structural foundation. Define your title, classification, and visual identity for the curriculum.
                         </p>
@@ -227,7 +205,7 @@ const InstructorCourseBuilder = () => {
                 </main>
 
                 {/* 6. RIGHT CONTEXTUAL SIDEBAR */}
-                <aside className="w-80 shrink-0 space-y-8">
+                <aside className="w-full lg:w-80 shrink-0 space-y-8">
                     
                     {/* Visual Identity Card */}
                     <div className="bg-white rounded-[2.5rem] p-8 shadow-[0px_12px_32px_rgba(25,28,30,0.04)] ring-1 ring-[#E0E3E5]/30 group">
@@ -269,6 +247,7 @@ const InstructorCourseBuilder = () => {
                 </aside>
 
             </div>
+            <BottomNav />
         </div>
     );
 };

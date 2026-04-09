@@ -1,16 +1,16 @@
-import Sidebar from "../components/layout/Sidebar";
+import Sidebar from "../components/Sidebar";
 import TopBar from "../components/layout/TopBar";
 import BottomNav from "../components/layout/BottomNav";
 import { Link } from "react-router-dom";
 
 const AdminInstructorProfilePage = () => {
     return (
-        <div className="bg-surface text-on-surface">
+        <div className="bg-[#F8FAFC] min-h-screen text-on-surface">
             <Sidebar />
-            <main className="pl-0 md:pl-64 min-h-screen pb-24 md:pb-0">
+            <main className="pl-0 lg:pl-80 min-h-screen pb-24 md:pb-0">
                 <TopBar />
                 
-                <div className="p-6 md:p-8 max-w-7xl mx-auto pt-8 md:pt-12">
+                <div className="p-6 md:p-8 max-w-7xl mx-auto">
                     {/* Header with Breadcrumbs */}
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
                         <div>

@@ -11,6 +11,10 @@ import InstructorDashboard from './pages/InstructorDashboard'
 import InstructorMyCoursesPage from './pages/InstructorMyCoursesPage'
 import AcademicTracksPage from './pages/InstructorCoursesPage'
 import AdminDashboard from './pages/AdminDashboard';
+import AdminUserManagementPage from './pages/AdminUserManagementPage';
+import AdminInstructorProfilePage from './pages/AdminInstructorProfilePage';
+import AdminAddInstructorPage from './pages/AdminAddInstructorPage';
+import AdminUserDetailPage from './pages/AdminUserDetailPage';
 import NotificationsPage from './pages/NotificationsPage'
 import MyLearningPage from './pages/MyLearningPage'
 import InstructorProfileSetupPage from './pages/InstructorProfileSetupPage'
@@ -56,6 +60,14 @@ function App() {
         <Route path="/instructor/content-upload" element={<InstructorContentUploadPage />} />
         <Route path="/instructor/assignment-builder" element={<InstructorAssignmentBuilderPage />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/user-management" element={<AdminUserManagementPage />} />
+        <Route path="/admin/talent-directory" element={<AdminInstructorProfilePage />} />
+        <Route path="/admin/instructor-profile" element={<AdminInstructorProfilePage />} />
+        <Route path="/admin/add-instructor" element={<AdminAddInstructorPage />} />
+        <Route path="/admin/user-detail/:id?" element={<AdminUserDetailPage />} />
+        <Route path="/admin/curriculum" element={<AcademicTracksPage />} />
+        <Route path="/admin/settings" element={<ProfileSetupPage />} />
       </Routes>
     </Router>
   )

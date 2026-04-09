@@ -50,16 +50,22 @@ function SidebarGroup({ label, children, isInstructor }: { label: string; childr
   )
 }
 
-export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Learner' }) {
+export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Learner' | 'Admin' }) {
   const location = useLocation()
   const storedRole = localStorage.getItem('userRole')
   // Use forceRole prop if provided, otherwise fallback to path detection, then finally localStorage
-  const pathRole = location.pathname.startsWith('/instructor') ? 'Instructor' : (location.pathname.startsWith('/learner') ? 'Learner' : null);
+  const pathRole = location.pathname.startsWith('/admin') ? 'Admin' : (location.pathname.startsWith('/instructor') ? 'Instructor' : (location.pathname.startsWith('/learner') ? 'Learner' : null));
   const role = forceRole || pathRole || storedRole || 'Learner'
   const isInstructor = role === 'Instructor'
-  const dashboardPath = isInstructor ? '/instructor/dashboard' : '/learner/dashboard'
+  const isAdmin = role === 'Admin'
+  const dashboardPath = isAdmin ? '/admin/dashboard' : (isInstructor ? '/instructor/dashboard' : '/learner/dashboard')
 
-  const themeClasses = isInstructor 
+  const themeClasses = isAdmin 
+    ? {
+        aside: 'bg-white text-[#191C1E] border-r border-[#E0E3E5]',
+        border: 'border-[#E0E3E5]'
+      }
+    : isInstructor 
     ? {
         aside: 'bg-[#001946] text-white',
         border: 'border-white/10'
@@ -76,17 +82,78 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
           <h2 className={`text-2xl font-black font-headline tracking-tighter ${isInstructor ? 'text-white' : 'text-[#00327D]'}`}>
             Talent Flow
           </h2>
-          <div className={`px-2 py-0.5 rounded-md text-[8px] font-black uppercase tracking-widest ${isInstructor ? 'bg-[#57FAE9] text-[#001946]' : 'bg-[#00327D] text-white'}`}>
-            {role === 'Instructor' ? 'Studio' : 'Path'}
+          <div className={`px-2 py-0.5 rounded-md text-[8px] font-black uppercase tracking-widest ${isAdmin ? 'bg-[#00327D] text-white' : (isInstructor ? 'bg-[#57FAE9] text-[#001946]' : 'bg-[#00327D] text-white')}`}>
+            {role === 'Admin' ? 'Director' : (role === 'Instructor' ? 'Studio' : 'Path')}
           </div>
         </div>
         <p className={`text-[10px] font-black uppercase tracking-[0.2em] mt-1 ${isInstructor ? 'text-[#D3E4FE]/80' : 'text-[#434653]'}`}>
-          {isInstructor ? 'Professional Educator Suite' : 'Career Growth Platform'}
+          {isAdmin ? 'Academic Governance Suite' : (isInstructor ? 'Professional Educator Suite' : 'Career Growth Platform')}
         </p>
       </div>
 
       <nav className="grow">
-        {isInstructor ? (
+        {isAdmin ? (
+          <>
+            <SidebarGroup label="Governance Core">
+              <SidebarItem 
+                icon="dashboard" 
+                label="Executive Overview" 
+                to="/admin/dashboard" 
+                active={location.pathname === '/admin/dashboard' || location.pathname === '/admin'}
+              />
+              <SidebarItem 
+                icon="person" 
+                label="User Management" 
+                to="/admin/user-management" 
+                active={location.pathname === '/admin/user-management'}
+              />
+              <SidebarItem 
+                icon="person_add" 
+                label="Add Instructor" 
+                to="/admin/add-instructor" 
+                isSubItem={true}
+                active={location.pathname === '/admin/add-instructor'}
+              />
+              <SidebarItem 
+                icon="badge" 
+                label="User Records" 
+                to="/admin/user-detail" 
+                isSubItem={true}
+                active={location.pathname.startsWith('/admin/user-detail')}
+              />
+              <SidebarItem 
+                icon="group" 
+                label="Talent Directory" 
+                to="/admin/talent-directory" 
+                active={location.pathname === '/admin/talent-directory' || location.pathname === '/admin/instructor-profile'}
+              />
+            </SidebarGroup>
+            
+            <SidebarGroup label="Academic Oversight">
+              <SidebarItem 
+                icon="architecture" 
+                label="Curriculum Audit" 
+                to="/admin/curriculum" 
+                active={location.pathname === '/admin/curriculum'}
+              />
+              <SidebarItem 
+                icon="analytics" 
+                label="System Metrics" 
+                to="/admin/dashboard" 
+                active={false}
+              />
+            </SidebarGroup>
+
+            <SidebarGroup label="Operations">
+              <SidebarItem 
+                icon="settings" 
+                label="Global Settings" 
+                to="/admin/settings" 
+                active={location.pathname === '/admin/settings'}
+              />
+            </SidebarGroup>
+          </>
+        ) : isInstructor ? (
           <>
             <SidebarGroup label="Curator Studio" isInstructor={true}>
               <SidebarItem 

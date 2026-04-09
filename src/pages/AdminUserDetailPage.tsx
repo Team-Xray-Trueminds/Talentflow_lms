@@ -1,20 +1,20 @@
-import Sidebar from "../components/layout/Sidebar";
+import Sidebar from "../components/Sidebar";
 import TopBar from "../components/layout/TopBar";
 import BottomNav from "../components/layout/BottomNav";
 
 const AdminUserDetailPage = () => {
     return (
-        <div className="bg-surface text-on-surface">
+        <div className="bg-[#F8FAFC] min-h-screen text-on-surface">
             {/* Side Navigation */}
             <Sidebar />
 
             {/* Main Workspace Content */}
-            <main className="pl-0 md:pl-64 min-h-screen pb-24 md:pb-0">
+            <main className="pl-0 lg:pl-80 min-h-screen pb-24 md:pb-0">
                 {/* Top Navigation */}
                 <TopBar />
 
                 {/* Dashboard Content Area */}
-                <div className="p-6 md:p-8 max-w-7xl mx-auto pt-8 md:pt-12">
+                <div className="p-6 md:p-8 max-w-7xl mx-auto">
                     
                     {/* DESKTOP VIEW (3-Column Layout from Desktop Code) */}
                     <div className="hidden xl:block">

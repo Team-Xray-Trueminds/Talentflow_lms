@@ -104,17 +104,17 @@ const LandingPage: React.FC = () => {
               <span className="material-symbols-outlined text-[#00327D] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>architecture</span>
               <span className="text-[#38485D] p-2 rounded-full text-sm font-bold tracking-wide uppercase">Premier Growth Platform</span>
             </div>
-            <h1 className="text-6xl font-extrabold text-[#191C1E] leading-[1.1] font-headline tracking-tighter animate-fade-in-up animate-stagger-1">
+            <h1 className="text-4xl md:text-6xl font-extrabold text-[#191C1E] leading-[1.1] font-headline tracking-tighter animate-fade-in-up animate-stagger-1">
               Architecting the future of <span className="text-[#0047AB] italic">career mentorship</span> and growth.
             </h1>
             <p className="text-xl text-[#434653] leading-relaxed max-w-lg animate-fade-in-up animate-stagger-2">
               TalentFlow provides the blueprints for professional evolution. We connect visionaries with curated expertise to build the next generation of global industry leaders.
             </p>
-            <div className="flex items-center gap-4 pt-4 animate-fade-in-up animate-stagger-3">
-              <button className="bg-[#002C70] text-white px-8 py-4 rounded-lg font-bold text-lg shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 transition-all">
+            <div className="flex flex-col sm:flex-row items-center gap-4 pt-4 animate-fade-in-up animate-stagger-3">
+              <button className="w-full sm:w-auto bg-[#002C70] text-white px-8 py-4 rounded-lg font-bold text-lg shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 transition-all">
                 Get Started
               </button>
-              <button className="flex items-center text-[#002C70] gap-2 font-bold px-8 py-4 rounded-lg hover:bg-[#E6E8EA] transition-colors">
+              <button className="w-full sm:w-auto flex items-center justify-center text-[#002C70] gap-2 font-bold px-8 py-4 rounded-lg hover:bg-[#E6E8EA] transition-colors">
                 <span className="material-symbols-outlined">play_circle</span>
                 The TalentFlow Vision
               </button>
@@ -164,19 +164,19 @@ const LandingPage: React.FC = () => {
           <ScrollReveal className="max-w-7xl mx-auto px-8 relative z-10" threshold={0.5}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-20 border-b border-white/10 pb-20">
               <div className="text-center space-y-2">
-                <div className="text-6xl font-black font-headline tracking-tight">
+                <div className="text-4xl md:text-6xl font-black font-headline tracking-tight">
                   <CountUp end={15} suffix="k+" />
                 </div>
                 <div className="text-blue-100/60 font-bold uppercase tracking-[0.2em] text-xs">Global Mentors</div>
               </div>
               <div className="text-center space-y-2">
-                <div className="text-6xl font-black font-headline tracking-tight">
+                <div className="text-4xl md:text-6xl font-black font-headline tracking-tight">
                   <CountUp end={94} suffix="%" />
                 </div>
                 <div className="text-blue-100/60 font-bold uppercase tracking-[0.2em] text-xs">Growth Rate</div>
               </div>
               <div className="text-center space-y-2">
-                <div className="text-6xl font-black font-headline tracking-tight">
+                <div className="text-4xl md:text-6xl font-black font-headline tracking-tight">
                   <CountUp end={200} suffix="+" />
                 </div>
                 <div className="text-blue-100/60 font-bold uppercase tracking-[0.2em] text-xs">Enterprises</div>
