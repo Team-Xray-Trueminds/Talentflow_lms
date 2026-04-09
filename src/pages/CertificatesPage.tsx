@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
+import BottomNav from '../components/layout/BottomNav'
 
 const certificates = [
   {
@@ -20,7 +21,7 @@ export default function CertificatesPage() {
   return (
     <div className="flex min-h-screen bg-[radial-gradient(circle_at_top,_#eff7ff_0%,_#f7f9fb_45%,_#eefcfb_100%)] font-body text-[#191C1E]">
       <Sidebar />
-      <main className="grow px-6 py-8 lg:px-10">
+      <main className="grow px-6 py-8 lg:px-10 pb-32 lg:pb-8">
         <div className="mx-auto max-w-6xl">
           <div className="mb-10 rounded-[32px] border border-white/70 bg-white/75 p-8 shadow-[0_24px_80px_rgba(0,50,125,0.12)] backdrop-blur-xl">
             <p className="text-xs font-black uppercase tracking-[0.3em] text-[#64748B]">Curator Portal</p>
@@ -56,6 +57,7 @@ export default function CertificatesPage() {
             ))}
           </div>
         </div>
+        <BottomNav />
       </main>
     </div>
   )

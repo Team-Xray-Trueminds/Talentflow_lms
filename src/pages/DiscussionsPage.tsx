@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import Sidebar from '../components/Sidebar'
+import BottomNav from '../components/layout/BottomNav'
 
 type ReplyItem = {
   author: string
@@ -166,7 +167,7 @@ export default function DiscussionsPage() {
     <div className="flex min-h-screen bg-[#F7F9FB] font-body text-[#191C1E]">
       <Sidebar />
 
-      <main className="grow px-6 py-8 lg:px-10">
+      <main className="grow px-6 py-8 lg:px-10 pb-32 lg:pb-8">
         <div className="mx-auto max-w-7xl">
           <section className="mb-8 grid gap-6 xl:grid-cols-[1fr_0.95fr]">
             <div className="rounded-[32px] bg-[linear-gradient(135deg,#031B4E_0%,#00327D_58%,#2559BD_100%)] p-8 text-white shadow-[0_24px_60px_rgba(0,50,125,0.2)]">
@@ -439,6 +440,7 @@ export default function DiscussionsPage() {
             </div>
           </section>
         </div>
+        <BottomNav />
       </main>
     </div>
   )
