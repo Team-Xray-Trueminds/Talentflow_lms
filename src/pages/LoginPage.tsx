@@ -59,12 +59,12 @@ export default function LoginPage() {
                 <label className="text-xs font-semibold uppercase tracking-wider text-on-surface-variant ml-1">
                   Password
                 </label>
-                <a
-                  href="#"
+                <Link
+                  to="/forgot-password"
                   className="text-xs font-semibold text-[#2559BD] hover:text-primary transition-colors"
                 >
                   Forgot Password?
-                </a>
+                </Link>
               </div>
               <div className="relative">
                 <input
@@ -118,6 +118,12 @@ export default function LoginPage() {
               Create an account
             </Link>
           </p>
+          <div className="mt-8 pt-4 border-t border-[#E0E3E5] flex justify-center">
+            <Link to="/admin" className="text-xs font-bold text-[#434653]/60 hover:text-[#00419E] transition-colors flex items-center gap-1">
+              <span className="material-symbols-outlined text-sm">admin_panel_settings</span>
+              Admin Portal
+            </Link>
+          </div>
         </div>
       </main>
 

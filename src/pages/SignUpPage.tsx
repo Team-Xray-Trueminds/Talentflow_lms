@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
-import AppFooter from '../components/AppFooter'
 import AuthDivider from '../components/auth/AuthDivider'
 import SocialAuthButton from '../components/auth/SocialAuthButton'
 
@@ -9,7 +8,7 @@ export default function SignUpPage() {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    role: 'FE Developer',
+    role: 'Learner',
     password: '',
     confirmPassword: '',
     termsAgreed: false,
@@ -55,14 +54,6 @@ export default function SignUpPage() {
           { label: 'Research', to: '/' },
           { label: 'Insights', to: '/' },
         ]}
-        rightSlot={
-          <Link
-            to="/login"
-            className="px-6 py-2.5 rounded-lg bg-surface-container-highest text-on-primary-fixed-variant font-semibold hover:bg-surface-container-high transition-all"
-          >
-            Sign In
-          </Link>
-        }
       />
 
       <main className="min-h-screen pt-20 flex bg-surface">
@@ -188,28 +179,9 @@ export default function SignUpPage() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-semibold text-on-surface-variant mb-2">
-                    Your Role
-                  </label>
-                  <select
-                    className="w-full px-4 py-3 rounded-lg bg-[#E0E3E5] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none appearance-none cursor-pointer"
-                    name="role"
-                    value={formData.role}
-                    onChange={handleChange}
-                  >
-                    <option>Learner</option>
-                    <option>Instructor</option>
-                  </select>
-                </div>
-                <div className="flex flex-col justify-end">
-                  <div className="flex items-center space-x-1.5 px-4 py-3 rounded-lg bg-surface-container-low shadow-ambient">
-                    <span className="material-symbols-outlined text-[#005049] text-sm">verified</span>
-                    <span className="text-xs font-bold text-[#005049]">Verified Member</span>
-                  </div>
-                </div>
-              </div>
+              {/* Hidden role field since only learners can sign up directly */}
+              <input type="hidden" name="role" value="Learner" />
+
 
               <div>
                 <label className="block text-sm font-semibold text-on-surface-variant mb-2">

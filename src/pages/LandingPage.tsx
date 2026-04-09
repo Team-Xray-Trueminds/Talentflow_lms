@@ -3,6 +3,75 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import AppFooter from '../components/AppFooter';
 
+const ScrollReveal: React.FC<{ children: React.ReactNode; className?: string; threshold?: number }> = ({ 
+  children, 
+  className = '',
+  threshold = 0.1
+}) => {
+  const [isVisible, setIsVisible] = React.useState(false);
+  const elementRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold }
+    );
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [threshold]);
+
+  return (
+    <div ref={elementRef} className={`${className} ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+      {children}
+    </div>
+  );
+};
+
+const CountUp: React.FC<{ end: number; suffix?: string }> = ({ end, suffix = '' }) => {
+  const [count, setCount] = React.useState(0);
+  const elementRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          let startTime: number | null = null;
+          const duration = 2000;
+
+          const step = (timestamp: number) => {
+            if (!startTime) startTime = timestamp;
+            const progress = Math.min((timestamp - startTime) / duration, 1);
+            setCount(Math.floor(progress * end));
+            if (progress < 1) {
+              requestAnimationFrame(step);
+            }
+          };
+          requestAnimationFrame(step);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [end]);
+
+  return <span ref={elementRef}>{count}{suffix}</span>;
+};
+
 const LandingPage: React.FC = () => {
   return (
     <>
@@ -27,9 +96,9 @@ const LandingPage: React.FC = () => {
           </>
         }
       />
-      <main className="pt-24 min-h-screen">
+      <main className="pt-24">
         {/* Hero Section */}
-        <section className="max-w-7xl mx-auto px-8 py-16 grid lg:grid-cols-2 gap-16 items-center">
+        <section className="max-w-7xl mx-auto px-8 min-h-[calc(100vh-6rem)] grid lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8">
             <div className="inline-flex items-center gap-2 bg-[#D0E1FB] px-4 py-1.5 rounded-full animate-fade-in-up">
               <span className="material-symbols-outlined text-[#00327D] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>architecture</span>
@@ -50,20 +119,7 @@ const LandingPage: React.FC = () => {
                 The TalentFlow Vision
               </button>
             </div>
-            <div className="pt-8 text-[#002C70] grid grid-cols-3 gap-8">
-              <div>
-                <div className="text-3xl font-black text-primary font-headline">15k+</div>
-                <div className="text-sm text-on-surface-variant font-medium">Global Mentors</div>
-              </div>
-              <div>
-                <div className="text-3xl font-black text-primary font-headline">94%</div>
-                <div className="text-sm text-on-surface-variant font-medium">Growth Rate</div>
-              </div>
-              <div>
-                <div className="text-3xl font-black text-primary font-headline">200+</div>
-                <div className="text-sm text-on-surface-variant font-medium">Enterprises</div>
-              </div>
-            </div>
+
           </div>
           <div className="relative">
             {/* Architectural Visual (Bento/Card Mashup) */}
@@ -98,28 +154,54 @@ const LandingPage: React.FC = () => {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary-container/5 rounded-full blur-[100px] -z-10"></div>
           </div>
         </section>
-        {/* Trusted Partners (Subtle Tonal Shift) */}
-        <section className="bg-[#B1C5FF]-container-low py-16">
-          <div className="max-w-7xl mx-auto px-8">
-            <p className="text-center text-2xl font-bold tracking-widest text-on-surface-variant uppercase mb-12">Architecting growth for world-class teams</p>
-            <div className="flex flex-wrap justify-center items-center gap-16 opacity-50 grayscale contrast-125">
-              <span className="text-3xl font-black font-headline tracking-tighter">NEXUS</span>
-              <span className="text-3xl font-black font-headline tracking-tighter">ORION</span>
-              <span className="text-3xl font-black font-headline tracking-tighter">LUMINA</span>
-              <span className="text-3xl font-black font-headline tracking-tighter">STRATOS</span>
-              <span className="text-3xl font-black font-headline tracking-tighter">APEX</span>
-            </div>
+        {/* Trusted Partners & Stats Section */}
+        <section className="bg-[#002C70] text-white py-24 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-white rounded-full blur-[120px]"></div>
+            <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-blue-400 rounded-full blur-[100px]"></div>
           </div>
+          
+          <ScrollReveal className="max-w-7xl mx-auto px-8 relative z-10" threshold={0.5}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-20 border-b border-white/10 pb-20">
+              <div className="text-center space-y-2">
+                <div className="text-6xl font-black font-headline tracking-tight">
+                  <CountUp end={15} suffix="k+" />
+                </div>
+                <div className="text-blue-100/60 font-bold uppercase tracking-[0.2em] text-xs">Global Mentors</div>
+              </div>
+              <div className="text-center space-y-2">
+                <div className="text-6xl font-black font-headline tracking-tight">
+                  <CountUp end={94} suffix="%" />
+                </div>
+                <div className="text-blue-100/60 font-bold uppercase tracking-[0.2em] text-xs">Growth Rate</div>
+              </div>
+              <div className="text-center space-y-2">
+                <div className="text-6xl font-black font-headline tracking-tight">
+                  <CountUp end={200} suffix="+" />
+                </div>
+                <div className="text-blue-100/60 font-bold uppercase tracking-[0.2em] text-xs">Enterprises</div>
+              </div>
+            </div>
+
+            <p className="text-center text-sm font-bold tracking-[0.3em] text-blue-100/40 uppercase mb-12">Architecting growth for world-class teams</p>
+            <div className="flex flex-wrap justify-center items-center gap-x-20 gap-y-10 opacity-40 grayscale brightness-200">
+              <span className="text-2xl font-black font-headline tracking-tighter">NEXUS</span>
+              <span className="text-2xl font-black font-headline tracking-tighter">ORION</span>
+              <span className="text-2xl font-black font-headline tracking-tighter">LUMINA</span>
+              <span className="text-2xl font-black font-headline tracking-tighter">STRATOS</span>
+              <span className="text-2xl font-black font-headline tracking-tighter">APEX</span>
+            </div>
+          </ScrollReveal>
         </section>
         {/* Bento Highlights Section */}
         <section className="max-w-7xl mx-auto px-8 py-24">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold font-headline mb-4 animate-fade-in-up">Precision Engineering for Potential</h2>
-            <p className="text-[#434653] max-w-2xl mx-auto animate-fade-in-up animate-stagger-1">We replace generic advice with architectural precision, ensuring every career move is supported by data and world-class mentorship.</p>
-          </div>
+          <ScrollReveal className="text-center mb-16">
+            <h2 className="text-4xl font-bold font-headline mb-4">Precision Engineering for Potential</h2>
+            <p className="text-[#434653] max-w-2xl mx-auto animate-stagger-1">We replace generic advice with architectural precision, ensuring every career move is supported by data and world-class mentorship.</p>
+          </ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Large Feature Card */}
-            <div className="md:col-span-2 bg-[#EEF0FF] p-10 rounded-xl flex flex-col justify-between relative overflow-hidden group shadow-sm">
+            <ScrollReveal className="md:col-span-2 bg-[#EEF0FF] p-10 rounded-xl flex flex-col justify-between relative overflow-hidden group shadow-sm">
               <div className="relative z-10">
                 <div className="w-12 h-12 bg-secondary-container flex items-center justify-center rounded-lg mb-6">
                   <span className="material-symbols-outlined text-primary">psychology</span>
@@ -133,9 +215,9 @@ const LandingPage: React.FC = () => {
                 <div className="w-24 h-24 bg-surface-container-highest rounded-lg shrink-0"></div>
                 <div className="w-24 h-24 bg-primary-fixed rounded-lg shrink-0"></div>
               </div>
-            </div>
+            </ScrollReveal>
             {/* Vertical Card */}
-            <div className="bg-[#003732] p-10 rounded-xl text-white flex flex-col justify-between shadow-sm">
+            <ScrollReveal className="bg-[#003732] p-10 rounded-xl text-white flex flex-col justify-between shadow-sm animate-stagger-1">
               <div>
                 <span className="material-symbols-outlined text-4xl text-on-tertiary-container mb-6">workspace_premium</span>
                 <h3 className="text-2xl font-bold font-headline mb-4">Elite Global Network</h3>
@@ -145,20 +227,20 @@ const LandingPage: React.FC = () => {
                 Explore Network
                 <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
               </a>
-            </div>
+            </ScrollReveal>
             {/* Small Cards */}
-            <div className="bg-[#C4C7C9] p-8 rounded-xl shadow-sm">
+            <ScrollReveal className="bg-[#C4C7C9] p-8 rounded-xl shadow-sm animate-stagger-1">
               <h4 className="font-bold text-2xl mb-2">Curated Insights</h4>
               <p className="text-sm text-on-surface-variant">Proprietary data to benchmark your growth against industry standards.</p>
-            </div>
-            <div className="bg- p-8 rounded-xl shadow-sm">
+            </ScrollReveal>
+            <ScrollReveal className="bg-[#E6E8EA] p-8 rounded-xl shadow-sm animate-stagger-2">
               <h4 className="font-bold text-2xl mb-2">Scaleable Flow</h4>
               <p className="text-sm text-on-surface-variant">Whether you are an individual or an enterprise, TalentFlow scales with your ambition.</p>
-            </div>
-            <div className="bg-[#B1C5FF] p-8 rounded-xl shadow-sm">
+            </ScrollReveal>
+            <ScrollReveal className="bg-[#B1C5FF] p-8 rounded-xl shadow-sm animate-stagger-3">
               <h4 className="font-bold text-2xl mb-2">Verified Success</h4>
               <p className="text-sm text-on-surface-variant">Every mentor is vetted through a 5-tier architectural expertise framework.</p>
-            </div>
+            </ScrollReveal>
           </div>
         </section>
       </main>
