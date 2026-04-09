@@ -10,11 +10,13 @@ import LearnerCoursesPage from './pages/LearnerCoursesPage'
 import InstructorDashboard from './pages/InstructorDashboard'
 import InstructorMyCoursesPage from './pages/InstructorMyCoursesPage'
 import AcademicTracksPage from './pages/InstructorCoursesPage'
+import AdminDashboard from './pages/AdminDashboard';
+import UserManagementPage from './pages/AdminUserManagementPage';
+import AdminUserDetailPage from './pages/AdminUserDetailPage';
 import NotificationsPage from './pages/NotificationsPage'
 import MyLearningPage from './pages/MyLearningPage'
 import InstructorProfileSetupPage from './pages/InstructorProfileSetupPage'
 import InstructorGradebookPage from './pages/InstructorGradebookPage'
-import AdminDashboard from './pages/AdminDashboard'
 import CertificatePage from './pages/CertificatePage'
 import MessagesPage from './pages/MessagesPage'
 import InstructorCourseBuilder from './pages/InstructorCourseBuilder'
@@ -45,6 +47,9 @@ function App() {
         <Route path="/instructor/academic-oversight" element={<AcademicTracksPage />} />
         <Route path="/instructor/course-builder" element={<InstructorCourseBuilder />} />
         <Route path="/instructor/curriculum-builder" element={<InstructorCurriculumBuilder />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/user-management" element={<UserManagementPage />} />
+        <Route path="/admin/talent-directory" element={<AdminUserDetailPage />} />
         <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </Router>
