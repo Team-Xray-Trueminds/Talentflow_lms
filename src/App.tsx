@@ -10,6 +10,13 @@ import LearnerCoursesPage from './pages/LearnerCoursesPage'
 import InstructorDashboard from './pages/InstructorDashboard'
 import InstructorMyCoursesPage from './pages/InstructorMyCoursesPage'
 import AcademicTracksPage from './pages/InstructorCoursesPage'
+<<<<<<< Updated upstream
+=======
+import InstructorAssignmentBuilder from './pages/InstructorAssignmentBuilderPage'
+import AdminDashboard from './pages/AdminDashboard';
+import UserManagementPage from './pages/AdminUserManagementPage';
+import AdminUserDetailPage from './pages/AdminUserDetailPage';
+>>>>>>> Stashed changes
 import NotificationsPage from './pages/NotificationsPage'
 import MyLearningPage from './pages/MyLearningPage'
 import InstructorProfileSetupPage from './pages/InstructorProfileSetupPage'
@@ -17,6 +24,7 @@ import InstructorGradebookPage from './pages/InstructorGradebookPage'
 import AdminDashboard from './pages/AdminDashboard'
 import CertificatePage from './pages/CertificatePage'
 import MessagesPage from './pages/MessagesPage'
+import InstructorContentUpload from './pages/InstructorContentUploadPage'
 import InstructorCourseBuilder from './pages/InstructorCourseBuilder'
 import InstructorCurriculumBuilder from './pages/InstructorCurriculumBuilder'
 
@@ -45,6 +53,14 @@ function App() {
         <Route path="/instructor/academic-oversight" element={<AcademicTracksPage />} />
         <Route path="/instructor/course-builder" element={<InstructorCourseBuilder />} />
         <Route path="/instructor/curriculum-builder" element={<InstructorCurriculumBuilder />} />
+<<<<<<< Updated upstream
+=======
+        <Route path="/instructor/content-upload" element={<InstructorContentUpload />} />
+        <Route path="/instructor/assignment-builder" element={<InstructorAssignmentBuilder />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/user-management" element={<UserManagementPage />} />
+        <Route path="/admin/talent-directory" element={<AdminUserDetailPage />} />
+>>>>>>> Stashed changes
         <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </Router>
