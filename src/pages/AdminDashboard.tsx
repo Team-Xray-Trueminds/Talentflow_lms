@@ -3,6 +3,7 @@ import Sidebar from "../components/layout/Sidebar";
 import TopBar from "../components/layout/TopBar";
 import BottomNav from "../components/layout/BottomNav";
 import MetricCard from "../components/MetricCard";
+import { Link } from "react-router-dom";
 import UserGrowthChart from "../components/UserGrowthChart";
 import MentorshipFlow from "../components/MentorshipFlow";
 import AuditTrail from "../components/AuditTrail";
@@ -75,20 +76,7 @@ const AdminDashboard = () => {
         { id: '2', name: 'Prof. James Wilson', email: 'j.wilson@talentflow.edu', expertise: 'Data Engineering', status: 'active' }
       ])
     
-      const [showAddModal, setShowAddModal] = useState(false)
-      const [newInstructor, setNewInstructor] = useState({ name: '', email: '', expertise: '' })
     
-      const handleAddInstructor = (e: React.FormEvent) => {
-        e.preventDefault()
-        const instructor: Instructor = {
-          id: Math.random().toString(36).substr(2, 9),
-          ...newInstructor,
-          status: 'pending'
-        }
-        setInstructors([...instructors, instructor])
-        setShowAddModal(false)
-        setNewInstructor({ name: '', email: '', expertise: '' })
-      }
 
     return (
         <div className="bg-surface text-on-surface">
@@ -114,13 +102,13 @@ const AdminDashboard = () => {
                             </p>
                         </div>
                         <div className="hidden md:flex items-center gap-3">
-                            <button 
-                                onClick={() => setShowAddModal(true)}
+                            <Link 
+                                to="/admin/add-instructor"
                                 className="flex items-center gap-2 bg-[#00327D] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-800 transition-colors shadow-lg"
                             >
                                 <span className="material-symbols-outlined text-lg">person_add</span>
                                 Create Instructor
-                            </button>
+                            </Link>
                             <button className="flex items-center gap-2 bg-surface-container-highest px-4 py-2 rounded-lg text-sm font-semibold hover:bg-slate-300 transition-colors border border-slate-200">
                                 <span className="material-symbols-outlined text-lg">download</span>
                                 Export Summary
@@ -200,76 +188,13 @@ const AdminDashboard = () => {
 
                 {/* Footer Area */}
                 <footer className="p-8 text-center text-slate-400 text-xs font-medium">
-                    © 2024 Architectural Curator Admin Console • Internal Use Only • v2.8.4-stable
+                    © 2026 TalentFlow LMS Admin Executive • Internal Use Only • v2.8.4-stable
                 </footer>
             </main>
 
             {/* Bottom Navigation (Mobile only) */}
             <BottomNav />
 
-            {/* Add Instructor Modal */}
-            {showAddModal && (
-                <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 animate-in fade-in zoom-in duration-200">
-                        <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-2xl font-bold text-[#1E293B] font-manrope">New Instructor Account</h2>
-                            <button onClick={() => setShowAddModal(false)} className="text-slate-400 hover:text-slate-600 transition-colors">
-                                <span className="material-symbols-outlined">close</span>
-                            </button>
-                        </div>
-                        
-                        <form onSubmit={handleAddInstructor} className="space-y-5">
-                            <div>
-                                <label className="block text-sm font-bold text-slate-700 mb-1.5">Full Name</label>
-                                <input 
-                                    required
-                                    className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-[#3730A3] focus:border-transparent text-slate-900 transition-all outline-none"
-                                    placeholder="e.g. Dr. Alex Rivera"
-                                    value={newInstructor.name}
-                                    onChange={e => setNewInstructor({...newInstructor, name: e.target.value})}
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-bold text-slate-700 mb-1.5">Institutional Email</label>
-                                <input 
-                                    type="email"
-                                    required
-                                    className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-[#3730A3] focus:border-transparent text-slate-900 transition-all outline-none"
-                                    placeholder="a.rivera@talentflow.edu"
-                                    value={newInstructor.email}
-                                    onChange={e => setNewInstructor({...newInstructor, email: e.target.value})}
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-bold text-slate-700 mb-1.5">Target Expertise Area</label>
-                                <select 
-                                    required
-                                    className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-[#3730A3] focus:border-transparent text-slate-900 transition-all outline-none appearance-none"
-                                    value={newInstructor.expertise}
-                                    onChange={e => setNewInstructor({...newInstructor, expertise: e.target.value})}
-                                >
-                                    <option value="">Select Domain</option>
-                                    <option value="System Architecture">System Architecture</option>
-                                    <option value="Data Science">Data Science</option>
-                                    <option value="Cloud Infrastructure">Cloud Infrastructure</option>
-                                    <option value="Cybersecurity">Cybersecurity</option>
-                                </select>
-                            </div>
-                            <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
-                                <p className="text-xs text-blue-700 font-medium leading-relaxed">
-                                    Account credentials will be automatically generated and sent to the instructor's institutional email address.
-                                </p>
-                            </div>
-                            <button 
-                                type="submit"
-                                className="w-full py-4 rounded-xl bg-[#00327D] text-white font-bold text-lg shadow-xl shadow-blue-900/10 hover:bg-blue-800 active:scale-[0.98] transition-all"
-                            >
-                                Confirm & Create Account
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };
