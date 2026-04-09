@@ -14,7 +14,11 @@ import AdminDashboard from './pages/AdminDashboard';
 import UserManagementPage from './pages/AdminUserManagementPage';
 import AdminUserDetailPage from './pages/AdminUserDetailPage';
 import NotificationsPage from './pages/NotificationsPage'
+import DiscussionsPage from './pages/DiscussionsPage'
 import MyLearningPage from './pages/MyLearningPage'
+import AssignmentsPage from './pages/AssignmentsPage'
+import SubmissionsPage from './pages/SubmissionsPage'
+import CertificatesPage from './pages/CertificatesPage'
 import InstructorProfileSetupPage from './pages/InstructorProfileSetupPage'
 import InstructorGradebookPage from './pages/InstructorGradebookPage'
 import CertificatePage from './pages/CertificatePage'
@@ -36,6 +40,11 @@ function App() {
         <Route path="/learner/dashboard" element={<LearnerDashboard />} />
         <Route path="/learner/courses" element={<LearnerCoursesPage />} />
         <Route path="/learner/notifications" element={<NotificationsPage />} />
+        <Route path="/learner/discussions" element={<DiscussionsPage />} />
+        <Route path="/learner/progress" element={<MyLearningPage />} />
+        <Route path="/learner/assignments" element={<AssignmentsPage />} />
+        <Route path="/learner/submissions" element={<SubmissionsPage />} />
+        <Route path="/learner/certificates" element={<CertificatesPage />} />
         <Route path="/learner/my-learning" element={<MyLearningPage />} />
         <Route path="/learner/messages" element={<MessagesPage />} />
         <Route path="/certificate/:courseId" element={<CertificatePage />} />
