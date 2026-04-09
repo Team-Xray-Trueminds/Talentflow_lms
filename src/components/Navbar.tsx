@@ -19,11 +19,7 @@ export default function Navbar({ links = [], rightSlot }: NavbarProps) {
       <div className="flex justify-between items-center w-full px-6 md:px-8 py-4 md:py-6 max-w-7xl mx-auto">
         <Link
           to="/"
-<<<<<<< HEAD
-          className="text-xl md:text-2xl text-[#0047AB] font-black tracking-tight font-headline transition-colors duration-300 dark:text-[#8AB4FF]"
-=======
-          className="text-xl md:text-2xl text-[#0047AB] font-black tracking-tight font-headline shrink-0"
->>>>>>> 7dad6345584927c3c089767c5603ac907dfa47fe
+          className="text-xl md:text-2xl text-[#0047AB] font-black tracking-tight font-headline shrink-0 transition-colors duration-300 dark:text-[#8AB4FF]"
         >
           TalentFlow
         </Link>
@@ -42,10 +38,6 @@ export default function Navbar({ links = [], rightSlot }: NavbarProps) {
           </nav>
         )}
 
-<<<<<<< HEAD
-        <div className="flex items-center gap-4 md:gap-6">
-          {rightSlot && <div className="flex items-center space-x-6">{rightSlot}</div>}
-=======
         <div className="flex items-center gap-4">
           <div className="hidden md:flex items-center space-x-6">
             {rightSlot}
@@ -79,7 +71,6 @@ export default function Navbar({ links = [], rightSlot }: NavbarProps) {
           <div className="pt-8 flex flex-col gap-4">
             {rightSlot}
           </div>
->>>>>>> 7dad6345584927c3c089767c5603ac907dfa47fe
         </div>
       </div>
     </header>

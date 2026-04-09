@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import AppFooter from '../components/AppFooter';
+import { useTheme } from '../components/theme/ThemeProvider';
 
 const ScrollReveal: React.FC<{ children: React.ReactNode; className?: string; threshold?: number }> = ({ 
   children, 
@@ -73,6 +74,9 @@ const CountUp: React.FC<{ end: number; suffix?: string }> = ({ end, suffix = '' 
 };
 
 const LandingPage: React.FC = () => {
+  const { resolvedTheme, setThemeMode } = useTheme()
+  const isDark = resolvedTheme === 'dark'
+
   return (
     <>
       <Navbar
@@ -84,6 +88,20 @@ const LandingPage: React.FC = () => {
         ]}
         rightSlot={
           <>
+            <button
+              type="button"
+              onClick={() => setThemeMode(isDark ? 'light' : 'dark')}
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/80 text-[#0047AB] shadow-[0_10px_24px_rgba(37,89,189,0.12)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:text-[#2559BD] dark:bg-[#22374F] dark:text-[#DCE8FF] dark:hover:bg-[#2B4663] dark:hover:text-white"
+            >
+              <span
+                className="material-symbols-outlined text-[20px]"
+                style={{ fontVariationSettings: "'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24" }}
+              >
+                {isDark ? 'light_mode' : 'dark_mode'}
+              </span>
+            </button>
             <Link to="/login" className="text-on-surface-variant font-medium hover:text-primary transition-all dark:text-[#D8E4FF] dark:hover:text-[#57FAE9]">
               Sign In
             </Link>
@@ -105,30 +123,17 @@ const LandingPage: React.FC = () => {
               <span className="material-symbols-outlined text-[#00327D] text-sm dark:text-[#57FAE9]" style={{ fontVariationSettings: "'FILL' 1" }}>architecture</span>
               <span className="p-2 rounded-full text-sm font-bold tracking-wide uppercase text-[#38485D] dark:text-[#D2DEFF]">Premier Growth Platform</span>
             </div>
-<<<<<<< HEAD
             <h1 className="text-6xl font-extrabold text-[#191C1E] leading-[1.1] font-headline tracking-tighter animate-fade-in-up animate-stagger-1 transition-colors duration-300 dark:text-[#F5F9FF]">
               Architecting the future of <span className="text-[#0047AB] italic dark:text-[#57FAE9]">career mentorship</span> and growth.
-=======
-            <h1 className="text-4xl md:text-6xl font-extrabold text-[#191C1E] leading-[1.1] font-headline tracking-tighter animate-fade-in-up animate-stagger-1">
-              Architecting the future of <span className="text-[#0047AB] italic">career mentorship</span> and growth.
->>>>>>> 7dad6345584927c3c089767c5603ac907dfa47fe
             </h1>
             <p className="text-xl text-[#434653] leading-relaxed max-w-lg animate-fade-in-up animate-stagger-2 transition-colors duration-300 dark:text-[#A8B7D8]">
               TalentFlow provides the blueprints for professional evolution. We connect visionaries with curated expertise to build the next generation of global industry leaders.
             </p>
-<<<<<<< HEAD
-            <div className="flex items-center gap-4 pt-4 animate-fade-in-up animate-stagger-3">
-              <button className="rounded-lg bg-[#002C70] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl active:scale-95 dark:bg-[linear-gradient(135deg,#0A5BFF,#57FAE9)] dark:text-[#021223] dark:shadow-[0_18px_35px_rgba(87,250,233,0.18)]">
-                Get Started
-              </button>
-              <button className="flex items-center gap-2 rounded-lg px-8 py-4 font-bold text-[#002C70] transition-colors hover:bg-[#E6E8EA] dark:text-[#DCE8FF] dark:hover:bg-[#0B1A33]">
-=======
             <div className="flex flex-col sm:flex-row items-center gap-4 pt-4 animate-fade-in-up animate-stagger-3">
-              <button className="w-full sm:w-auto bg-[#002C70] text-white px-8 py-4 rounded-lg font-bold text-lg shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 transition-all">
+              <button className="w-full sm:w-auto rounded-lg bg-[#002C70] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl active:scale-95 dark:bg-[linear-gradient(135deg,#6A8FDB,#7CE5DC)] dark:text-[#122032]">
                 Get Started
               </button>
-              <button className="w-full sm:w-auto flex items-center justify-center text-[#002C70] gap-2 font-bold px-8 py-4 rounded-lg hover:bg-[#E6E8EA] transition-colors">
->>>>>>> 7dad6345584927c3c089767c5603ac907dfa47fe
+              <button className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-lg px-8 py-4 font-bold text-[#002C70] transition-colors hover:bg-[#E6E8EA] dark:text-[#DCE8FF] dark:hover:bg-[#22374F]">
                 <span className="material-symbols-outlined">play_circle</span>
                 The TalentFlow Vision
               </button>
