@@ -11,11 +11,11 @@ export default function InstructorGradebookPage() {
   ]
 
   const students = [
-    { id: 1, name: 'Alexandru Chen', program: 'B.Arch Year 2', email: 'alex@talentflow.edu', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCk5utjN07mkZOhvtLZIyLzTlvKn2L4iPZCxU2HE03HITuSyf687NvYeKy1N3BB3ni_PXK6x68sbgc75rNQ2L2yaSJm-G8klfuPjgpLJwHX36NoMakdz6P_Z2afHIAebaZV13Q7a3n9L2hbMhTqfjyw74ubS7f51FH_QDX66YnHaXq9NSQwc_7KrIjpQkDJ-Yp3aaAhNu-vnGsNf7SIO4uN_S4bTdHe0MSfe9aqNGnaSUESsnPKSC5Ebl9BWs9kMIL9tpe4Ug-K6OI', assignments: [
+    { id: 1, name: 'Alexandru Chen', program: 'B.Arch Year 2', email: 'alex@talentflow.edu', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCk5utjN07mkZOhvtLZIyLzTlvKn2L4iPZCxU2HE03HITuSyf687NvYeKy1N3BB3ni_PXK6x68sbgc75rNQ2L2yaSJm-G8klfuPjgpLJwHX36NoMakdz6P_Z2afHIAebaZV13Q7a3n9L2hbMhTqfjyw74ubS7f51FH_QDX66YnHaXq9NSQwc_7KrIjpQkDJ-Yp3aaAhNu-vnGsNf7SIO4uN_S4bTdHe0MSfe9aqNGnaSUESsnPKSC5Ebl9BWs9kMIL9tpe4Ug-K6OI', progress: 68, status: 'Attention Needed', assignments: [
       { title: 'Modern UI Foundations', grade: 92, status: 'Graded' },
       { title: 'Project: Grid Systems', grade: null, status: 'Submitted' }
     ]},
-    { id: 2, name: 'Elena Rodriguez', program: 'B.Arch Year 3', email: 'elena@talentflow.edu', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB06ZF4rJWSKN23zp2wWsqwcW2AAK2QkSoDP8VJd3XcOmygrHupDSMRzlmq1pV7oIZmyGUWmoHieax_B0EhzWAKlA3mVAirTYUI7btKWWdLkEFw7NS5SmkEjHY-urpnaWWOzby9uwXtVCfd0xjLeIluwlQol8d9sOChqyuzLcu8hwIJZKuYVi7WMjsB_7DuwjZ7MBOWgf9H2W7DOYgCqdKZeTdDRVZqyp5Ox8q3TvJ3ndRGc5lXidkY5yfCJZDARcfbOl7kxPydQ1M', assignments: [
+    { id: 2, name: 'Elena Rodriguez', program: 'B.Arch Year 3', email: 'elena@talentflow.edu', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB06ZF4rJWSKN23zp2wWsqwcW2AAK2QkSoDP8VJd3XcOmygrHupDSMRzlmq1pV7oIZmyGUWmoHieax_B0EhzWAKlA3mVAirTYUI7btKWWdLkEFw7NS5SmkEjHY-urpnaWWOzby9uwXtVCfd0xjLeIluwlQol8d9sOChqyuzLcu8hwIJZKuYVi7WMjsB_7DuwjZ7MBOWgf9H2W7DOYgCqdKZeTdDRVZqyp5Ox8q3TvJ3ndRGc5lXidkY5yfCJZDARcfbOl7kxPydQ1M', progress: 95, status: 'On Track', assignments: [
       { title: 'Principles of Flow', grade: 88, status: 'Graded' },
       { title: 'Final Studio Exam', grade: 94, status: 'Graded' }
     ]},
@@ -131,6 +131,27 @@ export default function InstructorGradebookPage() {
                       <button onClick={() => setSelectedStudent(null)} className="p-2 hover:bg-[#F2F4F6] rounded-xl">
                          <span className="material-symbols-outlined">close</span>
                       </button>
+                   </div>
+
+                   {/* Progress Monitoring */}
+                   <div className="mb-10 p-6 bg-[#F7F9FB] rounded-3xl border border-[#C3C6D5]/10">
+                      <div className="flex justify-between items-center mb-4">
+                         <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-[#74777F]">Sync-Level Progress</h4>
+                         <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded ${selectedStudent.status === 'On Track' ? 'bg-[#57FAE9]/20 text-[#005049]' : 'bg-[#FFDAD6] text-[#BA1A1A]'}`}>
+                            {selectedStudent.status}
+                         </span>
+                      </div>
+                      <div className="relative w-full h-3 bg-white rounded-full overflow-hidden mb-3">
+                         <div 
+                           className={`absolute left-0 top-0 h-full transition-all duration-1000 ${selectedStudent.progress > 80 ? 'bg-[#00327D]' : 'bg-[#BA1A1A]'}`}
+                           style={{ width: `${selectedStudent.progress}%` }}
+                         ></div>
+                      </div>
+                      <div className="flex justify-between items-center text-[10px] font-bold text-[#434653]">
+                         <span>0%</span>
+                         <span>{selectedStudent.progress}% Completion</span>
+                         <span>100%</span>
+                      </div>
                    </div>
 
                    {/* Quick Actions */}

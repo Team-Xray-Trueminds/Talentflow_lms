@@ -1,4 +1,4 @@
-# TalentFlow LMS
+# TalentFlow LMS Admin Executive
 
 **Architecting the Future of Professional Excellence.** 🏗️✨
 
@@ -124,4 +124,4 @@ To keep the platform premium and cohesive:
 
 ---
 
-© 2026 TalentFlow. All rights reserved. Built for the **Architectural Curator**.
+© 2026 TalentFlow LMS. All rights reserved. Built for professional excellence.

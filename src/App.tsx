@@ -21,6 +21,9 @@ import CertificatePage from './pages/CertificatePage'
 import MessagesPage from './pages/MessagesPage'
 import InstructorCourseBuilder from './pages/InstructorCourseBuilder'
 import InstructorCurriculumBuilder from './pages/InstructorCurriculumBuilder'
+import AdminAddInstructorPage from './pages/AdminAddInstructorPage';
+import AdminInstructorProfilePage from './pages/AdminInstructorProfilePage';
+
 
 function App() {
   return (
@@ -49,6 +52,8 @@ function App() {
         <Route path="/instructor/curriculum-builder" element={<InstructorCurriculumBuilder />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/user-management" element={<UserManagementPage />} />
+        <Route path="/admin/add-instructor" element={<AdminAddInstructorPage />} />
+        <Route path="/admin/instructor-profile" element={<AdminInstructorProfilePage />} />
         <Route path="/admin/talent-directory" element={<AdminUserDetailPage />} />
         <Route path="/admin" element={<AdminDashboard />} />
       </Routes>

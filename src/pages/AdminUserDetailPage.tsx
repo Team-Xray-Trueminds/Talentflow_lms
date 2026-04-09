@@ -41,7 +41,7 @@ const AdminUserDetailPage = () => {
                                             <span className="material-symbols-outlined text-primary text-xl">mail</span>
                                             <div>
                                                 <p className="text-[10px] uppercase font-bold text-on-surface-variant/60 tracking-widest">Email</p>
-                                                <p className="text-sm font-medium text-on-surface break-all">elena.rodriguez@archcurator.com</p>
+                                                <p className="text-sm font-medium text-on-surface break-all">elena.rodriguez@talentflow.edu</p>
                                             </div>
                                         </div>
                                         <div className="flex items-start gap-3">
@@ -268,7 +268,7 @@ const AdminUserDetailPage = () => {
                                         <div className="absolute -bottom-2 -right-2 bg-tertiary-fixed text-on-tertiary-fixed px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-md">Active</div>
                                     </div>
                                     <h3 className="text-2xl font-bold text-on-surface">Elena Rodriguez</h3>
-                                    <p className="text-on-surface-variant text-sm font-medium mb-6 break-all">e.rodriguez@talentflow.arch</p>
+                                    <p className="text-on-surface-variant text-sm font-medium mb-6 break-all">e.rodriguez@talentflow.edu</p>
                                     <div className="w-full space-y-4 pt-6 border-t border-outline-variant/15">
                                         <div className="flex justify-between items-center text-sm">
                                             <span className="text-on-surface-variant">Phone</span>
