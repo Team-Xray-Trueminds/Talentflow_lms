@@ -6,21 +6,27 @@ TalentFlow is a high-fidelity learning management and professional mentorship pl
 
 ---
 
-## 🌓 The Dual Interface System
+## 🌒 The Triple Interface System
 
-TalentFlow offers two distinct visual and functional experiences tailored to the user's role:
+TalentFlow offers three distinct visual and functional experiences tailored to user roles:
+
+### 🏛️ The Vault (Admin Dashboard)
+Strategic oversight for platform administrators with a focus on governance and system health.
+- **User Management:** Granular control over instructor and learner accounts.
+- **Talent Directory:** Comprehensive database of platform participants and their performance.
+- **Audit Trails:** Tracking system activity and platform-wide growth metrics.
 
 ### 🎙️ The Studio (Instructor Dashboard)
-A sophisticated, dark-themed "control room" aesthetic designed for content creation and academic oversight.
-- **Deep Navy & Emerald Ties:** Professional, focused color palette.
-- **Strategic Curriculum Management:** Tools to build and manage career-defining tracks.
-- **Learner Oversight:** Advanced analytics and progress tracking.
+A sophisticated, dark-themed "control room" aesthetic designed for academic oversight and content creation.
+- **Academic Tracks:** Strategic curriculum management for career-defining tracks.
+- **Gradebook Portal:** High-fidelity performance metrics and submission oversight.
+- **Course Builder:** Precision-engineered tools for constructing adaptive learning paths.
 
 ### 🛣️ The Path (Learner Dashboard)
-A clean, airy, and light-themed environment focused on focus and progression.
-- **Surface Elevation:** Uses Material Design 3 principles for a high-fidelity feel.
-- **Bento Grid Layout:** Geometric rhythm for intuitive navigation.
-- **Progress Tracking:** Interactive maps for academic journeys.
+A clean, airy, light-themed environment focused on progression and clarity.
+- **Academic Explorer:** Intuitive course discovery and enrollment.
+- **Certification System:** Professional, downloadable certificates upon course completion.
+- **Bento Progress Tracking:** Geometric rhythm for tracking academic journeys.
 
 ---
 
@@ -44,15 +50,15 @@ The application uses a semantic system based on containers:
 ### 3. Typography & Motion
 - **Headlines:** `font-headline` (Manrope) for a modern, architectural feel.
 - **Body:** `font-body` (Inter) for maximum readability.
-- **Micro-interactions:** Every interaction should feel tactile. Use `hover:scale-[1.02]` and smooth `transition-all`.
+- **Fluid Motion:** Implementation of scroll-triggered animations and smooth micro-interactions (e.g., `hover:scale-[1.02]`).
 
 ---
 
 ## 🛡️ Security & Access Control
 
-- **Learner Registration:** Open to the public via the standard sign-up flow.
-- **Instructor Access:** Restricted. Instructor accounts cannot be created via the public sign-up page and must be provisioned by an Administrator to maintain the platform's standard of excellence.
-- **Email Verification:** Mandatory verification flow before accessing the dashboard.
+- **Learner Registration:** Open via standard sign-up flow.
+- **Instructor Access:** Strictly restricted. Instructor accounts must be provisioned by an Administrator to maintain educational standards.
+- **Verification:** Mandatory email verification flow for all account types.
 
 ---
 
@@ -72,18 +78,18 @@ The application uses a semantic system based on containers:
 ```bash
 src/
 ├── components/          # Reusable UI components
-│   ├── auth/            # Authentication triggers and forms
-│   ├── Navbar.tsx       # Dynamic navigation
-│   ├── Sidebar.tsx      # Role-based side navigation (Studio vs Path)
-│   └── AppFooter.tsx    # Branded footer
-├── pages/               # Functional page compositions
-│   ├── Instructor/      # Studio-related pages
-│   ├── Learner/         # Path-related pages
-│   ├── Admin/           # Oversight pages
-│   └── LandingPage.tsx  # Initial entry point
-├── context/             # Global state management
-├── index.css            # Tailwind configuration & global animations
-└── main.tsx             # App bootstrap
+│   ├── auth/            # Auth forms and verification modals
+│   ├── layout/          # Dashboard layouts and structural wrappers
+│   ├── Sidebar.tsx      # Role-based navigation logic (Vault, Studio, Path)
+│   └── MetricCard.tsx   # Premium data visualization cards
+├── pages/               # Page compositions
+│   ├── Admin/           # Oversight and Management pages
+│   ├── Instructor/      # Curriculum and Gradebook portals
+│   ├── Learner/         # My Learning and Certificate pages
+│   └── LandingPage.tsx  # Animated landing experience
+├── context/             # Global state (Auth, UI preferences)
+├── index.css            # Tailwind 4 configuration & custom animations
+└── App.tsx              # Central routing and role management
 ```
 
 ---
@@ -113,9 +119,9 @@ pnpm run dev
 To keep the platform premium and cohesive:
 
 1. **Follow the Grid:** Use the Bento-grid structure for all content layouts.
-2. **Use Semantic Tokens:** Never use hardcoded hex codes or generic Tailwind colors outside of configuration. Use the provided tokens (e.g., `bg-primary-container`).
-3. **High-Fidelity Assets:** Use `generate_image` or high-quality architectural visuals. No generic placeholders.
+2. **Use Semantic Tokens:** Never use hardcoded hex codes. Use the provided tokens (e.g., `text-primary`, `bg-on-secondary-container`).
+3. **Refined Motion:** Ensure any new UI elements include appropriate entry animations and hover states.
 
 ---
 
-© 2024 TalentFlow. All rights reserved. Built for the **Architectural Curator**.
+© 2026 TalentFlow. All rights reserved. Built for the **Architectural Curator**.
