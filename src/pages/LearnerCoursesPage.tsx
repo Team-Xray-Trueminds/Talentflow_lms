@@ -162,10 +162,13 @@ export default function LearnerCoursesPage() {
                             <div key={num} className="w-8 h-8 rounded-full border-2 border-white bg-[#D3E4FE]"></div>
                           ))}
                         </div>
-                        <button className="flex items-center gap-2 text-sm font-black text-[#00327D] group">
-                          Enroll Now
+                        <Link 
+                          to={`/learner/course-preview/${i + 1}`}
+                          className="flex items-center gap-2 text-sm font-black text-[#00327D] group no-underline"
+                        >
+                          Explore Course
                           <span className="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   </div>

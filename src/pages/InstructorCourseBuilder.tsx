@@ -1,418 +1,276 @@
 import { useState, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
-export default function InstructorCourseBuilder() {
-  const navigate = useNavigate();
+const InstructorCourseBuilder = () => {
+    const navigate = useNavigate();
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [coverImage, setCoverImage] = useState<string | null>(null);
+    const contentEditableRef = useRef<HTMLDivElement>(null);
 
-  // --- Image Upload State & Handlers ---
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [coverImage, setCoverImage] = useState<string | null>(null);
+    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const url = URL.createObjectURL(file);
+            setCoverImage(url);
+        }
+    };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setCoverImage(url);
-    }
-  };
+    const handleFormat = (command: string) => {
+        document.execCommand(command, false);
+        contentEditableRef.current?.focus();
+    };
 
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files?.[0];
-    if (file && file.type.startsWith('image/')) {
-      const url = URL.createObjectURL(file);
-      setCoverImage(url);
-    }
-  };
-
-  const clearImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCoverImage(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-  };
-
-  // --- Rich Text Handlers ---
-  const contentEditableRef = useRef<HTMLDivElement>(null);
-
-  const handleFormat = (command: string) => {
-    document.execCommand(command, false);
-    contentEditableRef.current?.focus();
-  };
-
-  const handleLink = () => {
-    const url = prompt('Enter link URL:');
-    if (url) {
-      document.execCommand('createLink', false, url);
-    }
-    contentEditableRef.current?.focus();
-  };
-
-  return (
-    <div className="flex flex-col min-h-screen font-sans pb-32 bg-brand-page">
-
-      {/* ── Top Header ── */}
-      <header className="h-20 flex items-center justify-between px-10 shrink-0 w-full shadow-sm z-20 sticky top-0 bg-white border-b border-gray-200">
-        <div className="flex items-center h-full">
-          <h1 className="text-xl font-black tracking-tight whitespace-nowrap mr-16 text-brand-navy">
-            Architectural Curator
-          </h1>
-          <nav className="flex items-center gap-10 h-full">
-            <Link
-              to="/instructor/dashboard"
-              className="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors h-full flex items-center pt-1 whitespace-nowrap"
-            >
-              Dashboard
-            </Link>
-            <div className="text-sm font-bold text-brand-navy border-b-[3px] border-brand-navy h-full flex items-center pt-1 whitespace-nowrap">
-              Courses
-            </div>
-            <Link
-              to="#"
-              className="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors h-full flex items-center pt-1 whitespace-nowrap"
-            >
-              Students
-            </Link>
-            <Link
-              to="/instructor/analytics"
-              className="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors h-full flex items-center pt-1 whitespace-nowrap"
-            >
-              Analytics
-            </Link>
-          </nav>
-        </div>
-
-        <div className="flex items-center gap-6">
-          <button className="text-gray-500 hover:text-gray-900 transition-colors flex bg-transparent outline-none cursor-pointer">
-            <span className="material-symbols-outlined text-2xl">notifications</span>
-          </button>
-          <button className="text-gray-500 hover:text-gray-900 transition-colors flex bg-transparent outline-none cursor-pointer">
-            <span className="material-symbols-outlined text-2xl">help</span>
-          </button>
-          <button className="text-white px-7 py-3 rounded-xl text-sm font-bold shadow-sm transition-transform active:scale-95 whitespace-nowrap ml-2 cursor-pointer bg-brand-navy">
-            Publish Course
-          </button>
-          <div className="w-11 h-11 rounded-full overflow-hidden shrink-0 shadow-sm ml-2">
-            <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOob43RVwc0CW12KB2DOBUtlHf-ew8BT46J0LkWSlklYMWRvTXlfGxTj8f_hGk8DCjxYTFV0FYgMSdkIchWPU2n2hN7odES9Y79DF2NjAD-N8AdXIh5Jqwuyr3gqbeQ6gQO9lHGathfnZ8t7xnUX7qARnkKnypxwL4TgPHwGE30jrZpU1GLNKHnIrF5FFm7Q1ZpHlQVl4KPpTMjINcfIXSwtWpEM4tMy34N59zfkcEZQrDOxVXaSd1q8rnaMb9573149iRc69wJQw"
-              alt="User"
-              className="w-full h-full object-cover"
+    return (
+        <div className="min-h-screen bg-[#F7F9FB] font-inter text-[#191C1E] flex flex-col">
+            <input 
+                type="file" 
+                ref={fileInputRef} 
+                onChange={handleImageUpload} 
+                className="hidden" 
+                accept="image/*" 
             />
-          </div>
-        </div>
-      </header>
-
-      {/* ── Main 3-Column Layout ── */}
-      <div className="flex flex-1 w-full max-w-[1400px] mx-auto px-8 lg:px-12 gap-12 items-stretch pt-10">
-
-        {/* ── Left Sidebar ── */}
-        <div className="w-60 flex flex-col shrink-0">
-          <h2 className="font-extrabold text-lg mb-1 tracking-tight text-brand-navy">Course Builder</h2>
-          <p className="text-xs font-semibold mb-10 text-brand-muted">Step 1 of 4</p>
-
-          <nav className="flex flex-col gap-2">
-            {/* Active step */}
-            <div className="flex items-center gap-3 font-bold text-sm py-4 px-5 rounded-2xl shadow-sm bg-white text-brand-blue border-l-4 border-brand-blue">
-              <span className="material-symbols-outlined text-[22px]">edit_note</span>
-              <span>Course Details</span>
-            </div>
-            <div className="flex items-center gap-3 font-bold text-sm py-4 px-5 rounded-2xl cursor-pointer transition-colors text-brand-slate">
-              <span className="material-symbols-outlined text-[22px]">view_module</span>
-              <span>Module Setup</span>
-            </div>
-            <div className="flex items-center gap-3 font-bold text-sm py-4 px-5 rounded-2xl cursor-pointer transition-colors text-brand-slate">
-              <span className="material-symbols-outlined text-[22px]">cloud_upload</span>
-              <span>Content Upload</span>
-            </div>
-            <div className="flex items-center gap-3 font-bold text-sm py-4 px-5 rounded-2xl cursor-pointer transition-colors text-brand-slate">
-              <span className="material-symbols-outlined text-[22px]">help_center</span>
-              <span>Assignment Builder</span>
-            </div>
-          </nav>
-        </div>
-
-        {/* ── Center Form ── */}
-        <main className="flex-1 max-w-[680px] flex flex-col min-w-0">
-          {/* Progress header */}
-          <div className="flex flex-col mb-6 mt-1">
-            <div className="flex justify-between items-end mb-3">
-              <p className="text-xs font-black tracking-[0.15em] uppercase text-brand-blue">STEP 1 OF 4</p>
-              <p className="text-xs font-bold tracking-wide text-brand-slate">25% Completed</p>
-            </div>
-            <div className="w-full h-1.5 rounded-full overflow-hidden bg-brand-divider">
-              <div className="w-1/4 h-full rounded-full bg-brand-blue"></div>
-            </div>
-          </div>
-
-          {/* Form card */}
-          <div className="rounded-3xl p-8 shadow-sm flex flex-col bg-white border border-brand-border">
-            <div className="flex flex-col gap-8">
-
-              {/* Course Title */}
-              <div>
-                <label className="block text-[13px] font-bold mb-3 text-brand-dark">Course Title</label>
-                <input
-                  type="text"
-                  placeholder="e.g. Architectural Design System"
-                  className="w-full rounded-2xl px-5 py-4 text-sm focus:outline-none font-medium border-none bg-brand-surface text-brand-dark"
-                />
-              </div>
-
-              {/* Academic Category */}
-              <div>
-                <label className="block text-[13px] font-bold mb-3 text-brand-dark">Academic Category</label>
-                <div className="relative">
-                  <select className="appearance-none w-full rounded-2xl px-5 py-4 text-sm focus:outline-none font-medium cursor-pointer border-none bg-brand-surface text-brand-mid">
-                    <option>Select Academic Field</option>
-                    <option>UI Architecture</option>
-                    <option>Frontend Engineering</option>
-                  </select>
-                  <span className="material-symbols-outlined absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-xl text-brand-slate">
-                    expand_more
-                  </span>
-                </div>
-              </div>
-
-              {/* Course Description – rich text */}
-              <div>
-                <label className="block text-[13px] font-bold mb-3 text-brand-dark">Course Description</label>
-                <div className="rounded-2xl overflow-hidden flex flex-col bg-brand-surface" style={{ minHeight: '160px' }}>
-                  {/* Toolbar */}
-                  <div className="px-5 py-3 flex items-center gap-6 border-b border-brand-divider shrink-0 bg-brand-back">
-                    <button
-                      title="Bold"
-                      type="button"
-                      onClick={() => handleFormat('bold')}
-                      className="rounded p-1 flex leading-none bg-transparent outline-none hover:bg-black/5 transition-colors cursor-pointer text-brand-mid"
-                    >
-                      <span className="material-symbols-outlined text-[18px]">format_bold</span>
-                    </button>
-                    <button
-                      title="Italic"
-                      type="button"
-                      onClick={() => handleFormat('italic')}
-                      className="rounded p-1 flex leading-none bg-transparent outline-none hover:bg-black/5 transition-colors cursor-pointer text-brand-mid"
-                    >
-                      <span className="material-symbols-outlined text-[18px]">format_italic</span>
-                    </button>
-                    <button
-                      title="Bullet List"
-                      type="button"
-                      onClick={() => handleFormat('insertUnorderedList')}
-                      className="rounded p-1 flex leading-none bg-transparent outline-none hover:bg-black/5 transition-colors cursor-pointer text-brand-mid"
-                    >
-                      <span className="material-symbols-outlined text-[18px]">format_list_bulleted</span>
-                    </button>
-                    <button
-                      title="Insert Link"
-                      type="button"
-                      onClick={handleLink}
-                      className="rounded p-1 flex leading-none bg-transparent outline-none hover:bg-black/5 transition-colors cursor-pointer text-brand-mid"
-                    >
-                      <span className="material-symbols-outlined text-[18px]">link</span>
-                    </button>
-                  </div>
-
-                  {/* Editable area */}
-                  <div
-                    ref={contentEditableRef}
-                    contentEditable
-                    className="w-full px-5 py-4 focus:outline-none flex-1 text-sm leading-relaxed text-brand-dark"
-                    onInput={(e) => {
-                      if (e.currentTarget.textContent?.trim() === '') {
-                        e.currentTarget.innerHTML = '';
-                      }
-                    }}
-                  />
-                  {/* Scoped styles for contenteditable behaviour – these cannot be expressed as Tailwind classes */}
-                  <style>{`
-                    div[contenteditable]:empty::before {
-                      content: "Define your course curriculum and learning objectives...";
-                      color: #94a3b8;
-                      pointer-events: none;
-                      display: block;
-                    }
-                    div[contenteditable] ul {
-                      list-style-type: disc;
-                      padding-left: 2rem;
-                      margin-top: 0.5rem;
-                      margin-bottom: 0.5rem;
-                    }
-                    div[contenteditable] a {
-                      color: #0047AB;
-                      text-decoration: underline;
-                    }
-                  `}</style>
-                </div>
-              </div>
-
-              {/* Cover Image */}
-              <div>
-                <label className="block text-[13px] font-bold mb-3 text-brand-dark">
-                  Course Cover Image (16:9 Recommended)
-                </label>
-                <div
-                  onClick={() => fileInputRef.current?.click()}
-                  onDragOver={handleDragOver}
-                  onDrop={handleDrop}
-                  className={`border-2 border-dashed rounded-[20px] flex flex-col items-center justify-center cursor-pointer overflow-hidden group relative transition-all h-[220px] ${
-                    coverImage
-                      ? 'border-transparent bg-black'
-                      : 'border-brand-upload-border bg-brand-upload hover:bg-black/5'
-                  }`}
-                >
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    onChange={handleImageUpload}
-                    accept="image/*"
-                    className="hidden"
-                  />
-
-                  {coverImage ? (
-                    <div className="w-full h-full relative">
-                      <img src={coverImage} alt="Cover Preview" className="w-full h-full object-cover" />
-                      <button
-                        onClick={clearImage}
-                        title="Remove Image"
-                        className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors z-20 cursor-pointer text-brand-dark"
-                      >
-                        <span className="material-symbols-outlined text-xl">close</span>
-                      </button>
+            
+            {/* 1. EDITORIAL HEADER */}
+            <header className="h-20 bg-[#F7F9FB]/80 backdrop-blur-xl sticky top-0 z-50 flex items-center justify-between px-10 w-full shrink-0">
+                <div className="flex items-center gap-12">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-gradient-to-tr from-[#00327D] to-[#2559BD] rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
+                            <span className="material-symbols-outlined text-white text-2xl">layers</span>
+                        </div>
+                        <span className="text-xl font-black tracking-tighter text-[#1C1B1F] font-manrope">Talent Flow</span>
                     </div>
-                  ) : (
-                    <>
-                      <div className="w-15 h-15 rounded-full flex items-center justify-center mb-4 shadow-sm group-hover:scale-105 transition-transform z-10 bg-white text-brand-blue">
-                        <span className="material-symbols-outlined text-[32px]">cloud_upload</span>
-                      </div>
-                      <p className="text-[15px] font-bold mb-1.5 z-10 text-center text-brand-dark">
-                        Click to upload or drag and drop
-                      </p>
-                      <p className="text-[11px] font-bold z-10 text-center uppercase tracking-widest text-brand-slate">
-                        PNG, JPG, OR WEBP (MAX. 5MB)
-                      </p>
-                    </>
-                  )}
+                    
+                    <nav className="hidden lg:flex items-center gap-8">
+                        {[
+                            { label: 'Dashboard', path: '/instructor/dashboard' },
+                            { label: 'Curriculum', path: '/instructor/courses' },
+                            { label: 'Gradebook', path: '/instructor/gradebook' },
+                            { label: 'Analytics', path: '/instructor/analytics' }
+                        ].map((item) => (
+                            <Link 
+                                key={item.label} 
+                                to={item.path}
+                                className="text-xs font-bold text-[#434653] hover:text-[#00327D] transition-colors bg-transparent border-none cursor-pointer uppercase tracking-widest no-underline"
+                            >
+                                {item.label}
+                            </Link>
+                        ))}
+                    </nav>
                 </div>
-              </div>
+                
+                <div className="flex items-center gap-6">
+                    <button 
+                        onClick={() => navigate('/learner/course-player')}
+                        className="text-xs font-bold text-[#434653] hover:text-[#191C1E] bg-transparent border-none cursor-pointer transition-colors uppercase tracking-widest"
+                    >
+                        Preview View
+                    </button>
+                    <button className="bg-gradient-to-r from-[#00327D] to-[#2559BD] text-white px-8 py-3 rounded-xl font-bold text-xs hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-primary/20 border-none cursor-pointer">
+                        Publish Course
+                    </button>
+                </div>
+            </header>
+
+            {/* ... Stepper ... */}
+            <section className="bg-white border-b border-[#E0E3E5]/40 py-4 px-10">
+                <div className="max-w-7xl mx-auto flex items-center justify-between">
+                    {[
+                        { label: 'Details', icon: 'info', status: 'ACTIVE' },
+                        { label: 'Curriculum', icon: 'account_tree', status: 'PENDING' },
+                        { label: 'Content', icon: 'cloud_upload', status: 'PENDING' },
+                        { label: 'Assignment', icon: 'assignment', status: 'PENDING' },
+                        { label: 'Review', icon: 'rate_review', status: 'PENDING' }
+                    ].map((step, i) => (
+                        <div key={step.label} className="flex items-center gap-3 group">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
+                                step.status === 'COMPLETE' ? 'bg-[#D3E4FE] text-[#00419E]' : 
+                                step.status === 'ACTIVE' ? 'bg-[#00327D] text-white ring-4 ring-primary/10 shadow-lg' : 
+                                'bg-[#F2F4F6] text-[#737784] opacity-50'
+                            }`}>
+                                <span className="material-symbols-outlined text-lg">
+                                    {step.status === 'COMPLETE' ? 'check' : step.icon}
+                                </span>
+                            </div>
+                            <span className={`text-xs font-bold tracking-tight ${
+                                step.status === 'ACTIVE' ? 'text-[#00327D]' : 
+                                step.status === 'COMPLETE' ? 'text-[#191C1E]' : 'text-[#737784] opacity-50'
+                            }`}>
+                                {step.label}
+                            </span>
+                            {i < 4 && <div className="hidden xl:block w-16 h-px bg-[#E0E3E5] mx-2" />}
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* 3. LAYOUT WRAPPER */}
+            <div className="max-w-[1440px] mx-auto w-full px-10 flex gap-12 flex-1 pt-12 pb-24">
+                
+                {/* 4. LEFT NAVIGATION SIDEBAR */}
+                <aside className="w-56 shrink-0 space-y-10">
+                    <div>
+                        <h3 className="text-[10px] font-black uppercase tracking-[0.25em] text-[#737784] mb-6">Talent Flow Builder</h3>
+                        <nav className="space-y-1">
+                            {[
+                                { label: 'Course Identity', icon: 'info_outline', active: true },
+                                { label: 'Module Hierarchy', icon: 'grid_view', path: '/instructor/curriculum-builder' },
+                                { label: 'Content Upload', icon: 'cloud_upload', path: '/instructor/content-upload' },
+                                { label: 'Assignment Builder', icon: 'assignment', path: '/instructor/assignment-builder' },
+                                { label: 'Platform Preview', icon: 'visibility', path: '/learner/course-player' }
+                            ].map((item) => (
+                                <Link 
+                                    key={item.label}
+                                    to={item.path || '#'} 
+                                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 no-underline ${
+                                        item.active 
+                                        ? 'bg-white shadow-[0px_4px_20px_rgba(0,0,0,0.04)] text-[#00327D] font-bold ring-1 ring-[#00327D]/5' 
+                                        : 'text-[#434653] font-medium hover:bg-white/60 hover:translate-x-1'
+                                    }`}
+                                >
+                                    <span className={`material-symbols-outlined text-xl ${item.active ? 'text-[#00327D]' : 'text-[#737784] opacity-60'}`}>
+                                        {item.icon}
+                                    </span>
+                                    <span className="text-xs">{item.label}</span>
+                                </Link>
+                            ))}
+                        </nav>
+                    </div>
+
+                    <div className="bg-[#191C1E] p-6 rounded-[2rem] text-white shadow-2xl relative overflow-hidden group">
+                        <div className="relative z-10 text-center">
+                            <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-4 text-[#57FAE9]">
+                                <span className="material-symbols-outlined text-2xl tracking-tighter">verified</span>
+                            </div>
+                            <h4 className="text-sm font-black leading-tight mb-2 tracking-tight">Identity<br/>Score: 84%</h4>
+                            <p className="text-[10px] text-white/40 font-bold mb-6">Your course data is nearly complete for indexing.</p>
+                            <button className="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg text-[10px] font-bold transition-all border-none text-white cursor-pointer w-full">Optimize SEO</button>
+                        </div>
+                    </div>
+                </aside>
+
+                {/* 5. MAIN CONTENT WORKSPACE */}
+                <main className="flex-1 space-y-10">
+                    <header>
+                        <h1 className="text-4xl font-black tracking-tighter text-[#1C1B1F] font-manrope mb-2">Course Identity</h1>
+                        <p className="text-[#434653] text-[15px] font-medium leading-relaxed max-w-xl">
+                            Establish the structural foundation. Define your title, classification, and visual identity for the curriculum.
+                        </p>
+                    </header>
+
+                    <div className="grid grid-cols-1 gap-10">
+                        {/* Course Title Card */}
+                        <section className="bg-white rounded-[2.5rem] p-10 shadow-[0px_12px_40px_rgba(0,0,0,0.02)] ring-1 ring-[#E0E3E5]/30 space-y-8">
+                             <div className="space-y-4">
+                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#737784]">Curator Classification</label>
+                                <div className="relative group">
+                                    <span className="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-[#737784] group-focus-within:text-[#00327D] transition-colors">search</span>
+                                    <input 
+                                        type="text" 
+                                        list="classifications"
+                                        placeholder="Search or type manual classification..."
+                                        className="w-full bg-[#F2F4F6] border-none rounded-2xl pl-14 pr-6 py-5 text-sm font-bold placeholder:text-[#C3C6D5]/60 focus:ring-2 focus:ring-[#00327D]/10 transition-all outline-none"
+                                    />
+                                    <datalist id="classifications">
+                                        <option value="UI Architecture" />
+                                        <option value="Advanced Frontend" />
+                                        <option value="Product Strategy" />
+                                        <option value="Visual Logic" />
+                                        <option value="System Design" />
+                                        <option value="Enterprise Engineering" />
+                                    </datalist>
+                                </div>
+                                <p className="text-[10px] font-bold text-[#737784]/60 italic ml-2">Note: Custom classifications will be verified by our curators.</p>
+                             </div>
+
+                             <div className="space-y-4">
+                                <label className="text-lg font-black font-manrope tracking-tight text-[#191C1E]">Master Title</label>
+                                <input 
+                                    type="text" 
+                                    placeholder="e.g. Advanced Symmetry & Cognitive Systems" 
+                                    className="w-full bg-[#F2F4F6] border-none rounded-2xl px-6 py-5 text-sm font-bold placeholder:text-[#C3C6D5]/60 focus:ring-2 focus:ring-[#00327D]/10 transition-all outline-none"
+                                />
+                             </div>
+
+                             <div className="space-y-4">
+                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#737784]">Editorial Description</label>
+                                <div className="bg-[#F2F4F6] rounded-2xl overflow-hidden">
+                                     <div className="px-4 py-3 bg-[#E0E3E5]/40 flex items-center gap-4 border-b border-[#E0E3E5]/20">
+                                         {['format_bold', 'format_italic', 'format_list_bulleted', 'link'].map(cmd => (
+                                             <button 
+                                                key={cmd}
+                                                onClick={() => handleFormat(cmd)}
+                                                className="material-symbols-outlined text-lg text-[#434653] hover:text-[#00327D] cursor-pointer bg-transparent border-none"
+                                             >
+                                                {cmd}
+                                             </button>
+                                         ))}
+                                     </div>
+                                     <div 
+                                        ref={contentEditableRef}
+                                        contentEditable 
+                                        className="min-h-[160px] p-6 text-sm font-medium leading-relaxed outline-none focus:bg-white transition-all text-[#191C1E]" 
+                                    />
+                                </div>
+                             </div>
+                        </section>
+
+                        <div className="flex items-center justify-end pt-4">
+                            <button 
+                                onClick={() => navigate('/instructor/curriculum-builder')} 
+                                className="bg-gradient-to-r from-[#00327D] to-[#2559BD] text-white px-10 py-4 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 flex items-center gap-4 hover:translate-x-[4px] transition-all border-none cursor-pointer group"
+                            >
+                                Establish Curriculum
+                                <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform text-lg">arrow_forward</span>
+                            </button>
+                        </div>
+                    </div>
+                </main>
+
+                {/* 6. RIGHT CONTEXTUAL SIDEBAR */}
+                <aside className="w-80 shrink-0 space-y-8">
+                    
+                    {/* Visual Identity Card */}
+                    <div className="bg-white rounded-[2.5rem] p-8 shadow-[0px_12px_32px_rgba(25,28,30,0.04)] ring-1 ring-[#E0E3E5]/30 group">
+                         <div className="flex items-center justify-between mb-8">
+                             <h4 className="text-[10px] font-black uppercase tracking-[0.25em] text-[#737784]">Visual Identity</h4>
+                             <span className="material-symbols-outlined text-[#737784]">photo_camera</span>
+                         </div>
+                         
+                         <div 
+                            onClick={() => fileInputRef.current?.click()}
+                            className="aspect-square bg-[#F7F9FB] rounded-[2rem] border-2 border-dashed border-[#E0E3E5] flex flex-col items-center justify-center text-center p-6 cursor-pointer hover:bg-[#F2F4F6] transition-all overflow-hidden relative"
+                        >
+                            {coverImage ? (
+                                <img src={coverImage} className="absolute inset-0 w-full h-full object-cover" alt="Cover" />
+                            ) : (
+                                <>
+                                    <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm text-[#00327D] mb-4 group-hover:scale-110 transition-transform">
+                                        <span className="material-symbols-outlined text-2xl">add_photo_alternate</span>
+                                    </div>
+                                    <p className="text-[10px] font-black text-[#191C1E] uppercase tracking-widest mb-2">Upload Hero Image</p>
+                                    <p className="text-[9px] text-[#737784] font-medium leading-relaxed">Recommended:<br/>16:9 • 1920x1080px</p>
+                                </>
+                            )}
+                         </div>
+                    </div>
+
+                    {/* Architect's Tip card */}
+                    <div className="bg-[#191C1E] rounded-[2.5rem] p-8 text-white relative overflow-hidden group shadow-2xl">
+                        <div className="relative z-10">
+                            <span className="material-symbols-outlined text-[#57FAE9] mb-6">architecture</span>
+                            <h3 className="text-xl font-black font-manrope leading-tight mb-4 tracking-tight">Identity Strategy</h3>
+                            <p className="text-xs text-white/50 leading-relaxed font-medium">
+                                Your course title is the first touchpoint in the student journey. Aim for precision and authority.
+                            </p>
+                            <div className="h-0.5 w-8 bg-[#57FAE9] mt-6" />
+                        </div>
+                        <span className="material-symbols-outlined text-[120px] text-white/5 absolute -right-6 -bottom-6 transition-transform group-hover:scale-110">lightbulb</span>
+                    </div>
+                </aside>
 
             </div>
-          </div>
-        </main>
-
-        {/* ── Right Sidebar ── */}
-        <div className="w-[340px] flex flex-col pt-1 shrink-0">
-          <div className="flex flex-col gap-6">
-
-            {/* Architect's Tip card */}
-            <div className="rounded-3xl p-8 relative shadow-lg overflow-hidden bg-brand-tip-bg text-white">
-              <div className="flex items-center mb-5 relative z-10">
-                <span className="material-symbols-outlined text-xl text-brand-tip-accent mr-3">architecture</span>
-                <span className="font-bold text-sm tracking-wide">Architect's Tip</span>
-              </div>
-              <span className="material-symbols-outlined text-[56px] text-white/10 opacity-80 absolute -right-3 -top-3">
-                emoji_objects
-              </span>
-              <p className="text-[13px] leading-relaxed font-medium relative z-10 mt-2 text-brand-tip-text">
-                "A course title is like the foundation of a skyscraper. It needs to be structural yet
-                inspiring. Aim for 5-8 words that clearly state the value proposition."
-              </p>
-              <div className="w-12 h-1 mt-8 rounded-full relative z-10 bg-brand-tip-accent"></div>
-            </div>
-
-            {/* Setup Progress card */}
-            <div className="rounded-3xl p-8 shadow-sm border bg-white border-brand-border">
-              <h3 className="font-extrabold text-sm mb-8 tracking-tight text-brand-dark">Setup Progress</h3>
-
-              <div className="space-y-8 relative ml-2">
-                {/* connector line */}
-                <div className="absolute left-3 top-2 bottom-6 w-0.5 bg-brand-divider"></div>
-
-                <div className="flex gap-5 relative z-10">
-                  <div className="w-[26px] h-[26px] rounded-full text-white flex items-center justify-center text-[10px] font-black shadow-md shrink-0 outline outline-4 outline-white bg-brand-navy">
-                    1
-                  </div>
-                  <div className="pt-0.5">
-                    <p className="text-[13px] font-bold leading-none text-brand-dark">Course Identity</p>
-                    <p className="text-[11px] font-medium mt-1.5 text-brand-slate">Title, description & category</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-5 relative z-10 opacity-70">
-                  <div className="w-[26px] h-[26px] rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 outline outline-4 outline-white border-2 bg-brand-back text-brand-mid border-brand-divider">
-                    2
-                  </div>
-                  <div className="pt-0.5">
-                    <p className="text-[13px] font-bold leading-none text-brand-dark">Curriculum Structure</p>
-                    <p className="text-[11px] font-medium mt-1.5 text-brand-slate">Modules and lesson mapping</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-5 relative z-10 opacity-70">
-                  <div className="w-[26px] h-[26px] rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 outline outline-4 outline-white border-2 bg-brand-back text-brand-mid border-brand-divider">
-                    3
-                  </div>
-                  <div className="pt-0.5">
-                    <p className="text-[13px] font-bold leading-none text-brand-dark">Resource Portal</p>
-                    <p className="text-[11px] font-medium mt-1.5 text-brand-slate">Upload PDFs and assets</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
+    );
+};
 
-      </div>
-
-      {/* ── Sticky Footer Action Bar ── */}
-      <div className="fixed bottom-0 left-0 w-full z-50 pointer-events-none pb-8 pt-10 bg-gradient-to-t from-brand-page via-brand-page/60 to-transparent">
-        <div className="flex flex-row w-full max-w-[1400px] mx-auto px-8 lg:px-12 gap-12 items-end">
-
-          {/* Save Draft — left column */}
-          <div className="w-60 shrink-0 pointer-events-auto">
-            <button className="font-bold py-4 rounded-2xl text-sm w-full text-center transition-colors shadow-sm cursor-pointer bg-brand-draft text-brand-navy">
-              Save Draft
-            </button>
-          </div>
-
-          {/* Exit Wizard / Back — center column */}
-          <div className="flex-1 max-w-[680px] min-w-0 pointer-events-auto">
-            <div className="rounded-2xl px-8 h-[72px] shadow-md border bg-white border-brand-border flex flex-row justify-between items-center">
-              <button
-                onClick={() => navigate(-1)}
-                className="font-bold transition-colors text-sm bg-transparent outline-none whitespace-nowrap cursor-pointer text-brand-navy flex items-center"
-              >
-                <span className="material-symbols-outlined text-[18px] mr-2">close</span>
-                Exit Wizard
-              </button>
-              <button
-                onClick={() => navigate(-1)}
-                className="font-bold text-sm outline-none whitespace-nowrap px-8 py-3 rounded-xl cursor-pointer bg-brand-back text-brand-navy"
-              >
-                Back
-              </button>
-            </div>
-          </div>
-
-          {/* Next Step — right column */}
-          <div className="w-[340px] shrink-0 pointer-events-auto">
-            <button
-              onClick={() => navigate('/instructor/curriculum-builder')}
-              className="w-full h-[72px] text-white px-7 rounded-2xl font-bold text-sm shadow-lg transition-colors active:scale-95 whitespace-nowrap cursor-pointer bg-brand-blue flex justify-center items-center"
-            >
-              Next Step: Curriculum Builder
-              <span className="material-symbols-outlined text-[18px] ml-2">arrow_forward</span>
-            </button>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-  );
-}
+export default InstructorCourseBuilder;

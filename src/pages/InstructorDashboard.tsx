@@ -21,9 +21,9 @@ export default function InstructorDashboard() {
         {/* Top Nav */}
         <div className="flex justify-between items-center mb-10">
           <div className="flex items-center gap-4 text-sm font-bold text-[#434653]">
-            <span className="text-[#00419E]">Resource Hub</span>
+            <span className="text-[#00419E]">Talent Flow</span>
             <span className="text-[#C3C6D5]">/</span>
-            <span>Community</span>
+            <span>Studio</span>
           </div>
           <div className="flex items-center gap-4">
              <div className="text-right">
@@ -48,7 +48,7 @@ export default function InstructorDashboard() {
              </div>
            </div>
            <p className="text-[#434653] text-lg font-medium leading-relaxed max-w-2xl">
-              Here is what is happening with your courses today. Your architectural studio is showing <span className="text-[#00419E] font-black">strong momentum</span> this week.
+              Here is what is happening with your courses today. Your education studio is showing <span className="text-[#00419E] font-black">strong momentum</span> this week.
            </p>
         </div>
 
@@ -90,23 +90,43 @@ export default function InstructorDashboard() {
 
             {/* Active Courses */}
             <div className="space-y-6">
-               <h3 className="text-sm font-black text-[#74777F] uppercase tracking-[0.2em]">Active Curricula</h3>
+               <h3 className="text-sm font-black text-[#74777F] uppercase tracking-[0.2em]">Active Courses</h3>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {[
+                   {[
                     { title: 'Advanced UI Systems', students: 420, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCk5utjN07mkZOhvtLZIyLzTlvKn2L4iPZCxU2HE03HITuSyf687NvYeKy1N3BB3ni_PXK6x68sbgc75rNQ2L2yaSJm-G8klfuPjgpLJwHX36NoMakdz6P_Z2afHIAebaZV13Q7a3n9L2hbMhTqfjyw74ubS7f51FH_QDX66YnHaXq9NSQwc_7KrIjpQkDJ-Yp3aaAhNu-vnGsNf7SIO4uN_S4bTdHe0MSfe9aqNGnaSUESsnPKSC5Ebl9BWs9kMIL9tpe4Ug-K6OI' },
                     { title: 'Product Strategy 101', students: 382, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB06ZF4rJWSKN23zp2wWsqwcW2AAK2QkSoDP8VJd3XcOmygrHupDSMRzlmq1pV7oIZmyGUWmoHieax_B0EhzWAKlA3mVAirTYUI7btKWWdLkEFw7NS5SmkEjHY-urpnaWWOzby9uwXtVCfd0xjLeIluwlQol8d9sOChqyuzLcu8hwIJZKuYVi7WMjsB_7DuwjZ7MBOWgf9H2W7DOYgCqdKZeTdDRVZqyp5Ox8q3TvJ3ndRGc5lXidkY5yfCJZDARcfbOl7kxPydQ1M' }
                   ].map((course, i) => (
-                    <div key={i} className="bg-white p-6 rounded-3xl shadow-ambient hover:shadow-xl transition-all cursor-pointer group flex items-center gap-6">
-                       <div className="w-24 h-24 rounded-2xl overflow-hidden shrink-0">
-                          <img src={course.img} alt="Course" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                    <div key={i} className="bg-white p-6 rounded-[32px] shadow-ambient hover:shadow-xl transition-all group flex flex-col gap-6 relative overflow-hidden ring-1 ring-[#F2F4F6]">
+                       <div className="flex items-center gap-6">
+                          <div className="w-16 h-16 rounded-2xl overflow-hidden shrink-0 shadow-sm">
+                             <img src={course.img} alt="Course" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                             <p className="font-black text-[#191C1E] text-md mb-0.5 line-clamp-1 truncate">{course.title}</p>
+                             <p className="text-[10px] text-[#74777F] font-black uppercase tracking-widest">{course.students} Learners Active</p>
+                          </div>
                        </div>
-                       <div>
-                          <p className="font-bold text-[#191C1E] text-lg mb-1">{course.title}</p>
-                          <p className="text-sm text-[#74777F] font-medium">{course.students} Learners Active</p>
-                          <div className="mt-4 flex gap-2">
-                             <div className="w-8 h-8 rounded-full border-2 border-white bg-[#D3E4FE] -ml-2"></div>
-                             <div className="w-8 h-8 rounded-full border-2 border-white bg-[#DAE2FF] -ml-2"></div>
-                             <div className="w-8 h-8 rounded-full border-2 border-white bg-[#F2F4F6] -ml-2 flex items-center justify-center text-[10px] font-black text-[#434653]">+32</div>
+                       
+                       <div className="flex items-center justify-between pt-4 border-t border-[#F2F4F6]">
+                          <div className="flex -space-x-3">
+                             {[1, 2, 3].map((n) => (
+                               <div key={n} className="w-8 h-8 rounded-full border-2 border-white bg-[#E0E3E5]"></div>
+                             ))}
+                          </div>
+                          <div className="flex items-center gap-2">
+                             <Link 
+                                to="/learner/courses" 
+                                className="w-10 h-10 rounded-xl bg-[#F2F4F6] flex items-center justify-center text-[#74777F] hover:bg-[#E0E3E5] hover:text-[#00327D] transition-all"
+                                title="Preview Student View"
+                             >
+                                <span className="material-symbols-outlined text-[20px]">visibility</span>
+                             </Link>
+                             <Link 
+                                to="/instructor/curriculum-builder" 
+                                className="px-5 py-2.5 bg-[#00327D] text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-[#002864] hover:shadow-lg transition-all no-underline"
+                             >
+                                Edit
+                             </Link>
                           </div>
                        </div>
                     </div>

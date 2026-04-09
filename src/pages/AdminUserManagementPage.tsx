@@ -1,6 +1,7 @@
 import Sidebar from "../components/layout/Sidebar";
 import TopBar from "../components/layout/TopBar";
 import BottomNav from "../components/layout/BottomNav";
+import { Link } from "react-router-dom";
 
 const UserManagementPage = () => {
     return (
@@ -21,12 +22,12 @@ const UserManagementPage = () => {
                         <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
                             <div>
                                 <h1 className="text-4xl font-extrabold tracking-tight text-on-surface mb-2">User Directory</h1>
-                                <p className="text-on-surface-variant max-w-xl leading-relaxed">Oversee and manage the talent ecosystem of Kinetic Academy. Curate roles, verify permissions, and track professional trajectories across the organization.</p>
+                                <p className="text-on-surface-variant max-w-xl leading-relaxed">Oversee and manage the talent ecosystem of TalentFlow LMS. Curate roles, verify permissions, and track professional trajectories across the organization.</p>
                             </div>
-                            <button className="cursor-pointer bg-gradient-to-tr from-primary to-primary-container text-white px-6 py-3 rounded-lg font-semibold flex items-center gap-2 hover:opacity-90 transition-opacity">
+                            <Link to="/admin/add-instructor" className="cursor-pointer bg-gradient-to-tr from-primary to-primary-container text-white px-6 py-3 rounded-lg font-semibold flex items-center gap-2 hover:opacity-90 transition-opacity">
                                 <span className="material-symbols-outlined text-lg">person_add</span>
                                 Add New User
-                            </button>
+                            </Link>
                         </div>
                         {/* Key Performance Metrics - Bento Grid Style */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
@@ -121,6 +122,9 @@ const UserManagementPage = () => {
                                         <td className="px-6 py-5 text-sm text-on-surface-variant font-medium">Oct 12, 2023</td>
                                         <td className="px-8 py-5 text-right">
                                             <div className="flex items-center justify-end gap-3">
+                                                <Link to="/admin/instructor-profile" className="p-2 hover:bg-surface-container-high rounded-lg text-outline-variant hover:text-primary transition-all">
+                                                    <span className="material-symbols-outlined text-lg">visibility</span>
+                                                </Link>
                                                 <button className="p-2 hover:bg-surface-container-high rounded-lg text-outline-variant hover:text-primary transition-all">
                                                     <span className="material-symbols-outlined text-lg">edit</span>
                                                 </button>
@@ -152,6 +156,9 @@ const UserManagementPage = () => {
                                         <td className="px-6 py-5 text-sm text-on-surface-variant font-medium">Jan 05, 2024</td>
                                         <td className="px-8 py-5 text-right">
                                             <div className="flex items-center justify-end gap-3">
+                                                <Link to="/admin/talent-directory" className="p-2 hover:bg-surface-container-high rounded-lg text-outline-variant hover:text-primary transition-all">
+                                                    <span className="material-symbols-outlined text-lg">visibility</span>
+                                                </Link>
                                                 <button className="p-2 hover:bg-surface-container-high rounded-lg text-outline-variant hover:text-primary transition-all">
                                                     <span className="material-symbols-outlined text-lg">edit</span>
                                                 </button>
@@ -167,7 +174,7 @@ const UserManagementPage = () => {
                                                 <img alt="User Avatar" className="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxhxD66ZHekQ3r5pPh0x3lSS3azW_1Y80mf_erAbb5HC0ifCsRikZhlOpLyY25myyaN5N8qmDSvQkm--_OThTqwM_YZaMvQp7kxLbgrUEAaRUuBjC5-43GwnK7PqukqLba5HOMC10LUr4h28AVgwN-X1ZkAAiGyIuTac_wS8KgozbKflWdPBjeRvPYdSzkFKz0KDcVPsVq1CT6A9S9LNA6MwU9vvwSYqs58RyH5L_0q3asudztLieirXowDj7l0Kq9ndKDe-7GzFs" />
                                                 <div>
                                                     <div className="font-bold text-on-surface">Elena Rodriguez</div>
-                                                    <div className="text-xs text-on-surface-variant">e.rod@kinetic.academy</div>
+                                                    <div className="text-xs text-on-surface-variant">e.rod@talentflow.edu</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -183,6 +190,9 @@ const UserManagementPage = () => {
                                         <td className="px-6 py-5 text-sm text-on-surface-variant font-medium">Feb 18, 2024</td>
                                         <td className="px-8 py-5 text-right">
                                             <div className="flex items-center justify-end gap-3">
+                                                <Link to="/admin/talent-directory" className="p-2 hover:bg-surface-container-high rounded-lg text-outline-variant hover:text-primary transition-all">
+                                                    <span className="material-symbols-outlined text-lg">visibility</span>
+                                                </Link>
                                                 <button className="p-2 hover:bg-surface-container-high rounded-lg text-outline-variant hover:text-primary transition-all">
                                                     <span className="material-symbols-outlined text-lg">edit</span>
                                                 </button>
@@ -195,7 +205,7 @@ const UserManagementPage = () => {
                                 </tbody>
                             </table>
                             <div className="px-8 py-4 bg-surface-container-low/20 border-t border-outline-variant/10 flex items-center justify-between">
-                                <span className="text-xs text-on-surface-variant font-medium tracking-tight">Displaying 1–25 of 1,248 Curator Profiles</span>
+                                <span className="text-xs text-on-surface-variant font-medium tracking-tight">Displaying 1–25 of 1,248 TalentFlow Profiles</span>
                                 <div className="flex items-center gap-2">
                                     <button className="p-2 rounded-lg hover:bg-surface-container-high text-outline transition-colors">
                                         <span className="material-symbols-outlined">chevron_left</span>
@@ -246,10 +256,10 @@ const UserManagementPage = () => {
                                     <option>Inactive</option>
                                 </select>
                             </div>
-                            <button className="cursor-pointer bg-primary text-on-primary px-6 py-3 rounded-lg font-bold flex w-full justify-center items-center gap-2 hover:opacity-90 active:scale-95 transition-all h-[52px] mt-2">
+                            <Link to="/admin/add-instructor" className="cursor-pointer bg-primary text-on-primary px-6 py-3 rounded-lg font-bold flex w-full justify-center items-center gap-2 hover:opacity-90 active:scale-95 transition-all h-[52px] mt-2 text-center">
                                 <span className="material-symbols-outlined">person_add</span>
                                 <span>Add User</span>
-                            </button>
+                            </Link>
                         </div>
                         {/* User List Table */}
                         <div className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm">

@@ -125,9 +125,12 @@ export default function MyLearningPage() {
                           style={{ width: `${course.progress}%` }}
                         ></div>
                       </div>
-                      <button className="w-full py-4 mt-2 bg-linear-to-r from-[#00327D] to-[#2559BD] text-white font-black rounded-2xl shadow-lg shadow-[#00327D]/20 hover:scale-[1.02] active:scale-95 transition-all">
+                      <Link 
+                        to={`/learner/course-player/${i + 101}`}
+                        className="w-full py-4 mt-2 bg-linear-to-r from-[#00327D] to-[#2559BD] text-white font-black rounded-2xl shadow-lg shadow-[#00327D]/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center no-underline"
+                      >
                         Resume Session
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 ))}

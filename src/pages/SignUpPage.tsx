@@ -110,7 +110,7 @@ export default function SignUpPage() {
                 Create your account
               </h1>
               <p className="text-on-surface-variant font-medium">
-                Join Kinetic Academy and start your journey.
+                Join TalentFlow LMS and start your journey.
               </p>
             </div>
 

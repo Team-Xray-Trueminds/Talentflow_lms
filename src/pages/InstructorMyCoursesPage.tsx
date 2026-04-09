@@ -70,34 +70,59 @@ export default function InstructorMyCoursesPage() {
           {/* Managed Courses List */}
           <div className="grid grid-cols-1 gap-8">
             {myCourses.map((course, i) => (
-              <div key={i} className="bg-white rounded-[32px] p-6 shadow-ambient hover:shadow-xl transition-all border border-transparent hover:border-[#00327D]/5 group animate-fade-in-up" style={{ animationDelay: `${i * 0.1}s` }}>
-                 <div className="flex gap-8 items-center">
-                    <div className="w-48 h-32 rounded-2xl overflow-hidden shrink-0">
+              <div key={i} className="bg-white rounded-[40px] p-8 shadow-ambient hover:shadow-xl transition-all border border-transparent hover:border-[#00327D]/5 group animate-fade-in-up" style={{ animationDelay: `${i * 0.1}s` }}>
+                 <div className="flex gap-10 items-center">
+                    <div className="w-56 h-40 rounded-[28px] overflow-hidden shrink-0 shadow-sm">
                       <img src={course.img} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                     </div>
                     <div className="grow">
-                      <div className="flex justify-between items-start mb-4">
+                      <div className="flex justify-between items-start mb-6">
                         <div>
-                          <p className="text-[10px] font-black text-[#00419E] uppercase tracking-[0.25em] mb-2">{course.level}</p>
-                          <h3 className="text-2xl font-bold font-headline leading-tight">{course.title}</h3>
+                          <div className="flex items-center gap-3 mb-2">
+                             <span className="text-[10px] font-black text-[#00419E] uppercase tracking-[0.25em]">{course.level}</span>
+                             <span className="w-1 h-1 bg-[#C3C6D5] rounded-full"></span>
+                             <span className="text-[10px] font-bold text-[#74777F] uppercase tracking-widest">Q4 2024</span>
+                          </div>
+                          <h3 className="text-3xl font-black font-headline leading-tight tracking-tight text-[#191C1E]">{course.title}</h3>
                         </div>
-                        <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ${course.status === 'Active' ? 'bg-[#57FAE9]/20 text-[#003E38]' : 'bg-[#E0E3E5] text-[#434653]'}`}>
+                        <span className={`px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm ${course.status === 'Active' ? 'bg-[#57FAE9]/30 text-[#003E38]' : 'bg-[#F2F4F6] text-[#434653]'}`}>
                           {course.status}
                         </span>
                       </div>
-                      <div className="flex items-center gap-10">
-                        <div className="flex items-center gap-2">
-                           <span className="material-symbols-outlined text-[18px] text-[#74777F]">person</span>
-                           <span className="text-sm font-bold text-[#434653]">{course.students} Learners</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                           <span className="material-symbols-outlined text-[18px] text-[#74777F]">analytics</span>
-                           <span className="text-sm font-bold text-[#434653]">Engagement: 92%</span>
-                        </div>
-                        <button className="ml-auto flex items-center gap-2 px-6 py-3 bg-[#F2F4F6] text-[#00327D] font-black rounded-xl hover:bg-[#00327D] hover:text-white transition-all">
-                          Manage Course
-                          <span className="material-symbols-outlined text-[18px]">settings</span>
-                        </button>
+                      <div className="flex items-center justify-between">
+                         <div className="flex items-center gap-12">
+                            <div className="flex flex-col gap-1">
+                               <span className="text-[9px] font-black text-[#74777F] uppercase tracking-widest">Enrollment</span>
+                               <div className="flex items-center gap-2">
+                                  <span className="material-symbols-outlined text-[18px] text-[#00327D]">groups</span>
+                                  <span className="text-base font-black text-[#191C1E]">{course.students} Learners</span>
+                               </div>
+                            </div>
+                            <div className="flex flex-col gap-1">
+                               <span className="text-[9px] font-black text-[#74777F] uppercase tracking-widest">Performance</span>
+                               <div className="flex items-center gap-2">
+                                  <span className="material-symbols-outlined text-[18px] text-[#005750]">analytics</span>
+                                  <span className="text-base font-black text-[#005750]">92% Activity</span>
+                               </div>
+                            </div>
+                         </div>
+                         
+                         <div className="flex items-center gap-4">
+                            <Link 
+                               to="/learner/courses" 
+                               className="flex items-center gap-2 px-6 py-4 bg-[#F2F4F6] text-[#191C1E] font-black rounded-2xl hover:bg-[#E0E3E5] transition-all text-xs uppercase tracking-widest no-underline"
+                            >
+                               <span className="material-symbols-outlined text-[20px]">visibility</span>
+                               Preview
+                            </Link>
+                            <Link 
+                               to="/instructor/curriculum-builder" 
+                               className="flex items-center gap-2 px-8 py-4 bg-[#00327D] text-white font-black rounded-2xl hover:bg-[#002864] hover:shadow-xl hover:translate-y-[-2px] transition-all text-xs uppercase tracking-widest no-underline"
+                            >
+                               <span className="material-symbols-outlined text-[20px]">edit</span>
+                               Edit Course
+                            </Link>
+                         </div>
                       </div>
                     </div>
                  </div>

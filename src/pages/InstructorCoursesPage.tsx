@@ -29,10 +29,13 @@ export default function InstructorCoursesPage() {
               </p>
            </div>
            {isInstructor && (
-             <button className="hidden md:flex items-center gap-2 bg-[#00327D] text-white px-6 py-3 rounded-xl font-black text-sm hover:shadow-lg transition-all active:scale-95">
-                <span className="material-symbols-outlined text-[20px]">add</span>
-                Add Department
-             </button>
+             <Link 
+               to="/instructor/course-builder"
+               className="hidden md:flex items-center gap-2 bg-[#00327D] text-white px-8 py-3 rounded-xl font-black text-xs hover:shadow-xl transition-all active:scale-95 no-underline shadow-lg shadow-[#00327D]/20"
+             >
+                <span className="material-symbols-outlined text-[20px]">architecture</span>
+                Build New Course
+             </Link>
            )}
         </div>
 
