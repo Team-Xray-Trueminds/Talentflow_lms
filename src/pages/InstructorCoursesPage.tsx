@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
+import BottomNav from '../components/layout/BottomNav'
 
 export default function InstructorCoursesPage() {
   const role = localStorage.getItem('userRole')
-  const isInstructor = role === 'Instructor'
+  const isAdmin = window.location.pathname.startsWith('/admin')
+  const isInstructor = role === 'Instructor' && !isAdmin
 
   const departments = [
     { title: 'UI Architecture', desc: 'Design systems & scale', icon: 'architecture', courses: 14 },
@@ -20,14 +22,18 @@ export default function InstructorCoursesPage() {
       <main className="grow p-6 md:p-10 max-w-[1600px] mx-auto w-full pb-32 lg:pb-10">
         {/* Header */}
         <div className="flex justify-between items-start mb-12 animate-fade-in-up">
-           <div>
-              <h1 className="text-3xl md:text-4xl font-extrabold text-[#191C1E] font-headline mb-2">Academic Explorer</h1>
+            <div>
+              <h1 className="text-3xl md:text-4xl font-extrabold text-[#191C1E] font-headline mb-2">
+                {isAdmin ? 'System-Wide Curricula' : 'Academic Explorer'}
+              </h1>
               <p className="text-base font-medium text-[#434653]">
-                {isInstructor 
-                  ? 'Manage departments and oversee curriculum architecture.' 
-                  : 'Direct access to major academic departments and specialized tracks.'}
+                {isAdmin 
+                  ? 'Strategic oversight of all academic tracks and department performance.'
+                  : isInstructor 
+                    ? 'Manage departments and oversee curriculum architecture.' 
+                    : 'Direct access to major academic departments and specialized tracks.'}
               </p>
-           </div>
+            </div>
            {isInstructor && (
              <Link 
                to="/instructor/course-builder"
@@ -81,20 +87,7 @@ export default function InstructorCoursesPage() {
            <div className="absolute right-[-5%] top-[-10%] w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
         </div>
 
-        {/* Mobile Bottom Navigation */}
-        <nav className="lg:hidden fixed bottom-6 left-6 right-6 bg-white/80 backdrop-blur-xl border border-[#C3C6D5]/20 h-16 rounded-2xl shadow-2xl flex items-center justify-around px-4 z-50">
-          {[
-            { icon: 'dashboard', label: 'Home', to: isInstructor ? '/instructor/dashboard' : '/learner/dashboard' },
-            { icon: 'school', label: 'Curricula', to: '/curriculum', active: true },
-            { icon: 'groups', label: 'Base', to: '#' },
-            { icon: 'account_circle', label: 'Profile', to: '/settings/profile-setup' }
-          ].map((nav, i) => (
-            <Link key={i} to={nav.to} className={`flex flex-col items-center gap-1 transition-all ${nav.active ? 'text-[#00327D]' : 'text-[#74777F]'}`}>
-              <span className={`material-symbols-outlined text-[24px] ${nav.active ? 'fill-1' : ''}`}>{nav.icon}</span>
-              <span className="text-[10px] font-bold tracking-tighter uppercase">{nav.label}</span>
-            </Link>
-          ))}
-        </nav>
+        <BottomNav />
       </main>
     </div>
   )

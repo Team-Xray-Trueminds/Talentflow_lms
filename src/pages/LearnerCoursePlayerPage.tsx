@@ -26,7 +26,7 @@ const LearnerCoursePlayerPage = () => {
     return (
         <div className="min-h-screen bg-[#000F29] text-white font-inter flex flex-col overflow-hidden">
             {/* 1. LAYERED HEADER */}
-            <header className="h-20 bg-[#001946]/40 backdrop-blur-2xl border-b border-white/5 flex items-center justify-between px-8 shrink-0 z-50">
+            <header className="h-16 md:h-20 bg-[#001946]/40 backdrop-blur-2xl border-b border-white/5 flex items-center justify-between px-4 lg:px-8 shrink-0 z-50">
                 <div className="flex items-center gap-8">
                     <button 
                         onClick={() => navigate(-1)} 
@@ -59,9 +59,9 @@ const LearnerCoursePlayerPage = () => {
                 </div>
             </header>
 
-            <div className="flex flex-1 overflow-hidden">
+            <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
                 {/* 2. PLAYER CORE CANVAS */}
-                <main className="flex-1 overflow-y-auto bg-[#000F29] relative flex flex-col pt-12 px-12 pb-24">
+                <main className="flex-1 overflow-y-auto bg-[#000F29] relative flex flex-col pt-8 md:pt-12 px-4 md:px-12 pb-24">
                     <div className="max-w-[1400px] mx-auto w-full space-y-12">
                         
                         {/* Immersive Player Shell */}
@@ -130,8 +130,8 @@ const LearnerCoursePlayerPage = () => {
                 </main>
 
                 {/* 3. CURRICULUM ARCHITECTURE (Right Panel) */}
-                <aside className="w-[450px] shrink-0 bg-[#001C38] border-l border-white/5 flex flex-col z-40">
-                    <div className="p-10 sticky top-0 bg-[#001C38]/90 backdrop-blur-2xl z-10 border-b border-white/5 mb-4">
+                <aside className="w-full lg:w-[450px] shrink-0 bg-[#001C38] border-l border-white/5 flex flex-col z-40 lg:h-full overflow-hidden">
+                    <div className="p-6 md:p-10 sticky top-0 bg-[#001C38]/90 backdrop-blur-2xl z-10 border-b border-white/5 mb-4">
                         <div className="flex items-center justify-between mb-2">
                            <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30">Curriculum Structure</h3>
                            <span className="text-[9px] font-black text-[#57FAE9] tracking-widest uppercase">12 Sessions Total</span>
@@ -139,7 +139,7 @@ const LearnerCoursePlayerPage = () => {
                         <p className="text-lg font-black text-white font-manrope">Advanced UI Systems</p>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto px-6 pb-12 space-y-12">
+                    <div className="flex-1 overflow-y-auto px-4 md:px-6 pb-12 space-y-12">
                         {curriculum.map((mod, modIdx) => (
                             <div key={modIdx}>
                                 <div className="px-4 flex items-center gap-3 mb-6">

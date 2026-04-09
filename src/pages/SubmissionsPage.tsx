@@ -1,4 +1,5 @@
 import Sidebar from '../components/Sidebar'
+import BottomNav from '../components/layout/BottomNav'
 
 const submissions = [
   {
@@ -28,7 +29,7 @@ export default function SubmissionsPage() {
   return (
     <div className="flex min-h-screen bg-[radial-gradient(circle_at_top,_#e8fbff_0%,_#f7f9fb_45%,_#eef2ff_100%)] font-body text-[#191C1E]">
       <Sidebar />
-      <main className="grow px-6 py-8 lg:px-10">
+      <main className="grow px-6 py-8 lg:px-10 pb-32 lg:pb-8">
         <div className="mx-auto max-w-6xl">
           <div className="mb-10 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="rounded-[32px] border border-white/70 bg-white/75 p-8 shadow-[0_24px_80px_rgba(0,50,125,0.12)] backdrop-blur-xl">
@@ -68,6 +69,7 @@ export default function SubmissionsPage() {
             ))}
           </div>
         </div>
+        <BottomNav />
       </main>
     </div>
   )

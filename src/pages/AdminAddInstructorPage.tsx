@@ -1,18 +1,18 @@
-import Sidebar from "../components/layout/Sidebar";
+import Sidebar from "../components/Sidebar";
 import TopBar from "../components/layout/TopBar";
 import BottomNav from "../components/layout/BottomNav";
 import { Link } from "react-router-dom";
 
 const AdminAddInstructorPage = () => {
     return (
-        <div className="bg-surface text-on-surface min-h-screen">
+        <div className="bg-[#F8FAFC] text-on-surface min-h-screen">
             {/* Navigation Components */}
             <Sidebar />
             
-            <main className="pl-0 md:pl-64 min-h-screen pb-24 md:pb-0">
+            <main className="pl-0 lg:pl-80 min-h-screen pb-24 md:pb-0">
                 <TopBar />
                 
-                <div className="p-6 md:p-10 max-w-5xl mx-auto">
+                <div className="p-6 md:p-8 max-w-5xl mx-auto">
                     {/* Header */}
                     <div className="mb-12 flex flex-col md:flex-row md:items-center justify-between gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
                         <div>

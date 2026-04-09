@@ -1,42 +1,56 @@
 import { Link, useLocation } from 'react-router-dom';
 
-interface BottomNavItem {
-    icon: string;
-    label: string;
-    href: string;
-}
-
-const navItems: BottomNavItem[] = [
-    { icon: 'dashboard', label: 'Dashboard', href: '/admin/dashboard' },
-    { icon: 'person', label: 'User Management', href: '/admin/user-management' },
-    { icon: 'group', label: 'Talent Directory', href: '/admin/talent-directory' },
-    { icon: 'history_edu', label: 'Logs', href: '#' },
-];
-
 const BottomNav = () => {
     const location = useLocation();
+    const storedRole = localStorage.getItem('userRole');
+    const pathRole = location.pathname.startsWith('/admin') ? 'Admin' : (location.pathname.startsWith('/instructor') ? 'Instructor' : (location.pathname.startsWith('/learner') ? 'Learner' : null));
+    const role = pathRole || storedRole || 'Learner';
+
+    const navItemsByRole = {
+        Admin: [
+            { icon: 'dashboard', label: 'Overview', href: '/admin/dashboard' },
+            { icon: 'person', label: 'Users', href: '/admin/user-management' },
+            { icon: 'group', label: 'Talent', href: '/admin/talent-directory' },
+            { icon: 'settings', label: 'Settings', href: '/admin/settings' },
+        ],
+        Instructor: [
+            { icon: 'dashboard', label: 'Home', href: '/instructor/dashboard' },
+            { icon: 'architecture', label: 'Courses', href: '/instructor/courses' },
+            { icon: 'school', label: 'Grades', href: '/instructor/gradebook' },
+            { icon: 'mail', label: 'Inbox', href: '/instructor/messages' },
+        ],
+        Learner: [
+            { icon: 'dashboard', label: 'Home', href: '/learner/dashboard' },
+            { icon: 'school', label: 'Catalog', href: '/learner/courses' },
+            { icon: 'menu_book', label: 'Learning', href: '/learner/my-learning' },
+            { icon: 'account_circle', label: 'Profile', href: '/settings/profile-setup' },
+        ],
+    };
+
+    const currentNavItems = navItemsByRole[role as keyof typeof navItemsByRole] || navItemsByRole.Learner;
 
     return (
-        <nav className="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-4 pt-2 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-t border-slate-200/50 dark:border-slate-800/50 rounded-t-2xl md:hidden z-50">
-            {navItems.map((item) => {
-                const isActive = item.href !== '#' && location.pathname === item.href;
+        <nav className="fixed bottom-0 left-0 w-full flex justify-around items-center px-2 pb-6 pt-3 bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl border-t border-slate-200/50 dark:border-slate-800/50 rounded-t-[32px] lg:hidden z-50 shadow-[0_-8px_30px_rgb(0,0,0,0.04)]">
+            {currentNavItems.map((item) => {
+                const isActive = location.pathname.startsWith(item.href);
                 return (
                     <Link
                         key={item.label}
                         to={item.href}
-                        className={
+                        className={`flex flex-col items-center justify-center p-2 rounded-2xl transition-all duration-300 ${
                             isActive
-                                ? 'flex flex-col items-center justify-center bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-100 rounded-xl px-3 py-1 scale-95 duration-100'
-                                : 'flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 active:bg-slate-100 dark:active:bg-slate-800 rounded-xl px-3 py-1 transition-colors'
-                        }
+                                ? 'text-[#0047AB] bg-[#0047AB]/5 scale-110'
+                                : 'text-slate-400'
+                        }`}
                     >
                         <span
-                            className="material-symbols-outlined text-lg mb-0.5"
-                            style={isActive ? { fontVariationSettings: "'FILL' 1" } : undefined}
+                            className={`material-symbols-outlined text-[24px] mb-1 transition-all ${isActive ? 'fill-1' : ''}`}
                         >
                             {item.icon}
                         </span>
-                        <span className="font-inter text-[10px] font-semibold">{item.label}</span>
+                        <span className={`text-[9px] font-black uppercase tracking-widest leading-none ${isActive ? 'opacity-100' : 'opacity-60'}`}>
+                            {item.label}
+                        </span>
                     </Link>
                 );
             })}

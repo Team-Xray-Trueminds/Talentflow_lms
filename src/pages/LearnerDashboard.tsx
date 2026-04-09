@@ -1,4 +1,5 @@
 import Sidebar from '../components/Sidebar'
+import BottomNav from '../components/layout/BottomNav'
 import { Link } from 'react-router-dom'
 
 export default function LearnerDashboard() {
@@ -49,7 +50,7 @@ export default function LearnerDashboard() {
 
         {/* Hero Welcome */}
         <div className="mb-12 animate-fade-in-up">
-           <h1 className="text-5xl font-extrabold text-[#191C1E] tracking-tight font-headline mb-4">
+           <h1 className="text-3xl md:text-5xl font-extrabold text-[#191C1E] tracking-tight font-headline mb-4">
              Welcome back, Alex Rivera
            </h1>
            <p className="text-[#434653] text-lg font-medium leading-relaxed max-w-2xl">
@@ -186,20 +187,7 @@ export default function LearnerDashboard() {
             </div>
           </div>
         </div>
-        {/* Mobile Navigation */}
-        <nav className="lg:hidden fixed bottom-6 left-6 right-6 bg-white/90 backdrop-blur-2xl border border-[#C3C6D5]/15 h-20 rounded-[24px] shadow-2xl flex items-center justify-around px-4 z-50">
-          {[
-            { icon: 'dashboard', label: 'Overview', to: '/learner/dashboard', active: true },
-            { icon: 'school', label: 'Catalog', to: '/learner/courses' },
-            { icon: 'menu_book', label: 'Learning', to: '/learner/my-learning' },
-            { icon: 'person', label: 'Profile', to: '/settings/profile-setup' }
-          ].map((nav, i) => (
-            <Link key={i} to={nav.to} className={`flex flex-col items-center gap-1.5 transition-all ${nav.active ? 'text-[#00327D]' : 'text-[#737784]'}`}>
-              <span className={`material-symbols-outlined text-[26px] ${nav.active ? 'fill-1' : ''}`}>{nav.icon}</span>
-              <span className="text-[10px] font-black tracking-tight uppercase">{nav.label}</span>
-            </Link>
-          ))}
-        </nav>
+        <BottomNav />
       </main>
     </div>
   )
