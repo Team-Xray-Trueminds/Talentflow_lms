@@ -11,8 +11,6 @@ import InstructorDashboard from './pages/InstructorDashboard'
 import InstructorMyCoursesPage from './pages/InstructorMyCoursesPage'
 import AcademicTracksPage from './pages/InstructorCoursesPage'
 import AdminDashboard from './pages/AdminDashboard';
-import UserManagementPage from './pages/AdminUserManagementPage';
-import AdminUserDetailPage from './pages/AdminUserDetailPage';
 import NotificationsPage from './pages/NotificationsPage'
 import MyLearningPage from './pages/MyLearningPage'
 import InstructorProfileSetupPage from './pages/InstructorProfileSetupPage'
