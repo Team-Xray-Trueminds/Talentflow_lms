@@ -27,12 +27,6 @@ const InstructorContentUploadPage = () => {
         }
     ]);
 
-    const deleteLesson = (modId: number, lessonId: number) => {
-        setModules(prev => prev.map(mod => 
-            mod.id === modId ? { ...mod, lessons: mod.lessons.filter(l => l.id !== lessonId) } : mod
-        ));
-    };
-
     const handleFileClick = (lessonId: number) => {
         setActiveLessonId(lessonId);
         fileInputRef.current?.click();
@@ -66,386 +60,274 @@ const InstructorContentUploadPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#F8F9FB] font-sans text-[#1E293B] flex flex-col">
+        <div className="min-h-screen bg-[#F7F9FB] font-inter text-[#191C1E] flex flex-col">
             <input type="file" ref={fileInputRef} onChange={onFileChange} className="hidden" />
             
-            {/* 1. HEADER - Responsive */}
-            <header className="h-16 bg-white border-b border-[#E2E8F0] flex items-center justify-between px-6 md:px-10 w-full z-50 shrink-0 sticky top-0">
-                {/* Desktop Logo/Nav */}
-                <div className="hidden md:flex items-center gap-10">
-                    <span className="text-lg font-bold tracking-tight text-[#00327D]">Course Architect</span>
-                    <nav className="flex gap-8 h-16">
-                        <button className="text-[11px] font-bold text-[#64748B] hover:text-[#00327D] bg-transparent border-none cursor-pointer">Dashboard</button>
-                        <div className="flex items-center border-b-2 border-[#00327D]">
-                            <button className="text-[11px] font-bold text-[#00327D] bg-transparent border-none cursor-pointer">Courses</button>
+            {/* 1. EDITORIAL HEADER */}
+            <header className="h-20 bg-[#F7F9FB]/80 backdrop-blur-xl sticky top-0 z-50 flex items-center justify-between px-10 w-full shrink-0">
+                <div className="flex items-center gap-12">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-gradient-to-tr from-[#00327D] to-[#2559BD] rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
+                            <span className="material-symbols-outlined text-white text-2xl">layers</span>
                         </div>
-                        <button className="text-[11px] font-bold text-[#64748B] hover:text-[#00327D] bg-transparent border-none cursor-pointer">Library</button>
-                        <button className="text-[11px] font-bold text-[#64748B] hover:text-[#00327D] bg-transparent border-none cursor-pointer">Analytics</button>
+                        <span className="text-xl font-black tracking-tighter text-[#1C1B1F] font-manrope">Talent Flow</span>
+                    </div>
+                    
+                    <nav className="hidden lg:flex items-center gap-8">
+                        {[
+                            { label: 'Dashboard', path: '/instructor/dashboard' },
+                            { label: 'Curriculum', path: '/instructor/courses' },
+                            { label: 'Gradebook', path: '/instructor/gradebook' },
+                            { label: 'Analytics', path: '/instructor/analytics' }
+                        ].map((item) => (
+                            <Link 
+                                key={item.label} 
+                                to={item.path}
+                                className="text-xs font-bold text-[#434653] hover:text-[#00327D] transition-colors bg-transparent border-none cursor-pointer uppercase tracking-widest no-underline"
+                            >
+                                {item.label}
+                            </Link>
+                        ))}
                     </nav>
                 </div>
-
-                {/* Mobile Header elements */}
-                <div className="flex md:hidden items-center gap-4 w-full justify-between">
-                    <button onClick={() => navigate(-1)} className="bg-transparent border-none cursor-pointer text-[#00327D]">
-                        <span className="material-symbols-outlined font-bold">arrow_back</span>
+                
+                <div className="flex items-center gap-6">
+                    <button className="text-xs font-bold text-[#434653] hover:text-[#191C1E] bg-transparent border-none cursor-pointer transition-colors uppercase tracking-widest">Save Draft</button>
+                    <button className="bg-gradient-to-r from-[#00327D] to-[#2559BD] text-white px-8 py-3 rounded-xl font-bold text-xs hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-primary/20 border-none cursor-pointer">
+                        Publish Course
                     </button>
-                    <span className="text-sm font-bold text-[#1E293B]">Course Builder</span>
-                    <button className="text-xs font-bold text-[#00327D] bg-transparent border-none cursor-pointer">Save Draft</button>
-                </div>
-
-                {/* Desktop Profile Actions */}
-                <div className="hidden md:flex items-center gap-5">
-                    <button className="text-[11px] font-bold text-[#64748B] hover:text-[#191C1E] bg-transparent border-none cursor-pointer">Save Draft</button>
-                    <button className="bg-[#00327D] text-white px-5 py-2 rounded-lg text-[11px] font-bold hover:bg-[#002864] border-none cursor-pointer">Publish Course</button>
-                    <div className="w-8 h-8 rounded-full overflow-hidden border border-[#E2E8F0] bg-gray-100">
-                        <img 
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
-                            alt="User" 
-                            className="w-full h-full object-cover" 
-                        />
-                    </div>
                 </div>
             </header>
 
-            {/* Layout Wrapper */}
-            <div className="max-w-[1400px] mx-auto w-full px-4 md:px-10 flex flex-col md:flex-row items-stretch gap-6 md:gap-11 flex-1 pb-24 md:pb-0">
+            {/* 2. PROGRESS STEPPER (Stitch Node Reference) */}
+            <section className="bg-white border-b border-[#E0E3E5]/40 py-4 px-10">
+                <div className="max-w-7xl mx-auto flex items-center justify-between">
+                    {[
+                        { label: 'Details', icon: 'info', status: 'COMPLETE' },
+                        { label: 'Curriculum', icon: 'account_tree', status: 'COMPLETE' },
+                        { label: 'Content', icon: 'cloud_upload', status: 'ACTIVE' },
+                        { label: 'Assignment', icon: 'assignment', status: 'PENDING' },
+                        { label: 'Review', icon: 'rate_review', status: 'PENDING' }
+                    ].map((step, i) => (
+                        <div key={step.label} className="flex items-center gap-3 group">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
+                                step.status === 'COMPLETE' ? 'bg-[#D3E4FE] text-[#00419E]' : 
+                                step.status === 'ACTIVE' ? 'bg-[#00327D] text-white ring-4 ring-primary/10 shadow-lg' : 
+                                'bg-[#F2F4F6] text-[#737784] opacity-50'
+                            }`}>
+                                <span className="material-symbols-outlined text-lg">
+                                    {step.status === 'COMPLETE' ? 'check' : step.icon}
+                                </span>
+                            </div>
+                            <span className={`text-xs font-bold tracking-tight ${
+                                step.status === 'ACTIVE' ? 'text-[#00327D]' : 
+                                step.status === 'COMPLETE' ? 'text-[#191C1E]' : 'text-[#737784] opacity-50'
+                            }`}>
+                                {step.label}
+                            </span>
+                            {i < 4 && <div className="hidden xl:block w-16 h-px bg-[#E0E3E5] mx-2" />}
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* 3. LAYOUT WRAPPER */}
+            <div className="max-w-[1440px] mx-auto w-full px-10 flex gap-12 flex-1 pt-12 pb-24">
                 
-                {/* 2. LEFT SIDEBAR - Desktop Only */}
-                <aside className="hidden md:flex w-52 flex-col pt-10 pb-12 shrink-0 border-r border-[#E2E8F0]/30 mr-2">
-                    <div className="flex items-center gap-3 px-1 mb-8">
-                        <div className="w-9 h-9 rounded-lg overflow-hidden border border-[#E2E8F0] bg-gray-100">
-                            <img 
-                                src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" 
-                                alt="Course" 
-                                className="w-full h-full object-cover" 
-                            />
-                        </div>
-                        <div>
-                            <h3 className="text-[11px] font-bold text-[#1E293B] leading-tight">Advanced UI Design</h3>
-                            <p className="text-[9px] text-[#64748B] font-semibold">Step 3 of 5</p>
-                        </div>
+                {/* 4. LEFT NAVIGATION SIDEBAR */}
+                <aside className="w-56 shrink-0 space-y-10">
+                    <div>
+                        <h3 className="text-[10px] font-black uppercase tracking-[0.25em] text-[#737784] mb-6">Talent Flow Builder</h3>
+                        <nav className="space-y-1">
+                            {[
+                                { label: 'Course Identity', icon: 'info_outline', path: '#' },
+                                { label: 'Module Hierarchy', icon: 'grid_view', path: '/instructor/curriculum-builder' },
+                                { label: 'Content Upload', icon: 'cloud_upload', active: true },
+                                { label: 'Assignment Builder', icon: 'assignment', path: '/instructor/assignment-builder' },
+                                { label: 'Platform Preview', icon: 'visibility', path: '#' }
+                            ].map((item) => (
+                                <Link 
+                                    key={item.label}
+                                    to={item.path || '#'} 
+                                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 no-underline ${
+                                        item.active 
+                                        ? 'bg-white shadow-[0px_4px_20px_rgba(0,0,0,0.04)] text-[#00327D] font-bold ring-1 ring-[#00327D]/5' 
+                                        : 'text-[#434653] font-medium hover:bg-white/60 hover:translate-x-1'
+                                    }`}
+                                >
+                                    <span className={`material-symbols-outlined text-xl ${item.active ? 'text-[#00327D]' : 'text-[#737784] opacity-60'}`}>
+                                        {item.icon}
+                                    </span>
+                                    <span className="text-xs">{item.label}</span>
+                                </Link>
+                            ))}
+                        </nav>
                     </div>
 
-                    <nav className="space-y-0.5">
-                        <Link to="#" className="item-nav-desktop">
-                            <span className="material-symbols-outlined text-[18px] opacity-40">info</span>
-                            Course Details
-                        </Link>
-                        <Link to="/instructor/curriculum-builder" className="item-nav-desktop">
-                            <span className="material-symbols-outlined text-[18px] opacity-40">account_tree</span>
-                            Curriculum
-                        </Link>
-                        <div className="w-full flex items-center gap-3 px-3 py-2 text-[11px] font-bold text-[#00327D] bg-white shadow-sm border-l-2 border-[#00327D] rounded-lg">
-                            <span className="material-symbols-outlined text-[18px]">cloud_upload</span>
-                            Content Upload
-                        </div>
-                        <div className="w-full flex items-center gap-3 px-3 py-2 text-[11px] font-semibold text-[#64748B] opacity-40">
-                            <span className="material-symbols-outlined text-[18px]">payments</span>
-                            Pricing
-                        </div>
-                        <div className="w-full flex items-center gap-3 px-3 py-2 text-[11px] font-semibold text-[#64748B] opacity-40">
-                            <span className="material-symbols-outlined text-[18px]">rate_review</span>
-                            Review
-                        </div>
-                    </nav>
-
-                    <div className="mt-auto space-y-3 pt-6">
-                        <div className="bg-[#D3E4FE]/60 p-3 rounded-xl flex items-center gap-3 hover:bg-[#D3E4FE] transition-colors cursor-pointer">
-                            <span className="material-symbols-outlined text-[#00327D] text-lg">menu_book</span>
-                            <span className="text-[9px] font-bold text-[#00327D] uppercase tracking-wider">Architect's Guide</span>
-                        </div>
-                        <div className="space-y-0.5 px-2">
-                            <button className="sidebar-btn-mobile">
-                                <span className="material-symbols-outlined text-base opacity-40">settings</span>
-                                Settings
-                            </button>
-                            <button className="sidebar-btn-mobile">
-                                <span className="material-symbols-outlined text-base opacity-40">help</span>
-                                Help Center
-                            </button>
+                    <div className="bg-[#191C1E] p-6 rounded-[2rem] text-white shadow-2xl relative overflow-hidden group">
+                        <div className="relative z-10">
+                            <span className="material-symbols-outlined text-[#57FAE9] mb-4">analytics</span>
+                            <h4 className="text-sm font-black leading-tight mb-2 tracking-tight">Upload<br/>Statistics</h4>
+                            <div className="space-y-4 my-6">
+                                <div className="flex justify-between items-end">
+                                    <span className="text-[9px] text-white/50 uppercase font-black">Storage</span>
+                                    <span className="text-xs font-black">1.2 GB / 5GB</span>
+                                </div>
+                                <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                                    <div className="w-1/4 h-full bg-[#57FAE9] rounded-full"></div>
+                                </div>
+                            </div>
+                            <button className="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg text-[10px] font-bold transition-all border-none text-white cursor-pointer w-full">Manage Media</button>
                         </div>
                     </div>
                 </aside>
 
-                {/* 3. MAIN WORKSPACE */}
-                <div className="flex-1 flex flex-col min-w-0 pt-6 md:pt-10 pb-12">
-                    
-                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 md:mb-3 pr-0 md:pr-8">
-                        <div className="flex-1">
-                            <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-[#00327D] mb-2 md:mb-1">Upload Content</h1>
-                            <p className="text-[#64748B] text-xs font-medium leading-relaxed max-w-[420px]">
-                                Add your teaching materials. Supported formats: MP4, PDF, and Markdown text.
-                            </p>
-                        </div>
-                        <div className="hidden md:flex text-right flex-col items-end pb-1">
-                            <span className="text-2xl font-bold text-[#00327D] leading-none">75%</span>
-                            <span className="text-[9px] font-bold text-[#64748B] tracking-[0.2em] uppercase mt-1">COMPLETE</span>
-                        </div>
-                    </div>
+                {/* 5. MAIN CONTENT WORKSPACE */}
+                <main className="flex-1 space-y-10">
+                    <header>
+                        <h1 className="text-4xl font-black tracking-tighter text-[#1C1B1F] font-manrope mb-2">Upload Content</h1>
+                        <p className="text-[#434653] text-[15px] font-medium leading-relaxed max-w-xl">
+                            Attach your primary teaching materials, video lectures, and support documents to each module.
+                        </p>
+                    </header>
 
-                    {/* Mobile Progress Row */}
-                    <div className="flex md:hidden justify-between items-center mb-2 px-1 text-[11px] font-bold">
-                        <span className="text-[#00327D]">Progress</span>
-                        <span className="text-[#64748B]">75% Complete</span>
-                    </div>
+                    <div className="space-y-8">
+                        {modules.map(mod => (
+                            <section key={mod.id} className="space-y-4">
+                                <div className="flex items-center gap-4 mb-2">
+                                    <div className="w-10 h-10 bg-white rounded-xl shadow-sm border border-[#E0E3E5]/40 flex items-center justify-center font-black text-[#00327D] text-sm">
+                                        {mod.id}
+                                    </div>
+                                    <h2 className="text-lg font-black tracking-tight text-[#191C1E] font-manrope">Module {mod.id}: {mod.title}</h2>
+                                </div>
 
-                    <div className="w-full h-1.5 md:h-1 bg-[#E2E8F0] rounded-full overflow-hidden mb-8 md:mb-10">
-                        <div className="w-3/4 h-full bg-[#00327D] rounded-full"></div>
-                    </div>
-
-                    <div className="flex flex-col lg:flex-row gap-10 items-stretch flex-1">
-                        <main className="flex-1 min-w-0">
-                            <div className="space-y-6 md:space-y-8">
-                                {modules.map(mod => (
-                                    <section key={mod.id} className="bg-white md:bg-transparent rounded-2xl md:rounded-none p-0 overflow-hidden md:overflow-visible">
-                                        {/* Module Header */}
-                                        <div className="bg-[#F1F5F9]/30 md:bg-transparent p-5 md:p-0 flex items-center gap-4 mb-0 md:mb-4 border-b md:border-none border-[#E2E8F0]/30">
-                                            <div className={`w-8 h-8 rounded-full flex items-center justify-center bg-[#F1F5F9] text-[#1E293B] text-xs font-bold shrink-0`}>
-                                                {mod.id}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {mod.lessons.map(lesson => (
+                                        <div key={lesson.id} className="bg-white rounded-[1.5rem] p-6 shadow-[0px_8px_24px_rgba(25,28,30,0.03)] ring-1 ring-[#E0E3E5]/30 hover:ring-[#00327D]/20 transition-all flex flex-col gap-4">
+                                            <div className="flex items-start justify-between">
+                                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                                                    lesson.status === 'verified' ? 'bg-[#E8F5E9] text-[#2E7D32]' : 
+                                                    lesson.status === 'uploading' ? 'bg-[#D3E4FE] text-[#00419E]' : 
+                                                    'bg-[#F2F4F6] text-[#737784]'
+                                                }`}>
+                                                    <span className="material-symbols-outlined text-xl">
+                                                        {lesson.status === 'verified' ? 'check_circle' : 
+                                                         lesson.status === 'uploading' ? 'cloud_sync' : 'draft'}
+                                                    </span>
+                                                </div>
+                                                <button className="text-[#737784] hover:text-[#191C1E] transition-colors bg-transparent border-none cursor-pointer">
+                                                    <span className="material-symbols-outlined text-lg">more_vert</span>
+                                                </button>
                                             </div>
-                                            <h2 className={`text-sm md:text-base font-bold tracking-tight ${mod.status === 'PENDING' ? 'text-[#64748B] opacity-60' : 'text-[#1E293B]'}`}>
-                                                Module {mod.id}: {mod.title}
-                                            </h2>
-                                        </div>
 
-                                        <div className="p-5 md:p-0 space-y-4 md:space-y-3">
-                                            {mod.lessons.length > 0 ? (
-                                                mod.lessons.map((lesson: any) => (
-                                                    <div key={lesson.id} className="group bg-white rounded-xl border border-[#E2E8F0] p-4 flex flex-col gap-3 hover:shadow-sm transition-all relative">
-                                                        <div className="flex items-center gap-4">
-                                                            <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 border border-[#E2E8F0]/50 ${lesson.status === 'verified' ? 'bg-[#E8F5E9] text-[#2E7D32]' : lesson.status === 'uploading' ? 'bg-[#D3E4FE]/40 text-[#00327D]' : 'bg-transparent text-[#64748B] opacity-40'}`}>
-                                                                <span className="material-symbols-outlined text-lg">
-                                                                    {lesson.status === 'verified' ? 'check_circle' : lesson.status === 'uploading' ? 'cloud_upload' : 'radio_button_unchecked'}
-                                                                </span>
-                                                            </div>
-                                                            <div className="flex-1 min-w-0">
-                                                                <h4 className="text-[13px] font-bold text-[#1E293B] mb-0.5 truncate">{lesson.title}</h4>
-                                                                <p className="text-[10px] font-medium text-[#64748B] uppercase tracking-wide">
-                                                                    {lesson.type} • {lesson.meta}
-                                                                </p>
-                                                            </div>
-                                                            {lesson.status === 'verified' && (
-                                                                <button className="bg-transparent border-none text-[#64748B] hover:text-[#00327D] cursor-pointer">
-                                                                    <span className="material-symbols-outlined text-lg">edit</span>
-                                                                </button>
-                                                            )}
-                                                        </div>
-                                                        
-                                                        {lesson.status === 'verified' && (
-                                                            <div className="flex items-center">
-                                                                <span className="bg-[#57FAE9]/30 text-[#00897B] text-[10px] font-bold px-3 py-1.5 rounded-md uppercase tracking-widest border-none">COMPLETE</span>
-                                                            </div>
-                                                        )}
+                                            <div>
+                                                <h4 className="text-sm font-black text-[#191C1E] mb-1 line-clamp-1">{lesson.title}</h4>
+                                                <span className="text-[10px] font-black text-[#737784] uppercase tracking-widest">{lesson.type} • {lesson.meta}</span>
+                                            </div>
 
-                                                        {lesson.status === 'uploading' && (
-                                                            <div className="w-full">
-                                                                <div className="w-full h-1.5 bg-[#E2E8F0] rounded-full overflow-hidden mb-2">
-                                                                    <div className="w-[45%] h-full bg-[#00327D] rounded-full"></div>
-                                                                </div>
-                                                                <button className="w-full bg-transparent border-none text-[#F44336] text-[11px] font-bold cursor-pointer uppercase tracking-widest hover:underline">Cancel</button>
-                                                            </div>
-                                                        )}
-
-                                                        {lesson.status === 'pending' && (
-                                                            <button 
-                                                                onClick={() => handleFileClick(lesson.id)} 
-                                                                className="w-full bg-[#E2E8F0]/50 text-[#1E293B] flex items-center justify-center gap-2 py-3 rounded-lg text-[11px] font-bold border-none cursor-pointer hover:bg-[#E2E8F0] transition-colors"
-                                                            >
-                                                                <span className="material-symbols-outlined text-base">add</span>
-                                                                Select File
-                                                            </button>
-                                                        )}
+                                            {lesson.status === 'uploading' && (
+                                                <div className="pt-2">
+                                                    <div className="w-full h-1.5 bg-[#F2F4F6] rounded-full overflow-hidden mb-2">
+                                                        <div className="h-full bg-[#00327D] transition-all" style={{ width: `${lesson.progress}%` }}></div>
                                                     </div>
-                                                ))
+                                                </div>
+                                            )}
+
+                                            {lesson.status === 'pending' ? (
+                                                <button 
+                                                    onClick={() => handleFileClick(lesson.id)}
+                                                    className="mt-2 w-full bg-[#F2F4F6] hover:bg-[#E0E3E5] py-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-[#191C1E] transition-colors border-none cursor-pointer"
+                                                >
+                                                    Select File
+                                                </button>
                                             ) : (
-                                                <div className="bg-white rounded-xl border border-[#E2E8F0]/60 p-10 flex flex-col items-center justify-center text-center">
-                                                    <div className="w-12 h-12 bg-[#F1F5F9] rounded-full flex items-center justify-center mb-4">
-                                                        <span className="material-symbols-outlined text-[#64748B] text-2xl">edit_document</span>
-                                                    </div>
-                                                    <p className="text-[13px] font-bold text-[#1E293B] mb-1">No lessons created yet</p>
-                                                    <p className="text-[11px] font-medium text-[#64748B] mb-0 ml-0">{mod.description}</p>
+                                                <div className="mt-2 flex items-center gap-2">
+                                                    <span className="material-symbols-outlined text-xs text-[#00A651]">attachment</span>
+                                                    <span className="text-[10px] font-bold text-[#434653] truncate">{lesson.file || 'No file attached'}</span>
                                                 </div>
                                             )}
                                         </div>
-                                    </section>
+                                    ))}
+                                    
+                                    {mod.lessons.length === 0 && (
+                                        <div className="col-span-full py-12 bg-white rounded-[2rem] border-2 border-dashed border-[#E0E3E5] flex flex-col items-center justify-center text-center opacity-60">
+                                            <span className="material-symbols-outlined text-4xl text-[#737784] mb-4">folder_open</span>
+                                            <p className="text-xs font-bold text-[#737784] uppercase tracking-widest">{mod.description}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </section>
+                        ))}
+
+                        <div className="flex items-center justify-between pt-10">
+                            <button 
+                                onClick={() => navigate('/instructor/curriculum-builder')} 
+                                className="flex items-center gap-3 text-[#434653] font-bold text-[11px] bg-white px-6 py-3 rounded-xl shadow-sm hover:translate-x-[-4px] transition-all border-none cursor-pointer uppercase tracking-widest"
+                            >
+                                <span className="material-symbols-outlined text-lg">west</span>
+                                Module Structure
+                            </button>
+                            <button 
+                                onClick={() => navigate('/instructor/assignment-builder')} 
+                                className="bg-gradient-to-r from-[#00327D] to-[#2559BD] text-white px-10 py-4 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 flex items-center gap-4 hover:translate-x-[4px] transition-all border-none cursor-pointer group"
+                            >
+                                Build Assignment
+                                <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform text-lg">arrow_forward</span>
+                            </button>
+                        </div>
+                    </div>
+                </main>
+
+                {/* 6. RIGHT CONTEXTUAL SIDEBAR */}
+                <aside className="w-80 shrink-0 space-y-8">
+                    
+                    {/* Media Guidelines Card */}
+                    <div className="bg-[#191C1E] rounded-[2.5rem] p-8 text-white relative overflow-hidden group shadow-2xl">
+                        <div className="relative z-10">
+                            <div className="flex items-center gap-3 mb-8">
+                                <div className="w-10 h-10 bg-white/10 backdrop-blur-xl rounded-2xl flex items-center justify-center text-[#57FAE9]">
+                                    <span className="material-symbols-outlined text-xl">play_circle</span>
+                                </div>
+                                <span className="text-[10px] font-black tracking-[0.25em] uppercase text-white/40">Media Protocol</span>
+                            </div>
+                            
+                            <h3 className="text-2xl font-black font-manrope leading-tight mb-4 tracking-tight">Optimizing Legacy Content</h3>
+                            <p className="text-xs text-white/60 leading-relaxed mb-8 font-medium">
+                                High-bitrate videos can buffer on mobile networks. We recommend H.264 encoding at 1080p for the perfect balance of clarity and speed.
+                            </p>
+                            
+                            <div className="space-y-3">
+                                {[
+                                    { label: 'Resolution', val: '1920 x 1080' },
+                                    { label: 'Encoding', val: 'H.264 / AAC' },
+                                    { label: 'Max Filesize', val: '500 MB' }
+                                ].map((spec) => (
+                                    <div key={spec.label} className="flex justify-between items-center py-2 border-b border-white/5">
+                                        <span className="text-[9px] font-black uppercase text-white/30 tracking-widest">{spec.label}</span>
+                                        <span className="text-[10px] font-bold">{spec.val}</span>
+                                    </div>
                                 ))}
                             </div>
-
-                            {/* Mobile Sidebar stack starts here */}
-                            <div className="md:hidden space-y-6 mt-8">
-                                {/* Architect's Tip - Mobile style */}
-                                <div className="bg-[#00327D] rounded-2xl p-7 text-white shadow-lg">
-                                    <div className="flex items-center gap-2 mb-5">
-                                        <span className="material-symbols-outlined text-sm font-bold text-[#57FAE9]">architecture</span>
-                                        <span className="text-[9px] font-bold tracking-[0.2em] text-white/50 uppercase">Architect's Tip</span>
-                                    </div>
-                                    <h4 className="text-xl font-bold leading-tight mb-3">Optimizing for Mobile</h4>
-                                    <p className="text-xs font-medium text-white/70 leading-relaxed mb-6">
-                                        High-bitrate videos can buffer on mobile networks. We recommend H.264 encoding at 1080p for the perfect balance of clarity and speed.
-                                    </p>
-                                    <button className="bg-transparent border-none text-[#57FAE9] text-[11px] font-bold uppercase tracking-widest flex items-center gap-2 cursor-pointer hover:underline">
-                                        Read the Guidelines
-                                        <span className="material-symbols-outlined text-base">north_east</span>
-                                    </button>
-                                </div>
-
-                                {/* Upload Summary - Mobile style */}
-                                <div className="bg-[#F1F5F9]/40 rounded-2xl p-7 border border-[#E2E8F0]/50">
-                                    <h3 className="text-[11px] font-bold text-[#1E293B] uppercase tracking-widest mb-6">Upload Summary</h3>
-                                    <div className="space-y-4">
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex items-center gap-3">
-                                                <span className="material-symbols-outlined text-[#1E293B] text-xl opacity-60">video_library</span>
-                                                <span className="text-[11px] font-bold text-[#64748B]">Videos</span>
-                                            </div>
-                                            <span className="text-[13px] font-bold text-[#1E293B]">2 / 5</span>
-                                        </div>
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex items-center gap-3">
-                                                <span className="material-symbols-outlined text-[#1E293B] text-xl opacity-60">description</span>
-                                                <span className="text-[11px] font-bold text-[#64748B]">Documents</span>
-                                            </div>
-                                            <span className="text-[13px] font-bold text-[#1E293B]">1 / 3</span>
-                                        </div>
-                                        <div className="flex items-center justify-between pt-4 border-t border-[#E2E8F0]">
-                                            <div className="flex items-center gap-3 text-[#1E293B]">
-                                                <span className="material-symbols-outlined text-xl font-bold">sort</span>
-                                                <span className="text-[11px] font-bold uppercase tracking-widest">Total Size</span>
-                                            </div>
-                                            <span className="text-[13px] font-bold text-[#1E293B]">1.2 GB</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Need Help - Mobile style */}
-                                <div className="bg-white border-2 border-dashed border-[#E2E8F0]/60 rounded-2xl p-6">
-                                    <h4 className="text-[12px] font-bold text-[#1E293B] mb-2 font-black">Need help?</h4>
-                                    <p className="text-[11px] font-medium text-[#64748B] leading-relaxed ml-0">
-                                        Our support team is available 24/7 to help with media processing issues.
-                                    </p>
-                                </div>
-                            </div>
-                        </main>
-
-                        {/* DESKTOP SIDEBAR */}
-                        <aside className="hidden lg:flex w-[320px] shrink-0 space-y-6 flex-col">
-                            <div className="bg-white border border-[#E2E8F0] rounded-2xl p-6 shadow-sm">
-                                <h3 className="text-[10px] font-bold text-[#64748B] tracking-[0.2em] uppercase mb-6 text-center">Summary</h3>
-                                <div className="space-y-4">
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 bg-[#D3E4FE]/40 rounded-lg flex items-center justify-center">
-                                                <span className="material-symbols-outlined text-[#00327D] text-lg font-light">video_library</span>
-                                            </div>
-                                            <span className="text-[11px] font-semibold text-[#64748B]">Videos</span>
-                                        </div>
-                                        <span className="text-sm font-bold text-[#1E293B]">2 / 5</span>
-                                    </div>
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 bg-[#FFF7ED] rounded-lg flex items-center justify-center">
-                                                <span className="material-symbols-outlined text-[#F97316] text-lg font-light">description</span>
-                                            </div>
-                                            <span className="text-[11px] font-semibold text-[#64748B]">Files</span>
-                                        </div>
-                                        <span className="text-sm font-bold text-[#1E293B]">1 / 3</span>
-                                    </div>
-                                    <div className="pt-4 border-t border-[#E2E8F0] flex justify-between items-center mt-2">
-                                        <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-widest">Total Size</span>
-                                        <span className="text-lg font-bold text-[#00327D] tracking-tighter">1.2 GB</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="bg-[#00327D] rounded-[32px] p-8 text-white relative overflow-hidden shadow-xl min-h-[320px] flex flex-col justify-center">
-                                <div className="flex items-center gap-2 mb-6 relative z-10">
-                                    <span className="material-symbols-outlined text-sm font-bold text-[#57FAE9]">bolt</span>
-                                    <span className="text-[9px] font-bold tracking-[0.3em] text-white/50 uppercase">Architect's Tip</span>
-                                </div>
-                                <h4 className="text-xl font-bold leading-tight mb-4 tracking-tight relative z-10">Optimizing for Desktop & Mobile</h4>
-                                <p className="text-xs font-medium text-white/70 leading-relaxed mb-8 relative z-10">
-                                    Ensure your videos use H.264 encoding and 1080p resolution for the perfect balance of quality and streaming speed across all student devices.
-                                </p>
-                                <div className="w-10 h-1 bg-[#57FAE9] rounded-full relative z-10"></div>
-                                <span className="material-symbols-outlined text-[120px] text-white/5 absolute -right-8 -bottom-8">architecture</span>
-                            </div>
-
-                            <div className="bg-white border border-[#E2E8F0] rounded-2xl p-6 flex flex-col items-center text-center">
-                                <div className="w-8 h-8 bg-[#F1F5F9] rounded-full flex items-center justify-center mb-3">
-                                    <span className="material-symbols-outlined text-[#00327D] text-lg font-light">help_outline</span>
-                                </div>
-                                <h4 className="text-[11px] font-bold text-[#1E293B] mb-1">Need help?</h4>
-                                <p className="text-[9px] font-semibold text-[#64748B] leading-relaxed mb-4">Support team is available 24/7 for assistance.</p>
-                                <button className="text-[#00327D] font-bold text-[9px] uppercase tracking-widest bg-transparent border-none cursor-pointer hover:underline">Support Center</button>
-                            </div>
-                        </aside>
+                        </div>
+                        <span className="material-symbols-outlined text-[140px] text-white/5 absolute -right-8 -bottom-8 transition-transform group-hover:scale-110">video_settings</span>
                     </div>
 
-                    {/* Desktop Step Navigation */}
-                    <div className="hidden md:flex justify-between items-center py-8 mt-10 border-t border-[#E2E8F0]">
-                        <button onClick={() => navigate('/instructor/curriculum-builder')} className="flex items-center gap-2 text-[#64748B] font-bold text-xs bg-transparent border-none cursor-pointer hover:text-[#1E293B]">
-                            <span className="material-symbols-outlined text-base">arrow_back</span>
-                            Previous Step
-                        </button>
-                        <button onClick={() => navigate('/instructor/assignment-builder')} className="bg-[#00327D] text-white px-8 py-2.5 rounded-xl font-bold text-xs shadow-lg shadow-[#00327D]/10 flex items-center gap-3 hover:translate-x-1 transition-all border-none cursor-pointer group">
-                            Next Step
-                            <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform text-base">arrow_forward</span>
-                        </button>
+                    {/* Support Bento */}
+                    <div className="bg-white rounded-[2.5rem] p-8 shadow-[0px_12px_32px_rgba(25,28,30,0.04)] ring-1 ring-[#E0E3E5]/30">
+                        <div className="flex flex-col items-center text-center">
+                            <div className="w-12 h-12 bg-[#F2F4F6] rounded-2xl flex items-center justify-center text-[#00327D] mb-4">
+                                <span className="material-symbols-outlined text-2xl">help_outline</span>
+                            </div>
+                            <h4 className="text-sm font-black text-[#191C1E] mb-2 font-manrope">Verification Issues?</h4>
+                            <p className="text-[11px] font-medium text-[#737784] leading-relaxed mb-6">
+                                If your file fails the automated verification check, our technical curators can assist you.
+                            </p>
+                            <button className="text-[10px] font-black uppercase tracking-[0.2em] text-[#00327D] bg-transparent border-none cursor-pointer hover:underline">Open Support Ticket</button>
+                        </div>
                     </div>
-                </div>
+                </aside>
+
             </div>
-
-            {/* 4. MOBILE FOOTER - Sticky */}
-            <footer className="flex md:hidden fixed bottom-0 left-0 w-full bg-[#F1F5F9] p-4 gap-3 z-50 border-t border-[#E2E8F0]">
-                <button onClick={() => navigate(-1)} className="flex-1 bg-[#E2E8F5] text-[#1E293B] py-4 rounded-xl font-black text-[11px] uppercase tracking-widest flex items-center justify-center gap-3 border-none cursor-pointer">
-                    <span className="material-symbols-outlined text-base">chevron_left</span>
-                    Previous Step
-                </button>
-                <button onClick={() => navigate('/instructor/assignment-builder')} className="flex-[1.5] bg-[#2962FF] text-white py-4 rounded-xl font-black text-[11px] uppercase tracking-widest flex items-center justify-center gap-3 border-none cursor-pointer shadow-lg shadow-[#2962FF]/30">
-                    Next Step
-                    <span className="material-symbols-outlined text-base">chevron_right</span>
-                </button>
-            </footer>
-
-            <style>{`
-                .item-nav-desktop {
-                    width: 100%;
-                    display: flex;
-                    align-items: center;
-                    gap: 12px;
-                    padding: 10px 12px;
-                    font-size: 11px;
-                    font-weight: 700;
-                    color: #64748B;
-                    border-radius: 8px;
-                    transition: all 0.2s;
-                    text-decoration: none;
-                }
-                .item-nav-desktop:hover {
-                    background-color: white;
-                }
-                .sidebar-btn-mobile {
-                    width: 100%;
-                    display: flex;
-                    align-items: center;
-                    gap: 12px;
-                    padding: 6px 0;
-                    font-size: 10px;
-                    font-weight: 600;
-                    color: #64748B;
-                    background-color: transparent;
-                    border: none;
-                    cursor: pointer;
-                }
-                .sidebar-btn-mobile:hover {
-                    color: #1E293B;
-                }
-                @media (max-width: 767px) {
-                    body {
-                        background-color: #F8F9FA !important;
-                    }
-                }
-            `}</style>
         </div>
     );
 };

@@ -107,8 +107,12 @@ export default function LoginPage() {
               Google
             </SocialAuthButton>
             <SocialAuthButton>
-              <span className="material-symbols-outlined text-[18px]">key</span>
-              SSO
+              <img
+                alt="GitHub"
+                className="w-4 h-4"
+                src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+              />
+              GitHub
             </SocialAuthButton>
           </div>
 

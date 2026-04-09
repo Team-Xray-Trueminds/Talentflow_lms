@@ -21,6 +21,9 @@ import InstructorCourseBuilder from './pages/InstructorCourseBuilder'
 import InstructorCurriculumBuilder from './pages/InstructorCurriculumBuilder'
 import InstructorContentUploadPage from './pages/InstructorContentUploadPage'
 import InstructorAssignmentBuilderPage from './pages/InstructorAssignmentBuilderPage'
+import LearnerCoursePlayerPage from './pages/LearnerCoursePlayerPage'
+import LearnerCoursePreviewPage from './pages/LearnerCoursePreviewPage'
+import LearnerAssignmentPage from './pages/LearnerAssignmentPage'
 
 function App() {
   return (
@@ -35,6 +38,9 @@ function App() {
         <Route path="/settings/instructor-setup" element={<InstructorProfileSetupPage />} />
         <Route path="/learner/dashboard" element={<LearnerDashboard />} />
         <Route path="/learner/courses" element={<LearnerCoursesPage />} />
+        <Route path="/learner/course-player/:id?" element={<LearnerCoursePlayerPage />} />
+        <Route path="/learner/course-preview/:id" element={<LearnerCoursePreviewPage />} />
+        <Route path="/learner/assignment/:id" element={<LearnerAssignmentPage />} />
         <Route path="/learner/notifications" element={<NotificationsPage />} />
         <Route path="/learner/my-learning" element={<MyLearningPage />} />
         <Route path="/learner/messages" element={<MessagesPage />} />
