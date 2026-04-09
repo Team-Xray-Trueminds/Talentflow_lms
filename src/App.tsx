@@ -17,6 +17,8 @@ import InstructorGradebookPage from './pages/InstructorGradebookPage'
 import AdminDashboard from './pages/AdminDashboard'
 import CertificatePage from './pages/CertificatePage'
 import MessagesPage from './pages/MessagesPage'
+import InstructorCourseBuilder from './pages/InstructorCourseBuilder'
+import InstructorCurriculumBuilder from './pages/InstructorCurriculumBuilder'
 
 function App() {
   return (
@@ -41,6 +43,8 @@ function App() {
         <Route path="/instructor/gradebook" element={<InstructorGradebookPage />} />
         <Route path="/instructor/messages" element={<MessagesPage />} />
         <Route path="/instructor/academic-oversight" element={<AcademicTracksPage />} />
+        <Route path="/instructor/course-builder" element={<InstructorCourseBuilder />} />
+        <Route path="/instructor/curriculum-builder" element={<InstructorCurriculumBuilder />} />
         <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </Router>

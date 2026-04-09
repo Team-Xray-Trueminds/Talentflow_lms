@@ -1,4 +1,25 @@
 @import "tailwindcss";
+/* trigger rebuild */
+
+@theme {
+  --color-brand-navy: #00327D;
+  --color-brand-blue: #0047AB;
+  --color-brand-slate: #64748B;
+  --color-brand-dark: #0F172A;
+  --color-brand-mid: #334155;
+  --color-brand-muted: #74777F;
+  --color-brand-tip-text: #E0E7FF;
+  --color-brand-tip-bg: #2B3C73;
+  --color-brand-tip-accent: #57FAE9;
+  --color-brand-surface: #F4F6F9;
+  --color-brand-page: #F8F9FA;
+  --color-brand-border: #F1F5F9;
+  --color-brand-divider: #E2E8F0;
+  --color-brand-upload: #EEF2F6;
+  --color-brand-upload-border: #CBD5E1;
+  --color-brand-draft: #E2E8F0;
+  --color-brand-back: #F8FAFC;
+}
 
 .material-symbols-outlined {
 	font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;

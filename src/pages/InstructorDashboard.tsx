@@ -1,4 +1,5 @@
 import Sidebar from '../components/Sidebar'
+import { Link } from 'react-router-dom'
 
 export default function InstructorDashboard() {
   const stats = [
@@ -121,15 +122,22 @@ export default function InstructorDashboard() {
                <h3 className="text-xl font-black font-headline mb-6">Quick Actions</h3>
                <div className="grid grid-cols-2 gap-4">
                   {[
-                    { label: 'New Course', icon: 'add_circle' },
+                    { label: 'New Course', icon: 'add_circle', to: '/instructor/course-builder' },
                     { label: 'Live Stream', icon: 'videocam' },
                     { label: 'Analytics', icon: 'monitoring' },
                     { label: 'Broadcast', icon: 'podcasts' }
                   ].map((btn, i) => (
-                    <button key={i} className="flex flex-col items-center justify-center p-4 bg-white/10 rounded-2xl hover:bg-white/20 transition-all gap-2 border border-white/10">
-                       <span className="material-symbols-outlined">{btn.icon}</span>
-                       <span className="text-[10px] font-bold uppercase tracking-widest">{btn.label}</span>
-                    </button>
+                    btn.to ? (
+                      <Link key={i} to={btn.to} className="flex flex-col items-center justify-center p-4 bg-white/10 rounded-2xl hover:bg-white/20 transition-all gap-2 border border-white/10">
+                         <span className="material-symbols-outlined">{btn.icon}</span>
+                         <span className="text-[10px] font-bold uppercase tracking-widest">{btn.label}</span>
+                      </Link>
+                    ) : (
+                      <button key={i} className="flex flex-col items-center justify-center p-4 bg-white/10 rounded-2xl hover:bg-white/20 transition-all gap-2 border border-white/10">
+                         <span className="material-symbols-outlined">{btn.icon}</span>
+                         <span className="text-[10px] font-bold uppercase tracking-widest">{btn.label}</span>
+                      </button>
+                    )
                   ))}
                </div>
             </div>
