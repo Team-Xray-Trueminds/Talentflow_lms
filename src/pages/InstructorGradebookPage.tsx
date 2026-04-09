@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Sidebar from '../components/Sidebar';
-import { Link } from 'react-router-dom';
 
 const InstructorGradebookPage = () => {
     const [selectedStudent, setSelectedStudent] = useState<any>(null);

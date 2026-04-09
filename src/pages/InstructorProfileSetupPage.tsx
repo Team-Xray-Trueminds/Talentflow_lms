@@ -1,8 +1,20 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
+import { useTheme, type ThemeMode } from '../components/theme/ThemeProvider'
+
+const displayModes: Array<{
+  value: ThemeMode
+  title: string
+  note: string
+  icon: string
+}> = [
+  { value: 'light', title: 'Light Mode', note: 'Keep your studio bright and editorial.', icon: 'light_mode' },
+  { value: 'dark', title: 'Dark Mode', note: 'Use a softer dark palette for focused work.', icon: 'dark_mode' },
+]
 
 export default function InstructorProfileSetupPage() {
+  const { themeMode, resolvedTheme, setThemeMode } = useTheme()
   const [formData, setFormData] = useState({
     headline: '',
     expertiseArea: '',
@@ -128,6 +140,58 @@ export default function InstructorProfileSetupPage() {
                     className="w-full pl-12 pr-5 py-4 rounded-xl bg-[#F2F4F6] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none"
                   />
                 </div>
+              </div>
+            </div>
+
+            <div className="pt-6 border-t border-[#C3C6D5]/30">
+              <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <h3 className="text-lg font-bold text-[#191C1E] font-headline">Workspace Settings</h3>
+                  <p className="mt-2 text-sm leading-6 text-[#434653]">
+                    Display preferences apply across your educator studio and learning tools.
+                  </p>
+                </div>
+                <span className="rounded-full bg-[#EAF0FF] px-3 py-1 text-[10px] font-black uppercase tracking-[0.25em] text-[#2559BD] w-fit">
+                  {resolvedTheme === 'dark' ? 'Dark Active' : 'Light Active'}
+                </span>
+              </div>
+
+              <div className="mt-6 grid gap-4">
+                {displayModes.map((mode) => {
+                  const active = themeMode === mode.value
+
+                  return (
+                    <button
+                      key={mode.value}
+                      type="button"
+                      onClick={() => setThemeMode(mode.value)}
+                      className={`flex w-full items-center justify-between gap-4 rounded-[24px] border px-5 py-4 text-left transition ${
+                        active
+                          ? 'border-[#2559BD]/30 bg-[#EAF0FF]'
+                          : 'border-[#D7DDEA] bg-[#FBFCFE] hover:border-[#2559BD]/20 hover:bg-[#F7F9FB]'
+                      }`}
+                    >
+                      <div className="flex items-center gap-4">
+                        <span className={`grid h-12 w-12 place-items-center rounded-2xl ${
+                          active ? 'bg-[#2559BD] text-white' : 'bg-white text-[#2559BD] border border-[#D7DDEA]'
+                        }`}>
+                          <span className="material-symbols-outlined">{mode.icon}</span>
+                        </span>
+                        <div>
+                          <p className="text-sm font-black text-[#191C1E]">{mode.title}</p>
+                          <p className="mt-1 text-xs leading-5 text-[#434653]">{mode.note}</p>
+                        </div>
+                      </div>
+                      <span className={`grid h-6 w-6 place-items-center rounded-full border ${
+                        active
+                          ? 'border-[#2559BD] bg-[#2559BD] text-white'
+                          : 'border-[#C3C6D5] bg-white text-transparent'
+                      }`}>
+                        <span className="material-symbols-outlined text-[15px]">check</span>
+                      </span>
+                    </button>
+                  )
+                })}
               </div>
             </div>
 

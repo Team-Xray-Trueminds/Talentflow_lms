@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
+import { useTheme, type ThemeMode } from '../components/theme/ThemeProvider'
 
 const notificationItems = [
   {
@@ -82,8 +83,19 @@ function Checkbox({
   )
 }
 
+const displayModes: Array<{
+  value: ThemeMode
+  title: string
+  note: string
+  icon: string
+}> = [
+  { value: 'light', title: 'Light Mode', note: 'Bright workspace with crisp surfaces.', icon: 'light_mode' },
+  { value: 'dark', title: 'Dark Mode', note: 'Soft low-light palette that stays easy on the eyes.', icon: 'dark_mode' },
+]
+
 export default function ProfileSetupPage() {
   const [formData, setFormData] = useState<ProfileFormState>(initialState)
+  const { themeMode, resolvedTheme, setThemeMode } = useTheme()
 
   const updateField = <K extends keyof ProfileFormState>(key: K, value: ProfileFormState[K]) => {
     setFormData((current) => ({ ...current, [key]: value }))
@@ -381,8 +393,65 @@ export default function ProfileSetupPage() {
 
                   <article className="rounded-[28px] border border-[#E3E8F0] bg-white p-6">
                     <h2 className="text-xl font-black tracking-tight text-[#191C1E]">
-                      Workspace Preferences
+                      Workspace Settings
                     </h2>
+                    <p className="mt-2 text-sm leading-6 text-[#6B7280]">
+                      Control how your workspace looks and behaves across every screen.
+                    </p>
+
+                    <div className="mt-6">
+                      <div className="flex items-center justify-between gap-3">
+                        <div>
+                          <h3 className="text-sm font-black uppercase tracking-[0.2em] text-[#434653]">
+                            Display
+                          </h3>
+                          <p className="mt-2 text-sm text-[#6B7280]">
+                            Current appearance: {resolvedTheme === 'dark' ? 'Dark' : 'Light'}
+                          </p>
+                        </div>
+                        <span className="rounded-full bg-[#EAF0FF] px-3 py-1 text-[10px] font-black uppercase tracking-[0.25em] text-[#2559BD]">
+                          {themeMode}
+                        </span>
+                      </div>
+
+                      <div className="mt-4 space-y-3">
+                        {displayModes.map((mode) => {
+                          const active = themeMode === mode.value
+
+                          return (
+                            <button
+                              key={mode.value}
+                              type="button"
+                              onClick={() => setThemeMode(mode.value)}
+                              className={`flex w-full items-center justify-between gap-4 rounded-[22px] border px-4 py-4 text-left transition ${
+                                active
+                                  ? 'border-[#2559BD]/30 bg-[#EAF0FF]'
+                                  : 'border-[#E3E8F0] bg-[#FBFCFE] hover:border-[#2559BD]/20 hover:bg-[#F7F9FB]'
+                              }`}
+                            >
+                              <div className="flex items-center gap-4">
+                                <span className={`grid h-12 w-12 place-items-center rounded-2xl ${
+                                  active ? 'bg-[#2559BD] text-white' : 'bg-white text-[#2559BD] border border-[#E3E8F0]'
+                                }`}>
+                                  <span className="material-symbols-outlined">{mode.icon}</span>
+                                </span>
+                                <div>
+                                  <p className="text-sm font-bold text-[#191C1E]">{mode.title}</p>
+                                  <p className="mt-1 text-xs leading-5 text-[#6B7280]">{mode.note}</p>
+                                </div>
+                              </div>
+                              <span className={`grid h-6 w-6 place-items-center rounded-full border ${
+                                active
+                                  ? 'border-[#2559BD] bg-[#2559BD] text-white'
+                                  : 'border-[#C3C6D5] bg-white text-transparent'
+                              }`}>
+                                <span className="material-symbols-outlined text-[15px]">check</span>
+                              </span>
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
 
                     <div className="mt-6 space-y-4">
                       {workspacePreferenceItems.map((item) => (

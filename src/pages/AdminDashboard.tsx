@@ -71,7 +71,7 @@ const metrics: MetricConfig[] = [
 ];
 
 const AdminDashboard = () => {
-    const [instructors, setInstructors] = useState<Instructor[]>([
+    const [instructors] = useState<Instructor[]>([
         { id: '1', name: 'Dr. Sarah Chen', email: 'sarah.chen@talentflow.edu', expertise: 'System Architecture', status: 'active' },
         { id: '2', name: 'Prof. James Wilson', email: 'j.wilson@talentflow.edu', expertise: 'Data Engineering', status: 'active' }
     ]);

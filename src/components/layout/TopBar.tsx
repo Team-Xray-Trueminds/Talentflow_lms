@@ -1,7 +1,7 @@
 
 const TopBar = () => {
     return (
-        <header className="bg-surface md:bg-slate-50/70 dark:bg-slate-900 md:dark:bg-slate-950/70 md:backdrop-blur-xl h-18 sticky top-0 z-40 md:shadow-sm flex justify-between items-center w-full px-6 md:px-8 py-3">
+        <header className="h-18 sticky top-0 z-40 flex w-full items-center justify-between border-b border-white/50 bg-surface/90 px-6 py-3 backdrop-blur-xl transition-colors duration-300 md:px-8 md:bg-slate-50/70 md:shadow-sm dark:border-[#57FAE9]/10 dark:bg-[#050d1d]/88 md:dark:bg-[#040b18]/78">
             <div className="flex items-center gap-2 md:gap-8 flex-1">
                 <span
                     className="material-symbols-outlined text-blue-900 dark:text-blue-200 md:hidden text-2xl"

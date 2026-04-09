@@ -1,13 +1,31 @@
 import { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
+interface Lesson {
+    id: number;
+    title: string;
+    type: string;
+    meta: string;
+    file: string;
+    status: 'verified' | 'uploading' | 'pending';
+    progress: number;
+}
+
+interface Module {
+    id: number;
+    title: string;
+    status: 'COMPLETE' | 'PENDING';
+    lessons: Lesson[];
+    description?: string;
+}
+
 const InstructorContentUploadPage = () => {
     const navigate = useNavigate();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [activeLessonId, setActiveLessonId] = useState<number | null>(null);
     
     // -- Interactive Logic --
-    const [modules, setModules] = useState([
+    const [modules, setModules] = useState<Module[]>([
         {
             id: 1,
             title: 'Foundations',

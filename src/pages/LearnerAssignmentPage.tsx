@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const LearnerAssignmentPage = () => {
     const navigate = useNavigate();
-    const { id } = useParams();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [fileUploaded, setFileUploaded] = useState(false);
 
