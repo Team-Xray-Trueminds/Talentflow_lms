@@ -21,6 +21,8 @@ import InstructorCourseBuilder from './pages/InstructorCourseBuilder'
 import InstructorCurriculumBuilder from './pages/InstructorCurriculumBuilder'
 import AdminAddInstructorPage from './pages/AdminAddInstructorPage';
 import AdminInstructorProfilePage from './pages/AdminInstructorProfilePage';
+import UserManagementPage from './pages/AdminUserManagementPage'
+import AdminUserDetailPage from './pages/AdminUserDetailPage'
 
 
 function App() {
