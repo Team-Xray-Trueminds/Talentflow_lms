@@ -35,6 +35,7 @@ import LearnerCoursePreviewPage from './pages/LearnerCoursePreviewPage'
 import LearnerAssignmentPage from './pages/LearnerAssignmentPage'
 import InstructorVerifyLoginPage from './pages/InstructorVerifyLoginPage'
 import InstructorSetPasswordPage from './pages/InstructorSetPasswordPage'
+import NotFoundPage from './pages/NotFoundPage'
 import { ProtectedRoute, PublicOnlyRoute } from './components/auth/AuthGuards'
 
 function App() {
@@ -94,6 +95,9 @@ function App() {
           <Route path="/admin/curriculum" element={<AcademicTracksPage />} />
           <Route path="/admin/settings" element={<ProfileSetupPage />} />
         </Route>
+        
+        {/* Global Catch-all / 404 Not Found */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   )
