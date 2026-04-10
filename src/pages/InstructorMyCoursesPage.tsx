@@ -73,7 +73,7 @@ export default function InstructorMyCoursesPage() {
               <div key={i} className="bg-white rounded-[40px] p-8 shadow-ambient hover:shadow-xl transition-all border border-transparent hover:border-[#00327D]/5 group animate-fade-in-up" style={{ animationDelay: `${i * 0.1}s` }}>
                  <div className="flex gap-10 items-center">
                     <div className="w-56 h-40 rounded-[28px] overflow-hidden shrink-0 shadow-sm">
-                      <img src={(course.thumbnailUrl || course.img)} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                      <img src={((course as any).thumbnailUrl || course.img)} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                     </div>
                     <div className="grow">
                       <div className="flex justify-between items-start mb-6">

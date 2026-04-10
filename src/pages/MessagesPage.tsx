@@ -16,6 +16,7 @@ interface Contact {
   time: string;
   unread: boolean;
   img: string;
+  thumbnailUrl?: string;
   role: string;
 }
 

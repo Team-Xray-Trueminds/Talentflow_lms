@@ -63,7 +63,7 @@ const UserManagementPage = () => {
                                         <tr key={i} className="hover:bg-slate-50/50 transition-colors">
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center gap-3">
-                                                    <img src={(user.thumbnailUrl || user.img)} className="w-8 h-8 rounded-full" alt="" />
+                                                    <img src={((user as any).thumbnailUrl || user.img)} className="w-8 h-8 rounded-full" alt="" />
                                                     <div>
                                                         <p className="font-bold text-sm text-slate-700">{user.name}</p>
                                                         <p className="text-[10px] text-slate-400">{user.email}</p>
@@ -104,7 +104,7 @@ const UserManagementPage = () => {
                                 <div key={idx} className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col gap-4">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-3">
-                                            <img src={(user.thumbnailUrl || user.img)} className="w-12 h-12 rounded-2xl object-cover shadow-sm" alt={user.name} />
+                                            <img src={((user as any).thumbnailUrl || user.img)} className="w-12 h-12 rounded-2xl object-cover shadow-sm" alt={user.name} />
                                             <div>
                                                 <p className="font-black text-slate-800 leading-tight text-base">{user.name}</p>
                                                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">{user.role}</p>

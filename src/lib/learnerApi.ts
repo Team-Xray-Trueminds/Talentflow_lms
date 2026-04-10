@@ -34,6 +34,23 @@ export interface Milestone {
   desc: string
 }
 
+export interface AssignmentDetail {
+  id: string
+  title: string
+  description: string
+  dueDate: string
+  points: number
+  attachments?: string[]
+}
+
+export interface AssignmentAttempt {
+  id: string
+  attemptNumber: number
+  submittedAt: string
+  score?: number
+  feedback?: string
+}
+
 export async function getCourses(token?: string) {
   return apiRequest<{ data: Course[] }>('/courses/recommended', {
     method: 'GET',
@@ -64,6 +81,34 @@ export async function getProgressTimeline(token: string) {
 
 export async function getRecommendedMentors(token: string) {
   return apiRequest<{ data: Mentor[] }>('/tutors/recommended', {
+    method: 'GET',
+    token
+  })
+}
+
+export async function getAllAssignments(token: string, page: number = 1) {
+  return apiRequest<{ data: any[] }>(`/assignments?page=${page}`, {
+    method: 'GET',
+    token
+  })
+}
+
+export async function getAssignmentDetails(id: string, token: string) {
+  return apiRequest<{ data: AssignmentDetail }>(`/assignments/${id}/details`, {
+    method: 'GET',
+    token
+  })
+}
+
+export async function getAssignmentAttempts(id: string, token: string) {
+  return apiRequest<{ data: AssignmentAttempt[] }>(`/assignments/${id}/attempts`, {
+    method: 'GET',
+    token
+  })
+}
+
+export async function getMySubmission(id: string, token: string) {
+  return apiRequest<{ data: any }>(`/assignments/${id}/submissions/me`, {
     method: 'GET',
     token
   })

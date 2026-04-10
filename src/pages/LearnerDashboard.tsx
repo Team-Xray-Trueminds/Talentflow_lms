@@ -5,6 +5,7 @@ import { useAuth } from '../components/auth/AuthProvider'
 import { getProgressOverview, getProgressTimeline, getRecommendedMentors } from '../lib/learnerApi'
 import { getNotifications } from '../lib/communicationsApi'
 import { useQuery } from '@tanstack/react-query'
+import FallbackImage from '../components/common/FallbackImage'
 
 export default function LearnerDashboard() {
   const { user } = useAuth()
@@ -134,7 +135,13 @@ export default function LearnerDashboard() {
             <div className="space-y-6">
                <h3 className="text-sm font-black text-[#74777F] uppercase tracking-[0.2em]">Current Engagement</h3>
                <div className="bg-[#00327D] rounded-[40px] p-12 text-white relative overflow-hidden min-h-[400px] flex flex-col justify-end group shadow-2xl">
-                  <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB06ZF4rJWSKN23zp2wWsqwcW2AAK2QkSoDP8VJd3XcOmygrHupDSMRzlmq1pV7oIZmyGUWmoHieax_B0EhzWAKlA3mVAirTYUI7btKWWdLkEFw7NS5SmkEjHY-urpnaWWOzby9uwXtVCfd0xjLeIluwlQol8d9sOChqyuzLcu8hwIJZKuYVi7WMjsB_7DuwjZ7MBOWgf9H2W7DOYgCqdKZeTdDRVZqyp5Ox8q3TvJ3ndRGc5lXidkY5yfCJZDARcfbOl7kxPydQ1M" alt="Course" className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:scale-105 transition-transform duration-1000" />
+                  <FallbackImage 
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuB06ZF4rJWSKN23zp2wWsqwcW2AAK2QkSoDP8VJd3XcOmygrHupDSMRzlmq1pV7oIZmyGUWmoHieax_B0EhzWAKlA3mVAirTYUI7btKWWdLkEFw7NS5SmkEjHY-urpnaWWOzby9uwXtVCfd0xjLeIluwlQol8d9sOChqyuzLcu8hwIJZKuYVi7WMjsB_7DuwjZ7MBOWgf9H2W7DOYgCqdKZeTdDRVZqyp5Ox8q3TvJ3ndRGc5lXidkY5yfCJZDARcfbOl7kxPydQ1M" 
+                    alt="Course" 
+                    seedName={overview?.activeCourse}
+                    fallbackType="course"
+                    className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:scale-105 transition-transform duration-1000" 
+                  />
                   <div className="absolute inset-0 bg-linear-to-t from-[#00327D] via-[#00327D]/20 to-transparent"></div>
                   <div className="relative z-10">
                      <p className="text-xs font-black uppercase tracking-[0.2em] text-[#D3E4FE] mb-4">Intermediate Flow</p>
@@ -153,19 +160,24 @@ export default function LearnerDashboard() {
                   <h3 className="text-sm font-black text-[#74777F] uppercase tracking-[0.2em]">Recommended Mentors</h3>
                   <button className="text-xs font-black text-[#00419E] hover:underline uppercase tracking-widest">View All</button>
                </div>
-               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {mentors.length > 0 ? (
-                    mentors.map((mentor, i) => (
+                    mentors.map((mentor: any, i: number) => (
                       <div key={i} className="bg-white p-6 rounded-3xl shadow-ambient hover:translate-y-[-4px] transition-all cursor-pointer flex flex-col items-center text-center">
-                         <div className="w-16 h-16 rounded-2xl overflow-hidden mb-4 border-2 border-[#D3E4FE] bg-[#F2F4F6]">
-                            {(mentor.thumbnailUrl || mentor.img) ? (
-                              <img src={(mentor.thumbnailUrl || mentor.img)} alt={mentor.name || '?'} className="w-full h-full object-cover" />
+                         <div className="w-16 h-16 rounded-2xl overflow-hidden mb-4 border-2 border-[#D3E4FE] bg-[#F2F4F6] flex items-center justify-center">
+                            {(mentor?.thumbnailUrl || mentor?.img) ? (
+                              <FallbackImage 
+                                src={(mentor?.thumbnailUrl || mentor?.img)} 
+                                alt={mentor?.name || 'Mentor'} 
+                                fallbackType="avatar"
+                                className="w-full h-full object-cover" 
+                              />
                             ) : (
-                              <span className="text-[#00327D] mt-4 block font-bold">{(mentor.name || '?').charAt(0).toUpperCase()}</span>
+                              <span className="text-[#00327D] font-bold">{(mentor?.name || '?')[0].toUpperCase()}</span>
                             )}
                          </div>
-                         <p className="font-bold text-[#191C1E]">{mentor.name}</p>
-                         <p className="text-[10px] text-[#74777F] font-bold uppercase tracking-wider mt-1">{mentor.role}</p>
+                         <p className="font-bold text-[#191C1E]">{mentor?.name}</p>
+                         <p className="text-[10px] text-[#74777F] font-bold uppercase tracking-wider mt-1">{mentor?.role}</p>
                       </div>
                     ))
                   ) : (

@@ -17,6 +17,7 @@ interface Student {
     grade: string;
     lastActive: string;
     status: string;
+    thumbnailUrl?: string;
     assignments: Assignment[];
 }
 

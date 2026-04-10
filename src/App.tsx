@@ -30,6 +30,7 @@ import InstructorCourseBuilder from './pages/InstructorCourseBuilder'
 import InstructorCurriculumBuilder from './pages/InstructorCurriculumBuilder'
 import InstructorContentUploadPage from './pages/InstructorContentUploadPage'
 import InstructorAssignmentBuilderPage from './pages/InstructorAssignmentBuilderPage'
+import InstructorSubmissionsPage from './pages/InstructorSubmissionsPage'
 import LearnerCoursePlayerPage from './pages/LearnerCoursePlayerPage'
 import LearnerCoursePreviewPage from './pages/LearnerCoursePreviewPage'
 import LearnerAssignmentPage from './pages/LearnerAssignmentPage'
@@ -37,11 +38,13 @@ import InstructorVerifyLoginPage from './pages/InstructorVerifyLoginPage'
 import InstructorSetPasswordPage from './pages/InstructorSetPasswordPage'
 import NotFoundPage from './pages/NotFoundPage'
 import { ProtectedRoute, PublicOnlyRoute } from './components/auth/AuthGuards'
+import GlobalErrorBoundary from './components/common/GlobalErrorBoundary'
 
 function App() {
   return (
-    <Router>
-      <Routes>
+    <GlobalErrorBoundary>
+      <Router>
+        <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route element={<PublicOnlyRoute />}>
           <Route path="/login" element={<LoginPage />} />
@@ -81,6 +84,7 @@ function App() {
           <Route path="/instructor/curriculum-builder" element={<InstructorCurriculumBuilder />} />
           <Route path="/instructor/content-upload" element={<InstructorContentUploadPage />} />
           <Route path="/instructor/assignment-builder" element={<InstructorAssignmentBuilderPage />} />
+          <Route path="/instructor/submissions-queue" element={<InstructorSubmissionsPage />} />
           <Route path="/instructor/verify-login" element={<InstructorVerifyLoginPage />} />
           <Route path="/instructor/set-password" element={<InstructorSetPasswordPage />} />
         </Route>
@@ -100,6 +104,7 @@ function App() {
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
+  </GlobalErrorBoundary>
   )
 }
 
