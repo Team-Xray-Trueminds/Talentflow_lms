@@ -109,7 +109,7 @@ const MessagesPage: React.FC = () => {
                 className={`p-4 rounded-3xl flex items-center gap-4 cursor-pointer transition-all duration-300 ${activeContactId === contact.id ? 'bg-[#D3E4FE] text-[#00327D]' : 'hover:bg-[#F2F4F6]'}`}
               >
                 <div className="relative shrink-0">
-                   <img src={contact.img} className="w-12 h-12 rounded-2xl object-cover" alt="" />
+                   <img src={(contact.thumbnailUrl || contact.img)} className="w-12 h-12 rounded-2xl object-cover" alt="" />
                    {contact.unread && activeContactId !== contact.id && (
                      <div className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-[#BA1A1A] rounded-full border-2 border-white"></div>
                    )}
@@ -133,7 +133,7 @@ const MessagesPage: React.FC = () => {
           {/* Top Bar */}
           <div className="p-6 bg-white border-b border-[#C3C6D5]/20 flex justify-between items-center relative z-10 shadow-sm">
              <div className="flex items-center gap-4">
-                <img src={activeContact.img} className="w-10 h-10 rounded-xl object-cover shadow-sm transition-all" alt="" />
+                <img src={(activeContact.thumbnailUrl || activeContact.img)} className="w-10 h-10 rounded-xl object-cover shadow-sm transition-all" alt="" />
                 <div>
                    <h2 className="font-black text-sm">{activeContact.name}</h2>
                    <p className="text-[10px] font-black uppercase tracking-[0.1em] text-[#005049]">Online • {activeContact.role}</p>

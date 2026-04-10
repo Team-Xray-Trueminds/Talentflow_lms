@@ -6,6 +6,7 @@ export interface Course {
   category: string
   level: string
   img: string
+  thumbnailUrl?: string
   description?: string
   instructorName?: string
 }
@@ -22,6 +23,7 @@ export interface Mentor {
   name: string
   role: string
   img: string
+  thumbnailUrl?: string
 }
 
 export interface Milestone {

@@ -26,6 +26,7 @@ export interface ActiveCourse {
   title: string
   students: number
   img: string
+  thumbnailUrl?: string
 }
 
 export async function getTutorOverview(token: string) {

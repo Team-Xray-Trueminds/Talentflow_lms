@@ -158,10 +158,10 @@ export default function LearnerDashboard() {
                     mentors.map((mentor, i) => (
                       <div key={i} className="bg-white p-6 rounded-3xl shadow-ambient hover:translate-y-[-4px] transition-all cursor-pointer flex flex-col items-center text-center">
                          <div className="w-16 h-16 rounded-2xl overflow-hidden mb-4 border-2 border-[#D3E4FE] bg-[#F2F4F6]">
-                            {mentor.img ? (
-                              <img src={mentor.img} alt={mentor.name} className="w-full h-full object-cover" />
+                            {(mentor.thumbnailUrl || mentor.img) ? (
+                              <img src={(mentor.thumbnailUrl || mentor.img)} alt={mentor.name || '?'} className="w-full h-full object-cover" />
                             ) : (
-                              <span className="text-[#00327D] mt-4 block font-bold">{mentor.name.charAt(0)}</span>
+                              <span className="text-[#00327D] mt-4 block font-bold">{(mentor.name || '?').charAt(0).toUpperCase()}</span>
                             )}
                          </div>
                          <p className="font-bold text-[#191C1E]">{mentor.name}</p>

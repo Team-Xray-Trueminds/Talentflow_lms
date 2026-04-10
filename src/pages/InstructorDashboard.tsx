@@ -106,7 +106,7 @@ export default function InstructorDashboard() {
                     <div key={i} className="bg-white p-6 rounded-[32px] shadow-ambient hover:shadow-xl transition-all group flex flex-col gap-6 relative overflow-hidden ring-1 ring-[#F2F4F6]">
                        <div className="flex items-center gap-6">
                           <div className="w-16 h-16 rounded-2xl overflow-hidden shrink-0 shadow-sm">
-                             <img src={course.img} alt="Course" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                             <img src={(course.thumbnailUrl || course.img)} alt="Course" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                           </div>
                           <div className="flex-1 min-w-0">
                              <p className="font-black text-[#191C1E] text-md mb-0.5 line-clamp-1 truncate">{course.title}</p>

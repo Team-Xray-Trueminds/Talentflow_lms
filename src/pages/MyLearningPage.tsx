@@ -111,7 +111,7 @@ export default function MyLearningPage() {
                   <div key={i} className="bg-white rounded-[40px] p-6 shadow-ambient flex flex-col group transition-all hover:scale-[1.01]">
                     <div className="flex gap-6 mb-8">
                       <div className="w-32 h-32 rounded-3xl overflow-hidden shrink-0">
-                        <img src={course.img} alt={course.title} className="w-full h-full object-cover" />
+                        <img src={(course.thumbnailUrl || course.img)} alt={course.title} className="w-full h-full object-cover" />
                       </div>
                       <div className="grow">
                         <p className="text-[10px] font-black text-[#00419E] uppercase tracking-widest mb-1">{course.category}</p>
@@ -149,7 +149,7 @@ export default function MyLearningPage() {
                 {completedCourses.map((course, i) => (
                   <div key={i} className="bg-white/60 border border-[#C3C6D5]/20 rounded-[32px] p-5 flex flex-col group hover:bg-white transition-all">
                     <div className="aspect-square rounded-2xl overflow-hidden mb-6 opacity-80 group-hover:opacity-100 transition-opacity">
-                      <img src={course.img} alt={course.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                      <img src={(course.thumbnailUrl || course.img)} alt={course.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
                     </div>
                     <h3 className="font-bold text-[#191C1E] line-clamp-1 mb-2">{course.title}</h3>
                     <div className="flex justify-between items-center mt-auto pt-4 border-t border-[#C3C6D5]/10">

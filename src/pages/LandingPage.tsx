@@ -287,8 +287,8 @@ const LandingPage: React.FC = () => {
               {featuredCourses.slice(0, 3).map((course, idx) => (
                 <ScrollReveal key={course.id || idx} className="rounded-2xl bg-white shadow-ambient overflow-hidden transition-all hover:-translate-y-2 hover:shadow-xl dark:bg-[#0D1E35] dark:border dark:border-[#8AB4FF]/15 group">
                   <div className="aspect-video relative overflow-hidden bg-[#E0E3E5] dark:bg-[#0A1526]">
-                    {course.img ? (
-                      <img src={course.img} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                    {(course.thumbnailUrl || course.img) ? (
+                      <img src={(course.thumbnailUrl || course.img)} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-[#74777F]">No Image</div>
                     )}

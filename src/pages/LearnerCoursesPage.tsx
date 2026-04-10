@@ -155,7 +155,7 @@ export default function LearnerCoursesPage() {
                 filteredCourses.map((course, i) => (
                   <div key={i} className="bg-white rounded-[40px] p-4 shadow-ambient hover:shadow-xl transition-all group animate-fade-in-up h-fit" style={{ animationDelay: `${i * 0.1}s` }}>
                     <div className="aspect-video rounded-[32px] overflow-hidden mb-8 relative">
-                      <img src={course.img} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                      <img src={(course.thumbnailUrl || course.img)} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                       <div className="absolute top-5 left-5">
                         <span className="px-4 py-1.5 bg-white/90 backdrop-blur-md rounded-xl text-[10px] font-black uppercase tracking-widest text-[#00327D]">
                           {course.category}
