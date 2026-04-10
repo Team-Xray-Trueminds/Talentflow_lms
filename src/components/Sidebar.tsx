@@ -89,10 +89,6 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
   }
 
   useEffect(() => {
-    setIsMobileOpen(false)
-  }, [location.pathname])
-
-  useEffect(() => {
     if (!isMobileOpen) return undefined
 
     const originalOverflow = document.body.style.overflow
@@ -102,6 +98,10 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
       document.body.style.overflow = originalOverflow
     }
   }, [isMobileOpen])
+
+  useEffect(() => {
+    setIsMobileOpen(false)
+  }, [location.pathname])
 
   const mobileButtonClasses = isInstructor
     ? 'border-white/10 bg-[#0A214D] text-white shadow-[0_16px_32px_rgba(0,0,0,0.28)]'
@@ -394,9 +394,9 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
           type="button"
           onClick={() => setIsMobileOpen(false)}
           aria-label="Close navigation overlay"
-          className={`absolute inset-0 bg-[#0F172A]/35 backdrop-blur-[2px] transition-opacity duration-300 ${isMobileOpen ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute inset-0 bg-[#0F172A]/32 backdrop-blur-[3px] transition-opacity duration-300 ${isMobileOpen ? 'opacity-100' : 'opacity-0'}`}
         />
-        <aside className={`absolute inset-y-0 left-0 flex w-[min(84vw,320px)] flex-col border-r px-5 py-6 shadow-[0_24px_64px_rgba(15,23,42,0.2)] transition-transform duration-300 ${mobileDrawerClasses} ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <aside className={`absolute inset-y-0 left-0 flex w-[min(76vw,360px)] max-w-[360px] min-w-[280px] flex-col border-r px-5 py-6 shadow-[0_24px_64px_rgba(15,23,42,0.2)] transition-transform duration-300 ${mobileDrawerClasses} ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
           {renderSidebarContent(true)}
         </aside>
       </div>

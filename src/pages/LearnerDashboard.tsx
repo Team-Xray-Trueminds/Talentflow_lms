@@ -43,7 +43,7 @@ export default function LearnerDashboard() {
                   onClick={() => setThemeMode(isDark ? 'light' : 'dark')}
                   aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
                   title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[#E6ECF7] bg-white text-[#0D2240] shadow-sm transition-all hover:border-[#00327D]/20 hover:text-[#00327D] dark:border-[#28456E] dark:bg-[#0B1930] dark:text-[#DCE8FF] dark:hover:border-[#57FAE9]/30 dark:hover:text-[#57FAE9]"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[#E6ECF7] bg-white text-[#0D2240] shadow-sm transition-all hover:border-[#00327D]/20 hover:text-[#00327D] dark:border-[#28456E] dark:bg-[#0B1930] dark:text-[#DCE8FF] dark:hover:border-[#57FAE9]/30 dark:hover:text-brand-tip-accent"
                 >
                   <span className="material-symbols-outlined text-[20px]">
                     {isDark ? 'light_mode' : 'dark_mode'}
