@@ -1,4 +1,5 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from './auth/AuthProvider'
 
 interface SidebarItemProps {
   icon: string
@@ -52,7 +53,9 @@ function SidebarGroup({ label, children, isInstructor }: { label: string; childr
 
 export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Learner' | 'Admin' }) {
   const location = useLocation()
-  const storedRole = localStorage.getItem('userRole')
+  const navigate = useNavigate()
+  const { clearSession, user } = useAuth()
+  const storedRole = user?.role === 'admin' ? 'Admin' : user?.role === 'tutor' ? 'Instructor' : 'Learner'
   // Use forceRole prop if provided, otherwise fallback to path detection, then finally localStorage
   const pathRole = location.pathname.startsWith('/admin') ? 'Admin' : (location.pathname.startsWith('/instructor') ? 'Instructor' : (location.pathname.startsWith('/learner') ? 'Learner' : null));
   const role = forceRole || pathRole || storedRole || 'Learner'
@@ -76,6 +79,11 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
         aside: 'bg-[#F2F4F6] text-[#191C1E]',
         border: 'border-[#C3C6D5]/30'
       }
+
+  const handleLogout = () => {
+    clearSession()
+    navigate('/login', { replace: true })
+  }
 
   return (
     <aside className={`hidden lg:flex w-80 h-screen sticky top-0 flex-col p-6 z-10 transition-colors duration-500 overflow-y-auto scrollbar-hide ${themeClasses.aside}`}>
@@ -309,8 +317,9 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
       </nav>
 
       <div className={`mt-auto space-y-2 pt-6 border-t shrink-0 ${themeClasses.border}`}>
-        <Link
-          to="/login"
+        <button
+          type="button"
+          onClick={handleLogout}
           className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
             isInstructor 
               ? 'text-[#FF8A8A] hover:bg-white/5' 
@@ -319,7 +328,7 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
         >
           <span className="material-symbols-outlined text-[20px]">logout</span>
           <span className="text-sm font-bold tracking-tight">Logout</span>
-        </Link>
+        </button>
       </div>
     </aside>
   )

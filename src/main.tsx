@@ -13,11 +13,14 @@ import 'material-symbols/outlined.css'
 import './index.css'
 import App from './App.tsx'
 import { ThemeProvider } from './components/theme/ThemeProvider.tsx'
+import { AuthProvider } from './components/auth/AuthProvider.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </ThemeProvider>
   </StrictMode>,
 )

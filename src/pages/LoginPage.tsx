@@ -1,19 +1,85 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import AppFooter from '../components/AppFooter'
 import AuthDivider from '../components/auth/AuthDivider'
 import SocialAuthButton from '../components/auth/SocialAuthButton'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { ApiError, API_BASE_URL } from '../lib/api'
+import { authStorage, fetchCurrentUser, getRoleHomePath, login } from '../lib/auth'
+import { useAuth } from '../components/auth/AuthProvider'
 
 export default function LoginPage() {
+  const [searchParams, setSearchParams] = useSearchParams()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const navigate = useNavigate()
+  const { setSession } = useAuth()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    const token = searchParams.get('token')
+    if (!token) return
+
+    let cancelled = false
+
+    const completeOAuthLogin = async () => {
+      setIsSubmitting(true)
+      setErrorMessage('')
+
+      try {
+        const profileResponse = await fetchCurrentUser(token)
+        if (cancelled) return
+        setSession(token, profileResponse.data)
+        searchParams.delete('token')
+        setSearchParams(searchParams, { replace: true })
+        navigate(getRoleHomePath(profileResponse.data.role), { replace: true })
+      } catch (error) {
+        if (cancelled) return
+        if (error instanceof Error) {
+          setErrorMessage(error.message)
+        } else {
+          setErrorMessage('OAuth sign-in failed. Please try again.')
+        }
+      } finally {
+        if (!cancelled) setIsSubmitting(false)
+      }
+    }
+
+    completeOAuthLogin()
+
+    return () => {
+      cancelled = true
+    }
+  }, [navigate, searchParams, setSearchParams, setSession])
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Handle login logic
-    console.log('Login attempted:', { email, password })
+    setIsSubmitting(true)
+    setErrorMessage('')
+
+    try {
+      const loginResponse = await login({ email, password })
+      const token = loginResponse.data.token
+      if (!token) {
+        throw new Error('Login succeeded but no access token was returned by the backend.')
+      }
+      const profileResponse = await fetchCurrentUser(token)
+      setSession(token, profileResponse.data)
+      navigate(getRoleHomePath(profileResponse.data.role))
+    } catch (error) {
+      if (error instanceof ApiError && error.code === 'EMAIL_NOT_VERIFIED') {
+        authStorage.setPendingVerificationEmail(email)
+        navigate('/verify-email')
+      } else if (error instanceof Error) {
+        setErrorMessage(error.message)
+      } else {
+        setErrorMessage('Unable to sign you in right now.')
+      }
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -40,6 +106,11 @@ export default function LoginPage() {
           </div>
 
           <form className="space-y-5" onSubmit={handleSubmit}>
+            {errorMessage ? (
+              <div className="rounded-lg border border-[#ff6b6b]/30 bg-[#12070b] px-4 py-3 text-sm text-[#ffb4ab]">
+                {errorMessage}
+              </div>
+            ) : null}
             <div className="space-y-2">
               <label className="text-xs font-semibold uppercase tracking-wider text-on-surface-variant ml-1">
                 Email Address
@@ -91,16 +162,17 @@ export default function LoginPage() {
 
             <button
               type="submit"
+              disabled={isSubmitting}
               className="w-full h-12 bg-linear-to-r from-[#00419E] to-[#87A9FF] text-white font-semibold rounded-lg active:scale-95 transition-transform duration-150 shadow-md hover:shadow-lg"
             >
-              Log In
+              {isSubmitting ? 'Signing In...' : 'Log In'}
             </button>
           </form>
 
           <AuthDivider label="Or continue with" />
 
           <div className="grid grid-cols-2 gap-4 mb-8">
-            <SocialAuthButton>
+            <SocialAuthButton onClick={() => window.location.href = `${API_BASE_URL}/auth/google`}>
               <img
                 alt="Google"
                 className="w-4 h-4"
@@ -108,7 +180,7 @@ export default function LoginPage() {
               />
               Google
             </SocialAuthButton>
-            <SocialAuthButton>
+            <SocialAuthButton onClick={() => window.location.href = `${API_BASE_URL}/auth/github`}>
               <img
                 alt="GitHub"
                 className="w-4 h-4"

@@ -1,8 +1,13 @@
 import Sidebar from '../components/Sidebar'
 import BottomNav from '../components/layout/BottomNav'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../components/auth/AuthProvider'
 
 export default function LearnerDashboard() {
+  const { user } = useAuth()
+  const displayName = user?.fullName || 'Learner'
+  const displayNameUpper = displayName.toUpperCase()
+  const avatarAlt = `${displayName} avatar`
   const announcements = [
     { title: 'Live Q&A with Design Lead at 5 PM', desc: "Don't miss out on industry secrets...", icon: 'campaign' },
     { title: 'New Resource: UI Kit v2.4 released', desc: 'Download the latest Figma components...', icon: 'description' }
@@ -39,19 +44,23 @@ export default function LearnerDashboard() {
                 <span className="absolute top-2 right-2 w-2 h-2 bg-[#BA1A1A] rounded-full border-2 border-[#F7F9FB]"></span>
               </Link>
               <div className="text-right">
-                <p className="text-sm font-black text-[#191C1E]">Alex Rivera</p>
+                <p className="text-sm font-black text-[#191C1E]">{displayNameUpper}</p>
                 <p className="text-[10px] font-bold text-[#434653] uppercase tracking-wider">Talent Flow Catalyst</p>
               </div>
-              <div className="w-10 h-10 rounded-full bg-[#E0E3E5] overflow-hidden border-2 border-white shadow-sm transition-transform hover:scale-105 cursor-pointer">
-                 <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk5utjN07mkZOhvtLZIyLzTlvKn2L4iPZCxU2HE03HITuSyf687NvYeKy1N3BB3ni_PXK6x68sbgc75rNQ2L2yaSJm-G8klfuPjgpLJwHX36NoMakdz6P_Z2afHIAebaZV13Q7a3n9L2hbMhTqfjyw74ubS7f51FH_QDX66YnHaXq9NSQwc_7KrIjpQkDJ-Yp3aaAhNu-vnGsNf7SIO4uN_S4bTdHe0MSfe9aqNGnaSUESsnPKSC5Ebl9BWs9kMIL9tpe4Ug-K6OI" alt="Alex" className="w-full h-full object-cover" />
-              </div>
+              <Link
+                to="/settings/profile-setup"
+                aria-label="Open account settings"
+                className="block w-10 h-10 rounded-full bg-[#E0E3E5] overflow-hidden border-2 border-white shadow-sm transition-transform hover:scale-105"
+              >
+                 <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk5utjN07mkZOhvtLZIyLzTlvKn2L4iPZCxU2HE03HITuSyf687NvYeKy1N3BB3ni_PXK6x68sbgc75rNQ2L2yaSJm-G8klfuPjgpLJwHX36NoMakdz6P_Z2afHIAebaZV13Q7a3n9L2hbMhTqfjyw74ubS7f51FH_QDX66YnHaXq9NSQwc_7KrIjpQkDJ-Yp3aaAhNu-vnGsNf7SIO4uN_S4bTdHe0MSfe9aqNGnaSUESsnPKSC5Ebl9BWs9kMIL9tpe4Ug-K6OI" alt={avatarAlt} className="w-full h-full object-cover" />
+              </Link>
            </div>
         </div>
 
         {/* Hero Welcome */}
         <div className="mb-12 animate-fade-in-up">
            <h1 className="text-3xl md:text-5xl font-extrabold text-[#191C1E] tracking-tight font-headline mb-4">
-             Welcome back, Alex Rivera
+             Welcome, {displayNameUpper}
            </h1>
            <p className="text-[#434653] text-lg font-medium leading-relaxed max-w-2xl">
               You've completed <span className="text-[#00419E] font-black">4.5 hours</span> of learning this week. Keep up the momentum!

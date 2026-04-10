@@ -1,22 +1,69 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import AppFooter from '../components/AppFooter'
 import OTPInput from '../components/auth/OTPInput'
 import SuccessModal from '../components/auth/SuccessModal'
+import { ApiError } from '../lib/api'
+import { authStorage, resendOtp, verifyOtp } from '../lib/auth'
 
 export default function VerifyEmailPage() {
   const [isVerifying, setIsVerifying] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
-  const email = "alex.design@company.com" // This would normally come from context or state
+  const [errorMessage, setErrorMessage] = useState('')
+  const [infoMessage, setInfoMessage] = useState('')
+  const [isResending, setIsResending] = useState(false)
+  const [otpResetTrigger, setOtpResetTrigger] = useState(0)
+  const email = authStorage.getPendingVerificationEmail() || ''
 
-  const handleVerify = (code: string) => {
-    console.log('Verifying code:', code)
+  const handleVerify = async (code: string) => {
+    if (!email) {
+      setErrorMessage('No email is waiting for verification. Please create an account first.')
+      return
+    }
+
     setIsVerifying(true)
-    // Simulate API call
-    setTimeout(() => {
+    setErrorMessage('')
+    setInfoMessage('')
+
+    try {
+      await verifyOtp({ email, code })
+      authStorage.clearPendingVerificationEmail()
       setIsVerifying(false)
       setShowSuccess(true)
-    }, 2000)
+    } catch (error) {
+      setIsVerifying(false)
+      if (error instanceof ApiError || error instanceof Error) {
+        setErrorMessage(error.message)
+      } else {
+        setErrorMessage('Unable to verify that code.')
+      }
+    }
+  }
+
+  const handleResend = async () => {
+    if (!email) {
+      setErrorMessage('No email is waiting for verification.')
+      return
+    }
+
+    setIsResending(true)
+    setErrorMessage('')
+    setInfoMessage('')
+
+    try {
+      const response = await resendOtp({ email })
+      setOtpResetTrigger((value) => value + 1)
+      setInfoMessage(response.message || 'A new verification code has been sent.')
+    } catch (error) {
+      if (error instanceof ApiError || error instanceof Error) {
+        setErrorMessage(error.message)
+      } else {
+        setErrorMessage('Unable to resend the verification code.')
+      }
+    } finally {
+      setIsResending(false)
+    }
   }
 
   return (
@@ -45,13 +92,25 @@ export default function VerifyEmailPage() {
             </p>
           </div>
 
+          {errorMessage ? (
+            <div className="mb-6 w-full max-w-lg rounded-xl border border-[#ff6b6b]/30 bg-[#12070b] px-4 py-3 text-sm text-[#ffb4ab]">
+              {errorMessage}
+            </div>
+          ) : null}
+
+          {infoMessage ? (
+            <div className="mb-6 w-full max-w-lg rounded-xl border border-[#57FAE9]/20 bg-[#05131c] px-4 py-3 text-sm text-[#9EF7FF]">
+              {infoMessage}
+            </div>
+          ) : null}
+
           <div className="mb-12">
-            <OTPInput onComplete={handleVerify} />
+            <OTPInput onComplete={handleVerify} resetTrigger={otpResetTrigger} />
           </div>
 
           <div className="w-full space-y-6">
             <button
-              onClick={() => handleVerify('123456')}
+              onClick={() => setErrorMessage('Enter the full code above to continue.')}
               disabled={isVerifying}
               className="w-full h-14 bg-linear-to-r from-[#00419E] to-[#87A9FF] text-white font-bold text-lg rounded-xl active:scale-95 transition-all duration-150 shadow-md hover:shadow-xl disabled:opacity-70 flex items-center justify-center gap-2"
             >
@@ -67,10 +126,21 @@ export default function VerifyEmailPage() {
                 <span className="material-symbols-outlined text-[20px] group-hover:rotate-12 transition-transform">support_agent</span>
                 Contact Support
               </button>
-              <button className="flex items-center gap-2 text-[#2559BD] font-bold hover:opacity-80 transition-all group">
-                <span className="material-symbols-outlined text-[20px] group-hover:-rotate-12 transition-transform">edit</span>
-                Change Email
-              </button>
+              <div className="flex items-center gap-4">
+                <button
+                  type="button"
+                  onClick={handleResend}
+                  disabled={isResending}
+                  className="flex items-center gap-2 text-[#2559BD] font-bold hover:opacity-80 transition-all group disabled:opacity-60"
+                >
+                  <span className="material-symbols-outlined text-[20px] group-hover:-rotate-12 transition-transform">refresh</span>
+                  {isResending ? 'Resending...' : 'Resend Code'}
+                </button>
+                <Link to="/signup" className="flex items-center gap-2 text-[#2559BD] font-bold hover:opacity-80 transition-all group">
+                  <span className="material-symbols-outlined text-[20px] group-hover:-rotate-12 transition-transform">edit</span>
+                  Change Email
+                </Link>
+              </div>
             </div>
           </div>
         </div>

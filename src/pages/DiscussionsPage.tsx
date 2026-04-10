@@ -7,6 +7,7 @@ type ReplyItem = {
   role: string
   body: string
   time: string
+  reaction: string
 }
 
 type ThreadItem = {
@@ -18,6 +19,10 @@ type ThreadItem = {
   time: string
   pinned?: boolean
   notifyLabel: string
+  tag: string
+  participants: number
+  views: number
+  unresolved?: boolean
   replies: ReplyItem[]
 }
 
@@ -39,18 +44,24 @@ const initialThreads: ThreadItem[] = [
     time: '12 min ago',
     pinned: true,
     notifyLabel: '8 participants notified',
+    tag: 'Portfolio',
+    participants: 8,
+    views: 126,
+    unresolved: true,
     replies: [
       {
         author: 'Seyi Daniels',
         role: 'Learner',
         body: 'I open with one summary frame, then move into the key system constraints before showing the polished screens.',
         time: '9 min ago',
+        reaction: 'Useful framing',
       },
       {
         author: 'Mara Kent',
         role: 'Mentor',
         body: 'Try using a three-part structure: challenge, structural decisions, and outcome evidence. That usually keeps the story clear.',
         time: '4 min ago',
+        reaction: 'Mentor pick',
       },
     ],
   },
@@ -63,12 +74,23 @@ const initialThreads: ThreadItem[] = [
       'What do you bring into a critique so the session becomes more actionable? I want sharper feedback instead of very broad comments.',
     time: '31 min ago',
     notifyLabel: '5 participants notified',
+    tag: 'Critique',
+    participants: 5,
+    views: 84,
     replies: [
       {
         author: 'Jesse Ward',
         role: 'Learner',
         body: 'I usually prepare two questions only: what is unclear, and what looks weakest in the hierarchy.',
         time: '18 min ago',
+        reaction: 'Tactical tip',
+      },
+      {
+        author: 'Hawa Bello',
+        role: 'Learner',
+        body: 'I also attach one screenshot with annotations. That gives mentors something concrete to react to immediately.',
+        time: '7 min ago',
+        reaction: 'High signal',
       },
     ],
   },
@@ -81,12 +103,53 @@ const initialThreads: ThreadItem[] = [
       'For people balancing design and implementation, which path created better momentum for you first: interface thinking or frontend fundamentals?',
     time: '1 hr ago',
     notifyLabel: '11 participants notified',
+    tag: 'Growth Path',
+    participants: 11,
+    views: 152,
     replies: [
       {
         author: 'Ayo Mensah',
         role: 'Mentor',
         body: 'If your goal is product execution, pair them. Learn hierarchy and spacing while building real components at the same time.',
         time: '46 min ago',
+        reaction: 'Mentor insight',
+      },
+      {
+        author: 'Rachel Stone',
+        role: 'Learner',
+        body: 'Frontend first helped me remove fear. Once I could build, the design lessons became easier to retain.',
+        time: '21 min ago',
+        reaction: 'Perspective',
+      },
+    ],
+  },
+  {
+    id: 4,
+    title: 'How are people documenting design system decisions for handoff?',
+    author: 'Mide Okafor',
+    role: 'Learner',
+    body:
+      'I want a lightweight handoff format that explains component intent, spacing rules, and edge cases without writing a giant spec.',
+    time: '2 hr ago',
+    notifyLabel: '6 participants notified',
+    tag: 'Design Systems',
+    participants: 6,
+    views: 67,
+    unresolved: true,
+    replies: [
+      {
+        author: 'Jordan Lake',
+        role: 'Learner',
+        body: 'I keep one page per component with intent, constraints, variants, and one anti-pattern example.',
+        time: '1 hr ago',
+        reaction: 'Clean workflow',
+      },
+      {
+        author: 'Tara Obi',
+        role: 'Mentor',
+        body: 'Short principle notes beat long specs. Teams usually need decision rationale more than decoration-level detail.',
+        time: '34 min ago',
+        reaction: 'Mentor pick',
       },
     ],
   },
@@ -115,6 +178,8 @@ export default function DiscussionsPage() {
     filteredThreads.find((thread) => thread.id === activeThreadId) ?? filteredThreads[0] ?? null
 
   const totalReplies = threads.reduce((total, thread) => total + thread.replies.length, 0)
+  const totalParticipants = threads.reduce((total, thread) => total + thread.participants, 0)
+  const unresolvedCount = threads.filter((thread) => thread.unresolved).length
 
   const handlePostQuestion = () => {
     const value = questionText.trim()
@@ -129,6 +194,10 @@ export default function DiscussionsPage() {
       body: value,
       time: 'Just now',
       notifyLabel: 'Participants notified',
+      tag: 'New Thread',
+      participants: 1,
+      views: 1,
+      unresolved: true,
       replies: [],
     }
 
@@ -153,6 +222,7 @@ export default function DiscussionsPage() {
                   role: 'Learner',
                   body: value,
                   time: 'Just now',
+                  reaction: 'New reply',
                 },
               ],
               notifyLabel: 'Participants notified',
@@ -170,19 +240,19 @@ export default function DiscussionsPage() {
       <main className="grow px-6 py-8 lg:px-10 pb-32 lg:pb-8">
         <div className="mx-auto max-w-7xl">
           <section className="mb-8 grid gap-6 xl:grid-cols-[1fr_0.95fr]">
-            <div className="rounded-[32px] bg-[linear-gradient(135deg,#031B4E_0%,#00327D_58%,#2559BD_100%)] p-8 text-white shadow-[0_24px_60px_rgba(0,50,125,0.2)]">
-              <p className="text-xs font-black uppercase tracking-[0.3em] text-[#B8DCFF]">
+            <div className="rounded-[32px] bg-[linear-gradient(135deg,#25415F_0%,#325B7A_58%,#557D9A_100%)] p-8 text-white shadow-[0_24px_60px_rgba(50,77,103,0.18)]">
+              <p className="text-xs font-black uppercase tracking-[0.3em] text-[#D8E7F3]">
                 Curator Portal
               </p>
               <h1 className="mt-4 max-w-xl text-4xl font-black tracking-tight lg:text-5xl">
                 Discussion Area
               </h1>
-              <p className="mt-4 max-w-2xl text-sm font-medium leading-7 text-[#D8E8FF]">
+              <p className="mt-4 max-w-2xl text-sm font-medium leading-7 text-[#E8F0F8]">
                 Post a question, reply to the active thread, and keep participants aligned with live
                 notifications.
               </p>
 
-              <div className="mt-8 grid gap-4 sm:grid-cols-3">
+              <div className="mt-8 grid gap-4 sm:grid-cols-4">
                 <div className="rounded-[24px] bg-white/10 p-5 backdrop-blur">
                   <p className="text-[10px] font-black uppercase tracking-[0.25em] text-white/70">
                     Mode
@@ -200,6 +270,33 @@ export default function DiscussionsPage() {
                     Replies Today
                   </p>
                   <p className="mt-3 text-2xl font-black">{totalReplies}</p>
+                </div>
+                <div className="rounded-[24px] bg-white/10 p-5 backdrop-blur">
+                  <p className="text-[10px] font-black uppercase tracking-[0.25em] text-white/70">
+                    Open Topics
+                  </p>
+                  <p className="mt-3 text-2xl font-black">{unresolvedCount}</p>
+                </div>
+              </div>
+
+              <div className="mt-6 grid gap-4 md:grid-cols-3">
+                <div className="rounded-[24px] bg-black/10 p-5">
+                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-white/60">
+                    Fastest Moving
+                  </p>
+                  <p className="mt-2 text-sm font-black text-white">Portfolio reviews and critique prep are trending now.</p>
+                </div>
+                <div className="rounded-[24px] bg-black/10 p-5">
+                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-white/60">
+                    Participants
+                  </p>
+                  <p className="mt-2 text-sm font-black text-white">{totalParticipants} active thread participants across the queue.</p>
+                </div>
+                <div className="rounded-[24px] bg-black/10 p-5">
+                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-white/60">
+                    Best Practice
+                  </p>
+                  <p className="mt-2 text-sm font-black text-white">Focused questions are getting the strongest mentor replies.</p>
                 </div>
               </div>
             </div>
@@ -239,7 +336,7 @@ export default function DiscussionsPage() {
 
               <div className="mt-8 rounded-[24px] bg-[#F7F9FB] p-5">
                 <div className="flex items-center gap-3">
-                  <div className="grid h-11 w-11 place-items-center rounded-2xl bg-[#EAF0FF] text-[#00327D]">
+                  <div className="grid h-11 w-11 place-items-center rounded-2xl bg-[#E7EEF4] text-[#35566F]">
                     <span className="material-symbols-outlined">forum</span>
                   </div>
                   <div>
@@ -259,12 +356,12 @@ export default function DiscussionsPage() {
 
                 <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div className="inline-flex items-center gap-2 text-sm text-[#64748B]">
-                    <span className="material-symbols-outlined text-[#00327D]">notifications_active</span>
+                    <span className="material-symbols-outlined text-[#35566F]">notifications_active</span>
                     Save post and notify participants automatically
                   </div>
                   <button
                     onClick={handlePostQuestion}
-                    className="inline-flex items-center justify-center gap-2 rounded-[18px] bg-[linear-gradient(90deg,#00327D,#2559BD)] px-5 py-3 text-sm font-black text-white shadow-[0_14px_30px_rgba(17,68,172,0.22)] transition hover:brightness-105"
+                    className="inline-flex items-center justify-center gap-2 rounded-[18px] bg-[linear-gradient(90deg,#35566F,#5D7E96)] px-5 py-3 text-sm font-black text-white shadow-[0_14px_30px_rgba(70,100,124,0.2)] transition hover:brightness-105"
                   >
                     <span className="material-symbols-outlined text-[18px]">send</span>
                     Save Post
@@ -323,6 +420,9 @@ export default function DiscussionsPage() {
                             Pinned
                           </span>
                         ) : null}
+                        <span className="rounded-full bg-[#EEF2F6] px-2.5 py-1 font-bold text-[#35566F]">
+                          {thread.tag}
+                        </span>
                         <span>{thread.time}</span>
                       </div>
 
@@ -332,8 +432,11 @@ export default function DiscussionsPage() {
                       <p className="mt-2 line-clamp-2 text-sm leading-6 text-[#64748B]">
                         {thread.body}
                       </p>
-                      <div className="mt-3 flex items-center gap-4 text-xs font-bold uppercase tracking-[0.16em] text-[#64748B]">
+                      <div className="mt-3 flex flex-wrap items-center gap-4 text-xs font-bold uppercase tracking-[0.16em] text-[#64748B]">
                         <span>{thread.replies.length} replies</span>
+                        <span>{thread.participants} participants</span>
+                        <span>{thread.views} views</span>
+                        {thread.unresolved ? <span className="text-[#9A5B2A]">open topic</span> : null}
                         <span>{thread.notifyLabel}</span>
                       </div>
                     </button>
@@ -352,6 +455,9 @@ export default function DiscussionsPage() {
                         Pinned Thread
                       </span>
                     ) : null}
+                    <span className="inline-flex items-center gap-2 rounded-full bg-[#EEF2F6] px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-[#35566F]">
+                      {activeThread.tag}
+                    </span>
                     <span className="text-sm text-[#64748B]">
                       Started by {activeThread.author} • {activeThread.role}
                     </span>
@@ -364,16 +470,25 @@ export default function DiscussionsPage() {
 
                   <div className="mt-5 flex flex-wrap items-center gap-5 text-sm text-[#64748B]">
                     <span className="inline-flex items-center gap-2">
-                      <span className="material-symbols-outlined text-[#00327D]">chat</span>
+                      <span className="material-symbols-outlined text-[#35566F]">chat</span>
                       {activeThread.replies.length} replies
                     </span>
                     <span className="inline-flex items-center gap-2">
-                      <span className="material-symbols-outlined text-[#00327D]">notifications_active</span>
+                      <span className="material-symbols-outlined text-[#35566F]">notifications_active</span>
                       {activeThread.notifyLabel}
+                    </span>
+                    <span className="inline-flex items-center gap-2">
+                      <span className="material-symbols-outlined text-[#35566F]">groups</span>
+                      {activeThread.participants} participants
+                    </span>
+                    <span className="inline-flex items-center gap-2">
+                      <span className="material-symbols-outlined text-[#35566F]">visibility</span>
+                      {activeThread.views} views
                     </span>
                   </div>
 
-                  <div className="mt-8 rounded-[24px] bg-[#F7F9FC] p-5">
+                  <div className="mt-8 grid gap-4 lg:grid-cols-[1fr_260px]">
+                    <div className="rounded-[24px] bg-[#F7F9FC] p-5">
                     <div className="flex items-center justify-between gap-3">
                       <h3 className="text-lg font-black tracking-tight text-[#191C1E]">Replies</h3>
                       <span className="text-xs font-black uppercase tracking-[0.18em] text-slate-500">
@@ -392,14 +507,38 @@ export default function DiscussionsPage() {
                             <span className="text-xs text-slate-400">{reply.time}</span>
                           </div>
                           <p className="mt-3 text-sm leading-7 text-[#434653]">{reply.body}</p>
+                          <div className="mt-3 inline-flex rounded-full bg-[#EEF2F6] px-3 py-1 text-[11px] font-bold text-[#35566F]">
+                            {reply.reaction}
+                          </div>
                         </article>
                       ))}
                     </div>
                   </div>
 
+                  <aside className="rounded-[24px] bg-[#F7F9FC] p-5">
+                    <h3 className="text-lg font-black tracking-tight text-[#191C1E]">Context Panel</h3>
+                    <div className="mt-4 space-y-4">
+                      <div className="rounded-[20px] bg-white p-4">
+                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#64748B]">Thread Status</p>
+                        <p className="mt-2 text-sm font-bold text-[#191C1E]">
+                          {activeThread.unresolved ? 'Open for fresh answers' : 'Mostly resolved'}
+                        </p>
+                      </div>
+                      <div className="rounded-[20px] bg-white p-4">
+                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#64748B]">Recommended Reply Style</p>
+                        <p className="mt-2 text-sm font-bold text-[#191C1E]">Concrete examples, concise structure, one actionable takeaway.</p>
+                      </div>
+                      <div className="rounded-[20px] bg-white p-4">
+                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#64748B]">Momentum Signal</p>
+                        <p className="mt-2 text-sm font-bold text-[#191C1E]">{activeThread.notifyLabel}</p>
+                      </div>
+                    </div>
+                  </aside>
+                  </div>
+
                   <div className="mt-6 rounded-[24px] border border-[#E2E8F0] bg-white p-5">
                     <div className="flex items-center gap-3">
-                      <div className="grid h-10 w-10 place-items-center rounded-2xl bg-[#E9FDF7] text-[#0B6B62]">
+                      <div className="grid h-10 w-10 place-items-center rounded-2xl bg-[#E9F3F8] text-[#35566F]">
                         <span className="material-symbols-outlined text-[18px]">reply</span>
                       </div>
                       <div>
@@ -419,12 +558,12 @@ export default function DiscussionsPage() {
 
                     <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                       <span className="inline-flex items-center gap-2 text-sm text-[#64748B]">
-                        <span className="material-symbols-outlined text-[#00327D]">mark_chat_read</span>
+                        <span className="material-symbols-outlined text-[#35566F]">mark_chat_read</span>
                         Reply will be saved to the active thread
                       </span>
                       <button
                         onClick={handleReply}
-                        className="inline-flex items-center justify-center gap-2 rounded-[18px] bg-[linear-gradient(90deg,#00327D,#2559BD)] px-5 py-3 text-sm font-black text-white shadow-[0_14px_30px_rgba(17,68,172,0.22)] transition hover:brightness-105"
+                        className="inline-flex items-center justify-center gap-2 rounded-[18px] bg-[linear-gradient(90deg,#35566F,#5D7E96)] px-5 py-3 text-sm font-black text-white shadow-[0_14px_30px_rgba(70,100,124,0.2)] transition hover:brightness-105"
                       >
                         <span className="material-symbols-outlined text-[18px]">reply</span>
                         Post Reply

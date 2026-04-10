@@ -1,13 +1,19 @@
-import { useState, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface OTPInputProps {
   length?: number
   onComplete: (code: string) => void
+  resetTrigger?: number
 }
 
-export default function OTPInput({ length = 6, onComplete }: OTPInputProps) {
+export default function OTPInput({ length = 6, onComplete, resetTrigger = 0 }: OTPInputProps) {
   const [code, setCode] = useState<string[]>(Array(length).fill(''))
   const inputs = useRef<(HTMLInputElement | null)[]>([])
+
+  useEffect(() => {
+    setCode(Array(length).fill(''))
+    inputs.current[0]?.focus()
+  }, [length, resetTrigger])
 
   const handleChange = (value: string, index: number) => {
     if (isNaN(Number(value))) return

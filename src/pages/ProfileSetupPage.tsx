@@ -1,7 +1,10 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import { useTheme, type ThemeMode } from '../components/theme/ThemeProvider'
+import { useAuth } from '../components/auth/AuthProvider'
+import { updateCurrentUserProfile } from '../lib/auth'
+import { ApiError } from '../lib/api'
 
 const notificationItems = [
   {
@@ -94,20 +97,62 @@ const displayModes: Array<{
 ]
 
 export default function ProfileSetupPage() {
-  const [formData, setFormData] = useState<ProfileFormState>(initialState)
+  const { user, token, updateUser, refreshUser } = useAuth()
+  const personalizedInitialState = useMemo<ProfileFormState>(() => ({
+    ...initialState,
+    fullName: user?.fullName || initialState.fullName,
+    email: user?.email || initialState.email,
+    role: user?.role === 'admin' ? 'Admin' : user?.role === 'tutor' ? 'Tutor' : 'Learner',
+  }), [user])
+  const [formData, setFormData] = useState<ProfileFormState>(personalizedInitialState)
+  const [isSaving, setIsSaving] = useState(false)
+  const [saveMessage, setSaveMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
   const { themeMode, resolvedTheme, setThemeMode } = useTheme()
+  const identityName = formData.fullName.toUpperCase()
 
   const updateField = <K extends keyof ProfileFormState>(key: K, value: ProfileFormState[K]) => {
     setFormData((current) => ({ ...current, [key]: value }))
   }
 
   const handleReset = () => {
-    setFormData(initialState)
+    setFormData(personalizedInitialState)
+    setSaveMessage('')
+    setErrorMessage('')
   }
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault()
-    window.location.href = '/learner/dashboard'
+    if (!token) {
+      setErrorMessage('You need to be signed in to save profile changes.')
+      return
+    }
+
+    setIsSaving(true)
+    setSaveMessage('')
+    setErrorMessage('')
+
+    try {
+      const response = await updateCurrentUserProfile(
+        {
+          fullName: formData.fullName,
+          bio: formData.bio,
+          skills: formData.skills,
+        },
+        token,
+      )
+      updateUser(response.data)
+      await refreshUser(token)
+      setSaveMessage(response.message || 'Profile updated successfully.')
+    } catch (error) {
+      if (error instanceof ApiError || error instanceof Error) {
+        setErrorMessage(error.message)
+      } else {
+        setErrorMessage('Unable to save your profile right now.')
+      }
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   return (
@@ -148,11 +193,11 @@ export default function ProfileSetupPage() {
                         Identity Core
                       </p>
                       <h2 className="mt-3 text-2xl font-black tracking-tight text-white">
-                        {formData.fullName}
+                        {identityName}
                       </h2>
                       <p className="mt-2 text-sm text-white/75">Learner • UI/UX Track</p>
                     </div>
-                    <div className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.25em] text-white">
+                    <div className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[8px] font-black uppercase tracking-[0.22em] text-white">
                       Synced
                     </div>
                   </div>
@@ -197,6 +242,18 @@ export default function ProfileSetupPage() {
               </aside>
 
               <form className="space-y-6 p-6 md:p-8 lg:p-10" onSubmit={handleSave}>
+                {errorMessage ? (
+                  <div className="rounded-2xl border border-[#ff6b6b]/25 bg-[#12070b] px-4 py-3 text-sm text-[#ffb4ab]">
+                    {errorMessage}
+                  </div>
+                ) : null}
+
+                {saveMessage ? (
+                  <div className="rounded-2xl border border-[#57FAE9]/20 bg-[#05131c] px-4 py-3 text-sm text-[#9EF7FF]">
+                    {saveMessage}
+                  </div>
+                ) : null}
+
                 <section className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
                   <article className="rounded-[28px] border border-[#E3E8F0] bg-[#FBFCFE] p-6">
                     <div className="flex items-center gap-3">
@@ -221,9 +278,10 @@ export default function ProfileSetupPage() {
                           Email Address
                         </span>
                         <input
-                          className="w-full rounded-2xl border border-[#D7DDEA] bg-white px-4 py-3 text-[#191C1E] outline-none transition placeholder:text-slate-500 focus:border-[#2559BD] focus:shadow-[0_0_0_3px_rgba(37,89,189,0.12)]"
+                          readOnly
+                          aria-readonly="true"
+                          className="w-full cursor-not-allowed rounded-2xl border border-[#D7DDEA] bg-[#F2F4F6] px-4 py-3 text-[#191C1E] outline-none transition placeholder:text-slate-500"
                           value={formData.email}
-                          onChange={(e) => updateField('email', e.target.value)}
                         />
                       </label>
 
@@ -232,9 +290,10 @@ export default function ProfileSetupPage() {
                           Role
                         </span>
                         <input
-                          className="w-full rounded-2xl border border-[#D7DDEA] bg-white px-4 py-3 text-[#191C1E] outline-none transition placeholder:text-slate-500 focus:border-[#2559BD] focus:shadow-[0_0_0_3px_rgba(37,89,189,0.12)]"
+                          readOnly
+                          aria-readonly="true"
+                          className="w-full cursor-not-allowed rounded-2xl border border-[#D7DDEA] bg-[#F2F4F6] px-4 py-3 text-[#191C1E] outline-none transition placeholder:text-slate-500"
                           value={formData.role}
-                          onChange={(e) => updateField('role', e.target.value)}
                         />
                       </label>
 
@@ -243,9 +302,10 @@ export default function ProfileSetupPage() {
                           Timezone
                         </span>
                         <input
-                          className="w-full rounded-2xl border border-[#D7DDEA] bg-white px-4 py-3 text-[#191C1E] outline-none transition placeholder:text-slate-500 focus:border-[#2559BD] focus:shadow-[0_0_0_3px_rgba(37,89,189,0.12)]"
+                          readOnly
+                          aria-readonly="true"
+                          className="w-full cursor-not-allowed rounded-2xl border border-[#D7DDEA] bg-[#F2F4F6] px-4 py-3 text-[#191C1E] outline-none transition placeholder:text-slate-500"
                           value={formData.timezone}
-                          onChange={(e) => updateField('timezone', e.target.value)}
                         />
                       </label>
                     </div>
@@ -493,9 +553,10 @@ export default function ProfileSetupPage() {
                     </button>
                     <button
                       type="submit"
+                      disabled={isSaving}
                       className="rounded-2xl bg-[linear-gradient(90deg,#00327D,#2559BD)] px-6 py-3.5 text-sm font-black text-white shadow-[0_12px_28px_rgba(37,89,189,0.2)] transition hover:scale-[1.01]"
                     >
-                      Save Settings
+                      {isSaving ? 'Saving...' : 'Save Settings'}
                     </button>
                   </div>
                 </div>

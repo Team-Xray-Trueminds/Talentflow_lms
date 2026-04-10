@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import BottomNav from '../components/layout/BottomNav'
+import { useAuth } from '../components/auth/AuthProvider'
 
 const progressFlow = {
   title: 'Progress Page',
@@ -10,6 +11,9 @@ const progressFlow = {
 }
 
 export default function MyLearningPage() {
+  const { user } = useAuth()
+  const displayName = user?.fullName || 'Learner'
+  const displayNameUpper = displayName.toUpperCase()
   const activeCourses = [
     { 
       title: 'Modern UI Design Principles', 
@@ -54,7 +58,7 @@ export default function MyLearningPage() {
                 <span className="absolute top-2 right-2 w-2 h-2 bg-[#BA1A1A] rounded-full border-2 border-[#F7F9FB]"></span>
               </Link>
               <div className="text-right">
-                <p className="text-sm font-black text-[#191C1E]">Alex Rivera</p>
+                <p className="text-sm font-black text-[#191C1E]">{displayNameUpper}</p>
                 <p className="text-[10px] font-bold text-[#434653] uppercase tracking-wider">Talent Flow Catalyst</p>
               </div>
            </div>

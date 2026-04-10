@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import BottomNav from '../components/layout/BottomNav'
+import { useAuth } from '../components/auth/AuthProvider'
 
 export default function InstructorCoursesPage() {
-  const role = localStorage.getItem('userRole')
+  const { user } = useAuth()
+  const role = user?.role
   const isAdmin = window.location.pathname.startsWith('/admin')
-  const isInstructor = role === 'Instructor' && !isAdmin
+  const isInstructor = role === 'tutor' && !isAdmin
 
   const departments = [
     { title: 'UI Architecture', desc: 'Design systems & scale', icon: 'architecture', courses: 14 },

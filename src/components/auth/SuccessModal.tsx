@@ -67,10 +67,10 @@ export default function SuccessModal({ isOpen, onClose, email }: SuccessModalPro
 
           <div className="mt-10 w-full space-y-4">
             <Link
-              to="/settings/profile-setup"
+              to="/login"
               className="block w-full py-4 rounded-xl bg-linear-to-r from-[#00419E] to-[#608DF4] text-white font-bold text-lg shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all text-center"
             >
-              Continue to Setup
+              Continue to Sign In
             </Link>
             <button
               onClick={onClose}

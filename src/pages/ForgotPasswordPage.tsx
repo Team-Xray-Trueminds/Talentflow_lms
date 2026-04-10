@@ -2,20 +2,32 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import AppFooter from '../components/AppFooter'
+import { ApiError } from '../lib/api'
+import { forgotPassword } from '../lib/auth'
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    // Simulate API call
-    setTimeout(() => {
+    setErrorMessage('')
+
+    try {
+      await forgotPassword({ email })
       setIsLoading(false)
       setIsSubmitted(true)
-    }, 1500)
+    } catch (error) {
+      setIsLoading(false)
+      if (error instanceof ApiError || error instanceof Error) {
+        setErrorMessage(error.message)
+      } else {
+        setErrorMessage('Unable to send reset email right now.')
+      }
+    }
   }
 
   return (
@@ -48,6 +60,11 @@ export default function ForgotPasswordPage() {
               </div>
 
               <form className="space-y-6" onSubmit={handleSubmit}>
+                {errorMessage ? (
+                  <div className="rounded-lg border border-[#ff6b6b]/30 bg-[#12070b] px-4 py-3 text-sm text-[#ffb4ab]">
+                    {errorMessage}
+                  </div>
+                ) : null}
                 <div className="space-y-2">
                   <label className="text-xs font-bold uppercase tracking-widest text-on-surface-variant ml-1">
                     Institutional Email

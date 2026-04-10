@@ -1,8 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../auth/AuthProvider';
 
 const BottomNav = () => {
     const location = useLocation();
-    const storedRole = localStorage.getItem('userRole');
+    const { user } = useAuth();
+    const storedRole = user?.role === 'admin' ? 'Admin' : user?.role === 'tutor' ? 'Instructor' : 'Learner';
     const pathRole = location.pathname.startsWith('/admin') ? 'Admin' : (location.pathname.startsWith('/instructor') ? 'Instructor' : (location.pathname.startsWith('/learner') ? 'Learner' : null));
     const role = pathRole || storedRole || 'Learner';
 

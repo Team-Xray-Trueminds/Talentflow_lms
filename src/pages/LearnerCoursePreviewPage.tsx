@@ -34,6 +34,17 @@ const LearnerCoursePreviewPage = () => {
                 <section className="relative h-[600px] w-full overflow-hidden shrink-0">
                     <img src={courseData.img} className="absolute inset-0 w-full h-full object-cover" alt="Hero" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#001946] via-[#001946]/40 to-transparent" />
+
+                    <div className="absolute left-8 top-8 z-10">
+                        <button
+                            type="button"
+                            onClick={() => navigate(-1)}
+                            aria-label="Go back"
+                            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-[#001946]/45 text-white shadow-[0_14px_30px_rgba(0,0,0,0.2)] backdrop-blur-xl transition-all hover:border-[#57FAE9]/40 hover:bg-[#001946]/70 hover:text-[#57FAE9]"
+                        >
+                            <span className="material-symbols-outlined text-base">west</span>
+                        </button>
+                    </div>
                     
                     <div className="absolute inset-0 flex flex-col justify-end p-20 pb-24 max-w-[1400px] mx-auto w-full">
                         <div className="flex items-center gap-4 mb-8">
