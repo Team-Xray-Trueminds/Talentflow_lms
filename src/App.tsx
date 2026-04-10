@@ -33,6 +33,8 @@ import InstructorAssignmentBuilderPage from './pages/InstructorAssignmentBuilder
 import LearnerCoursePlayerPage from './pages/LearnerCoursePlayerPage'
 import LearnerCoursePreviewPage from './pages/LearnerCoursePreviewPage'
 import LearnerAssignmentPage from './pages/LearnerAssignmentPage'
+import InstructorVerifyLoginPage from './pages/InstructorVerifyLoginPage'
+import InstructorSetPasswordPage from './pages/InstructorSetPasswordPage'
 import { ProtectedRoute, PublicOnlyRoute } from './components/auth/AuthGuards'
 
 function App() {
@@ -78,6 +80,8 @@ function App() {
           <Route path="/instructor/curriculum-builder" element={<InstructorCurriculumBuilder />} />
           <Route path="/instructor/content-upload" element={<InstructorContentUploadPage />} />
           <Route path="/instructor/assignment-builder" element={<InstructorAssignmentBuilderPage />} />
+          <Route path="/instructor/verify-login" element={<InstructorVerifyLoginPage />} />
+          <Route path="/instructor/set-password" element={<InstructorSetPasswordPage />} />
         </Route>
         <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
           <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />

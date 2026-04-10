@@ -17,6 +17,7 @@ export interface UserProfile {
   skills?: string[] | null
   avatarUrl?: string | null
   isEmailVerified: boolean
+  mustChangePassword?: boolean
 }
 
 type ApiEnvelope<T> = {
@@ -71,6 +72,7 @@ function normalizeUserProfile(payload: unknown): UserProfile {
         ? record.avatar
         : null,
     isEmailVerified: Boolean(record.isEmailVerified ?? record.emailVerified ?? record.verified ?? false),
+    mustChangePassword: Boolean(record.mustChangePassword ?? false),
   }
 }
 

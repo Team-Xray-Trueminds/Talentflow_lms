@@ -67,8 +67,19 @@ export default function LoginPage() {
         throw new Error('Login succeeded but no access token was returned by the backend.')
       }
       const profileResponse = await fetchCurrentUser(token)
-      setSession(token, profileResponse.data)
-      navigate(getRoleHomePath(profileResponse.data.role))
+      
+      // Simulated first-login check
+      const mustChangePassword = localStorage.getItem(`must_change_password_${email}`) === 'true'
+      
+      if (profileResponse.data.role === 'tutor' && mustChangePassword) {
+        authStorage.setPendingVerificationEmail(email)
+        // We set session but redirect to specialized setup flow
+        setSession(token, profileResponse.data)
+        navigate('/instructor/verify-login')
+      } else {
+        setSession(token, profileResponse.data)
+        navigate(getRoleHomePath(profileResponse.data.role))
+      }
     } catch (error) {
       if (error instanceof ApiError && error.code === 'EMAIL_NOT_VERIFIED') {
         authStorage.setPendingVerificationEmail(email)

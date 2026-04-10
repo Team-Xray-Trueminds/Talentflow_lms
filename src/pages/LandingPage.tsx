@@ -76,6 +76,8 @@ const CountUp: React.FC<{ end: number; suffix?: string }> = ({ end, suffix = '' 
 const LandingPage: React.FC = () => {
   const { resolvedTheme, setThemeMode } = useTheme()
   const isDark = resolvedTheme === 'dark'
+  const [showInstructorContact, setShowInstructorContact] = React.useState(false);
+  const [interestSubmitted, setInterestSubmitted] = React.useState(false);
 
   return (
     <>
@@ -262,7 +264,89 @@ const LandingPage: React.FC = () => {
             </ScrollReveal>
           </div>
         </section>
+
+        {/* Become an Instructor Section */}
+        <section className="relative overflow-hidden bg-[#0047AB] py-24 text-white transition-colors duration-300 dark:bg-[linear-gradient(180deg,#051326,#081C38)]">
+          <div className="absolute inset-0 opacity-10 pointer-events-none">
+            <div className="absolute top-1/2 left-1/4 w-[60%] h-[60%] bg-blue-400 rounded-full blur-[140px]"></div>
+          </div>
+          
+          <ScrollReveal className="max-w-4xl mx-auto px-8 relative z-10 text-center">
+            <h2 className="text-4xl md:text-5xl font-black font-headline tracking-tighter mb-6">Architect Your Legacy: Become a Mentor</h2>
+            <p className="text-xl text-blue-100/80 mb-10 leading-relaxed font-medium">
+              Join our elite network of global visionaries. Share your expertise, shape the next generation of industry leaders, and architect the future of professional growth.
+            </p>
+            <button 
+              onClick={() => setShowInstructorContact(true)}
+              className="bg-white text-[#0047AB] px-10 py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-sm hover:scale-[1.05] transition-all shadow-2xl active:scale-95 dark:bg-[#57FAE9] dark:text-[#021223]"
+            >
+              Express Interest
+            </button>
+          </ScrollReveal>
+        </section>
       </main>
+
+      {/* Instructor Interest Modal */}
+      {showInstructorContact && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-[#021223]/80 backdrop-blur-md" onClick={() => setShowInstructorContact(false)}></div>
+          <div className="relative w-full max-w-xl bg-white rounded-3xl p-8 shadow-2xl animate-fade-in-up dark:bg-[#0D1E35] dark:border dark:border-[#57FAE9]/20">
+            {!interestSubmitted ? (
+              <>
+                <h3 className="text-2xl font-bold font-headline mb-4 dark:text-white">Instructor Partnership</h3>
+                <p className="text-[#434653] mb-6 dark:text-[#A8B7D8]">
+                  Please review our professional standards and terms of engagement before expressing intertest.
+                </p>
+                <div className="bg-[#F7F9FB] rounded-2xl p-6 mb-8 max-h-48 overflow-y-auto border border-[#E0E3E5] dark:bg-[#08172E] dark:border-[#2559BD]/30">
+                  <h4 className="font-bold text-sm mb-2 dark:text-[#57FAE9]">Terms and Conditions</h4>
+                  <p className="text-xs text-[#434653] leading-relaxed dark:text-[#D2DEFF]">
+                    By continuing, you agree to the TalentFlow Instructor Code of Conduct. You acknowledge that all content must meet our architectural precision standards and that your profile will be subject to professional vetting. You agree to provide accurate credentials and maintain a commitment to mentee growth. TalentFlow reserves the right to review and approve all instructor applications to ensure the highest quality of mentorship within our global ecosystem.
+                  </p>
+                </div>
+                <div className="space-y-4">
+                  <div className="group">
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-outline mb-2 block dark:text-[#57FAE9]/60">Corporate Email</label>
+                    <input 
+                      type="email" 
+                      placeholder="name@company.com"
+                      className="w-full bg-[#F7F9FB] border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] dark:bg-[#0A1930] dark:text-white dark:ring-1 dark:ring-[#57FAE9]/20"
+                    />
+                  </div>
+                  <button 
+                    onClick={() => setInterestSubmitted(true)}
+                    className="w-full bg-[#0047AB] text-white py-4 rounded-xl font-bold hover:bg-[#00327D] transition-colors dark:bg-[#57FAE9] dark:text-[#021223]"
+                  >
+                    Agree & Send Interest
+                  </button>
+                  <button 
+                    onClick={() => setShowInstructorContact(false)}
+                    className="w-full py-4 text-[#434653] font-medium hover:text-[#0047AB] transition-colors dark:text-[#DCE8FF] dark:hover:text-[#57FAE9]"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="text-center py-8">
+                <div className="w-20 h-20 bg-[#57FAE9]/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <span className="material-symbols-outlined text-[#0047AB] text-4xl dark:text-[#57FAE9]">mark_email_read</span>
+                </div>
+                <h3 className="text-2xl font-bold font-headline mb-4 dark:text-white">Interest Logged</h3>
+                <p className="text-[#434653] mb-8 dark:text-[#A8B7D8]">
+                  Your interest has been communicated to the TalentFlow Administrative Council. An admin will contact you via your corporate email for the next steps in your provisioning.
+                </p>
+                <button 
+                  onClick={() => setShowInstructorContact(false)}
+                  className="w-full bg-[#0047AB] text-white py-4 rounded-xl font-bold dark:bg-[#57FAE9] dark:text-[#021223]"
+                >
+                  Return to Platform
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       <AppFooter className="mt-24 bg-[#E0E3E5] transition-colors duration-300 dark:bg-[#061221]" links={[
         { label: 'Privacy Policy', href: '#' },
         { label: 'Terms of Service', href: '#' },
