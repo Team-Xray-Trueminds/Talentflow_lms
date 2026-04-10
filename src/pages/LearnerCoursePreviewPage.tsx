@@ -35,7 +35,7 @@ const LearnerCoursePreviewPage = () => {
                     <img src={((courseData as any).thumbnailUrl || courseData.img)} className="absolute inset-0 w-full h-full object-cover" alt="Hero" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#001946] via-[#001946]/40 to-transparent" />
 
-                    <div className="absolute left-8 top-8 z-10">
+                    <div className="absolute left-4 top-4 sm:left-8 sm:top-8 z-10">
                         <button
                             type="button"
                             onClick={() => navigate(-1)}
@@ -46,8 +46,8 @@ const LearnerCoursePreviewPage = () => {
                         </button>
                     </div>
                     
-                    <div className="absolute inset-0 flex flex-col justify-end p-20 pb-24 max-w-[1400px] mx-auto w-full">
-                        <div className="flex items-center gap-4 mb-8">
+                    <div className="absolute inset-0 flex flex-col justify-end px-4 py-8 sm:p-10 lg:p-16 xl:p-20 pb-10 sm:pb-16 lg:pb-24 max-w-[1400px] mx-auto w-full">
+                        <div className="flex flex-wrap items-center gap-4 mb-6 sm:mb-8">
                            <span className="px-4 py-1.5 bg-[#57FAE9] text-[#001946] rounded-full text-[11px] font-black uppercase tracking-[0.2em] shadow-xl">Architect Choice</span>
                            <div className="flex items-center gap-1 text-[#57FAE9]">
                                <span className="material-symbols-outlined text-sm fill-1">star</span>
@@ -56,11 +56,11 @@ const LearnerCoursePreviewPage = () => {
                            </div>
                         </div>
                         
-                        <h1 className="text-7xl font-black font-manrope tracking-tighter text-white mb-6 leading-[0.9]">
+                        <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black font-manrope tracking-tighter text-white mb-6 leading-[0.95]">
                             {courseData.title}
                         </h1>
                         
-                        <div className="flex items-center gap-8 mb-12">
+                        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-8 mb-10 sm:mb-12">
                             <div className="flex items-center gap-4">
                                 <div className="w-12 h-12 rounded-2xl bg-white/10 p-[2px] shadow-2xl">
                                     <div className="w-full h-full bg-[#001946] rounded-[14px] overflow-hidden grayscale">
@@ -73,9 +73,9 @@ const LearnerCoursePreviewPage = () => {
                                 </div>
                             </div>
                             
-                            <div className="h-10 w-px bg-white/10" />
+                            <div className="hidden lg:block h-10 w-px bg-white/10" />
                             
-                            <div className="flex gap-12">
+                            <div className="grid grid-cols-2 gap-4 sm:flex sm:flex-wrap sm:gap-8 lg:gap-12">
                                 {[
                                     { label: 'Runtime', val: courseData.duration },
                                     { label: 'Students', val: courseData.students },
@@ -92,17 +92,17 @@ const LearnerCoursePreviewPage = () => {
                 </section>
 
                 {/* 2. BODY LAYOUT */}
-                <div className="max-w-[1400px] w-full mx-auto px-20 grid grid-cols-1 lg:grid-cols-12 gap-20 py-20">
+                <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-10 xl:px-20 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 xl:gap-20 py-10 sm:py-14 lg:py-20">
                     
                     {/* Left content */}
-                    <div className="lg:col-span-8 space-y-20">
+                    <div className="lg:col-span-8 space-y-10 sm:space-y-14 lg:space-y-20">
                         {/* Overview */}
                         <section>
                             <h3 className="text-[11px] font-black uppercase tracking-[0.3em] text-[#737784] mb-8 flex items-center gap-3">
                                 <span className="w-8 h-px bg-[#00327D]" />
                                 Curriculum Architectural Intent
                             </h3>
-                            <p className="text-2xl font-medium leading-[1.6] text-[#434653]">
+                            <p className="text-lg sm:text-xl lg:text-2xl font-medium leading-[1.6] text-[#434653]">
                                 {courseData.description}
                             </p>
                         </section>
@@ -112,8 +112,8 @@ const LearnerCoursePreviewPage = () => {
                             <h3 className="text-[11px] font-black uppercase tracking-[0.3em] text-[#737784] mb-12">Program Scaffolding</h3>
                             <div className="space-y-4">
                                 {courseData.curriculum.map((mod, i) => (
-                                    <div key={i} className="group bg-white p-8 rounded-[2.5rem] shadow-[0px_12px_32px_rgba(25,28,30,0.02)] ring-1 ring-[#E0E3E5]/30 hover:ring-[#00327D]/20 transition-all flex items-center justify-between">
-                                        <div className="flex items-center gap-6">
+                                    <div key={i} className="group bg-white p-5 sm:p-6 lg:p-8 rounded-[2rem] lg:rounded-[2.5rem] shadow-[0px_12px_32px_rgba(25,28,30,0.02)] ring-1 ring-[#E0E3E5]/30 hover:ring-[#00327D]/20 transition-all flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
+                                        <div className="flex items-center gap-4 sm:gap-6">
                                             <div className="w-12 h-12 rounded-2xl bg-[#F2F4F6] flex items-center justify-center text-[#737784] font-black text-xs group-hover:bg-[#00327D] group-hover:text-white transition-colors">
                                                 0{i + 1}
                                             </div>
@@ -129,8 +129,8 @@ const LearnerCoursePreviewPage = () => {
                         </section>
 
                         {/* Instructor Bio */}
-                        <section className="bg-[#DAE2FF]/30 p-12 rounded-[3.5rem] flex gap-10 items-start">
-                             <div className="w-32 h-32 rounded-[2.5rem] overflow-hidden shrink-0 shadow-2xl grayscale border-4 border-white">
+                        <section className="bg-[#DAE2FF]/30 p-6 sm:p-8 lg:p-12 rounded-[2.5rem] lg:rounded-[3.5rem] flex flex-col sm:flex-row gap-6 sm:gap-8 lg:gap-10 items-start">
+                             <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden shrink-0 shadow-2xl grayscale border-4 border-white">
                                  <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk5utjN07mkZOhvtLZIyLzTlvKn2L4iPZCxU2HE03HITuSyf687NvYeKy1N3BB3ni_PXK6x68sbgc75rNQ2L2yaSJm-G8klfuPjgpLJwHX36NoMakdz6P_Z2afHIAebaZV13Q7a3n9L2hbMhTqfjyw74ubS7f51FH_QDX66YnHaXq9NSQwc_7KrIjpQkDJ-Yp3aaAhNu-vnGsNf7SIO4uN_S4bTdHe0MSfe9aqNGnaSUESsnPKSC5Ebl9BWs9kMIL9tpe4Ug-K6OI" className="w-full h-full object-cover" alt="" />
                              </div>
                              <div>
@@ -145,7 +145,7 @@ const LearnerCoursePreviewPage = () => {
 
                     {/* Right sidebar - Enrollment Card */}
                     <div className="lg:col-span-4">
-                        <div className="sticky top-[100px] bg-white rounded-[3rem] p-10 shadow-[0px_32px_80px_rgba(25,28,30,0.06)] ring-1 ring-[#E0E3E5]/40 flex flex-col items-center text-center">
+                        <div className="sticky top-6 lg:top-[100px] bg-white rounded-[2.5rem] lg:rounded-[3rem] p-6 sm:p-8 lg:p-10 shadow-[0px_32px_80px_rgba(25,28,30,0.06)] ring-1 ring-[#E0E3E5]/40 flex flex-col items-center text-center">
                             <div className="w-20 h-20 bg-[#F2F4F6] rounded-[2rem] flex items-center justify-center text-[#00327D] mb-8">
                                 <span className="material-symbols-outlined text-4xl fill-1">verified</span>
                             </div>

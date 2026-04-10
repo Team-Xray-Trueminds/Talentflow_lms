@@ -51,7 +51,7 @@ const InstructorCourseBuilder = () => {
 
             {/* ... Stepper ... */}
             <section className="bg-white border-b border-[#E0E3E5]/40 py-4 px-4 md:px-10 overflow-x-auto no-scrollbar">
-                <div className="max-w-7xl mx-auto flex items-center justify-between min-w-[600px] md:min-w-0">
+                <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 min-w-[600px] md:min-w-0">
                     {[
                         { label: 'Details', icon: 'info', status: 'ACTIVE' },
                         { label: 'Curriculum', icon: 'account_tree', status: 'PENDING' },
@@ -82,10 +82,10 @@ const InstructorCourseBuilder = () => {
             </section>
 
             {/* 3. LAYOUT WRAPPER */}
-            <div className="max-w-[1440px] mx-auto w-full px-4 md:px-10 flex flex-col lg:flex-row gap-12 flex-1 pt-8 md:pt-12 pb-32">
+            <div className="max-w-[1440px] mx-auto w-full px-4 md:px-10 flex flex-col xl:flex-row gap-8 lg:gap-10 xl:gap-12 flex-1 pt-8 md:pt-12 pb-32">
                 
                 {/* 4. LEFT NAVIGATION SIDEBAR */}
-                <aside className="w-full lg:w-56 shrink-0 space-y-10">
+                <aside className="w-full xl:w-56 shrink-0 space-y-8 xl:space-y-10">
                     <div>
                         <h3 className="text-[10px] font-black uppercase tracking-[0.25em] text-[#737784] mb-6">Talent Flow Builder</h3>
                         <nav className="space-y-1">
@@ -137,7 +137,7 @@ const InstructorCourseBuilder = () => {
 
                     <div className="grid grid-cols-1 gap-10">
                         {/* Course Title Card */}
-                        <section className="bg-white rounded-[2.5rem] p-10 shadow-[0px_12px_40px_rgba(0,0,0,0.02)] ring-1 ring-[#E0E3E5]/30 space-y-8">
+                        <section className="bg-white rounded-[2rem] md:rounded-[2.5rem] p-6 sm:p-8 lg:p-10 shadow-[0px_12px_40px_rgba(0,0,0,0.02)] ring-1 ring-[#E0E3E5]/30 space-y-8">
                              <div className="space-y-4">
                                 <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#737784]">Curator Classification</label>
                                 <div className="relative group">
@@ -192,10 +192,10 @@ const InstructorCourseBuilder = () => {
                              </div>
                         </section>
 
-                        <div className="flex items-center justify-end pt-4">
+                        <div className="flex items-center justify-stretch sm:justify-end pt-4">
                             <button 
                                 onClick={() => navigate('/instructor/curriculum-builder')} 
-                                className="bg-gradient-to-r from-[#00327D] to-[#2559BD] text-white px-10 py-4 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 flex items-center gap-4 hover:translate-x-[4px] transition-all border-none cursor-pointer group"
+                                className="w-full sm:w-auto bg-gradient-to-r from-[#00327D] to-[#2559BD] text-white px-8 sm:px-10 py-4 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 flex items-center justify-center gap-4 hover:translate-x-[4px] transition-all border-none cursor-pointer group"
                             >
                                 Establish Curriculum
                                 <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform text-lg">arrow_forward</span>
@@ -205,7 +205,7 @@ const InstructorCourseBuilder = () => {
                 </main>
 
                 {/* 6. RIGHT CONTEXTUAL SIDEBAR */}
-                <aside className="w-full lg:w-80 shrink-0 space-y-8">
+                <aside className="w-full xl:w-80 shrink-0 space-y-8">
                     
                     {/* Visual Identity Card */}
                     <div className="bg-white rounded-[2.5rem] p-8 shadow-[0px_12px_32px_rgba(25,28,30,0.04)] ring-1 ring-[#E0E3E5]/30 group">

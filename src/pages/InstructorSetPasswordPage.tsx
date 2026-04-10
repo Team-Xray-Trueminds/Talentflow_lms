@@ -40,7 +40,7 @@ export default function InstructorSetPasswordPage() {
       
       // Redirect to the final step of the flow
       navigate('/settings/instructor-setup')
-    } catch (error) {
+    } catch {
       setErrorMessage('Unable to synchronize credentials at this time.')
     } finally {
       setIsSubmitting(false)

@@ -44,15 +44,23 @@ export default function MyLearningPage() {
   return (
     <div className="flex bg-[#F7F9FB] min-h-screen font-body text-[#191C1E]">
       <Sidebar />
-      <main className="grow flex flex-col">
+      <main className="grow flex flex-col pb-28 lg:pb-10">
         {/* Top bar */}
-        <div className="px-10 py-8 flex justify-between items-center bg-[#F7F9FB]">
-           <div className="flex items-center gap-3">
+        <div className="bg-[#F7F9FB] px-4 pt-20 pb-6 sm:px-6 lg:px-10 lg:py-8">
+           <div className="mb-6 flex items-center justify-end rounded-[28px] border border-white/70 bg-white/90 px-4 py-4 shadow-[0_18px_40px_rgba(15,23,42,0.06)] backdrop-blur-xl sm:hidden">
+              <div className="flex items-center gap-3">
+                <Link to="/learner/notifications" className="relative flex h-11 w-11 items-center justify-center rounded-full border border-[#E6ECF7] bg-white text-[#0D2240] shadow-sm transition-all hover:border-[#00327D]/20 hover:text-[#00327D]">
+                  <span className="material-symbols-outlined text-[20px]">notifications</span>
+                </Link>
+              </div>
+           </div>
+           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+           <div className="hidden sm:flex items-center gap-3">
               <span className="text-xs font-black uppercase tracking-widest text-[#74777F]">Curator Portal</span>
               <span className="w-1 h-1 bg-[#C3C6D5] rounded-full"></span>
               <span className="text-xs font-bold text-[#434653]">My Learning</span>
            </div>
-           <div className="flex items-center gap-6">
+           <div className="hidden sm:flex items-center gap-6">
               <Link to="/learner/notifications" className="relative group p-2 hover:bg-white rounded-xl transition-all">
                 <span className="material-symbols-outlined text-[#434653] group-hover:text-[#00419E]">notifications</span>
                 <span className="absolute top-2 right-2 w-2 h-2 bg-[#BA1A1A] rounded-full border-2 border-[#F7F9FB]"></span>
@@ -62,12 +70,13 @@ export default function MyLearningPage() {
                 <p className="text-[10px] font-bold text-[#434653] uppercase tracking-wider">Talent Flow Catalyst</p>
               </div>
            </div>
+           </div>
         </div>
 
         {/* Content Area */}
-        <div className="px-10 pb-20 max-w-[1200px] w-full mx-auto">
+        <div className="w-full max-w-[1200px] mx-auto px-4 pb-20 sm:px-6 lg:px-10">
           <header className="mb-12 animate-fade-in-up">
-            <h1 className="text-4xl font-black font-headline tracking-tight mb-4 text-[#191C1E]">
+            <h1 className="mb-4 text-3xl font-black tracking-tight text-[#191C1E] font-headline sm:text-4xl">
               My Learning Journey
             </h1>
             <p className="text-[#434653] font-medium">Continue your architectual mastery. Consistency is the key to depth.</p>
@@ -145,7 +154,7 @@ export default function MyLearningPage() {
             {/* Completed Section */}
             <section className="animate-fade-in-up animate-stagger-2">
               <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-[#74777F] mb-8">Archived Mastery</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                 {completedCourses.map((course, i) => (
                   <div key={i} className="bg-white/60 border border-[#C3C6D5]/20 rounded-[32px] p-5 flex flex-col group hover:bg-white transition-all">
                     <div className="aspect-square rounded-2xl overflow-hidden mb-6 opacity-80 group-hover:opacity-100 transition-opacity">

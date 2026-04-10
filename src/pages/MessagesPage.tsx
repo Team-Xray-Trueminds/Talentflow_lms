@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import { useSearchParams } from 'react-router-dom';
+import BottomNav from '../components/layout/BottomNav';
 
 interface Message {
   sender: string;
@@ -54,6 +55,7 @@ const MessagesPage: React.FC = () => {
   });
 
   const [inputText, setInputText] = useState('');
+  const [isListOpen, setIsListOpen] = useState(false);
   const activeContact = contacts.find(c => c.id === activeContactId) || contacts[0];
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -87,10 +89,10 @@ const MessagesPage: React.FC = () => {
   return (
     <div className="flex bg-[#F7F9FB] min-h-screen font-body text-[#191C1E]">
       <Sidebar />
-      <main className="grow flex h-screen overflow-hidden">
+      <main className="grow flex min-h-screen xl:h-screen overflow-hidden">
         {/* Left: Contact List */}
-        <div className="w-96 border-r border-[#C3C6D5]/20 bg-white flex flex-col shrink-0">
-          <div className="p-8 pb-4">
+        <div className={`${isListOpen ? 'flex' : 'hidden'} xl:flex w-full max-w-full xl:w-96 border-r border-[#C3C6D5]/20 bg-white flex-col shrink-0`}>
+          <div className="p-4 sm:p-6 xl:p-8 pb-4">
             <h1 className="text-3xl font-black font-headline tracking-tighter mb-6">Messages</h1>
             <div className="relative">
               <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#74777F]">search</span>
@@ -102,11 +104,14 @@ const MessagesPage: React.FC = () => {
             </div>
           </div>
           
-          <div className="grow overflow-y-auto p-4 space-y-2">
+          <div className="grow overflow-y-auto p-3 sm:p-4 space-y-2 pb-28 xl:pb-4">
             {contacts.map((contact) => (
               <div 
                 key={contact.id} 
-                onClick={() => setActiveContactId(contact.id)}
+                onClick={() => {
+                  setActiveContactId(contact.id)
+                  setIsListOpen(false)
+                }}
                 className={`p-4 rounded-3xl flex items-center gap-4 cursor-pointer transition-all duration-300 ${activeContactId === contact.id ? 'bg-[#D3E4FE] text-[#00327D]' : 'hover:bg-[#F2F4F6]'}`}
               >
                 <div className="relative shrink-0">
@@ -130,9 +135,9 @@ const MessagesPage: React.FC = () => {
         </div>
 
         {/* Right: Chat Window */}
-        <div className="grow flex flex-col relative bg-[#F7F9FB]">
+        <div className={`${isListOpen ? 'hidden xl:flex' : 'flex'} grow min-w-0 flex-col relative bg-[#F7F9FB]`}>
           {/* Top Bar */}
-          <div className="p-6 bg-white border-b border-[#C3C6D5]/20 flex justify-between items-center relative z-10 shadow-sm">
+          <div className="p-4 sm:p-6 bg-white border-b border-[#C3C6D5]/20 flex justify-between items-center gap-3 relative z-10 shadow-sm">
              <div className="flex items-center gap-4">
                 <img src={(activeContact.thumbnailUrl || activeContact.img)} className="w-10 h-10 rounded-xl object-cover shadow-sm transition-all" alt="" />
                 <div>
@@ -140,7 +145,7 @@ const MessagesPage: React.FC = () => {
                    <p className="text-[10px] font-black uppercase tracking-[0.1em] text-[#005049]">Online • {activeContact.role}</p>
                 </div>
              </div>
-             <div className="flex items-center gap-2">
+             <div className="flex items-center gap-1 sm:gap-2">
                 <button className="p-2 hover:bg-[#F2F4F6] rounded-xl transition-all">
                    <span className="material-symbols-outlined text-[#434653]">call</span>
                 </button>
@@ -154,10 +159,10 @@ const MessagesPage: React.FC = () => {
           </div>
 
           {/* Messages Feed */}
-          <div className="grow overflow-y-auto p-8 space-y-6">
+          <div className="grow overflow-y-auto p-4 sm:p-6 xl:p-8 space-y-6 pb-24 xl:pb-8">
              {(chatHistory[activeContactId] || []).map((msg, i) => (
                <div key={i} className={`flex ${msg.isMe ? 'justify-end' : 'justify-start'} animate-fade-in-up`} style={{ animationDelay: `${i * 0.05}s` }}>
-                  <div className={`max-w-md rounded-3xl p-5 ${msg.isMe ? 'bg-[#00327D] text-white rounded-tr-sm shadow-lg shadow-[#00327D]/20' : 'bg-white text-[#191C1E] border border-[#C3C6D5]/10 rounded-tl-sm shadow-sm'}`}>
+                  <div className={`max-w-[85%] sm:max-w-md rounded-3xl p-4 sm:p-5 ${msg.isMe ? 'bg-[#00327D] text-white rounded-tr-sm shadow-lg shadow-[#00327D]/20' : 'bg-white text-[#191C1E] border border-[#C3C6D5]/10 rounded-tl-sm shadow-sm'}`}>
                      <p className="text-sm font-medium leading-relaxed">{msg.content}</p>
                      <p className={`text-[10px] font-bold mt-2 opacity-50 ${msg.isMe ? 'text-right' : 'text-left'}`}>{msg.time}</p>
                   </div>
@@ -167,7 +172,7 @@ const MessagesPage: React.FC = () => {
           </div>
 
           {/* Bottom Bar: Input */}
-          <div className="p-8 pt-4">
+          <div className="p-4 sm:p-6 xl:p-8 pt-4 pb-28 xl:pb-8">
              <form onSubmit={handleSendMessage} className="bg-white border border-[#C3C6D5]/20 rounded-3xl p-2 flex items-center gap-2 shadow-sm focus-within:ring-2 focus-within:ring-[#00327D]/10 transition-all">
                 <button type="button" className="p-3 hover:bg-[#F2F4F6] rounded-2xl transition-all text-[#434653]">
                    <span className="material-symbols-outlined">add</span>
@@ -190,6 +195,7 @@ const MessagesPage: React.FC = () => {
              <p className="text-center text-[8px] font-black uppercase tracking-widest text-[#74777F] mt-4 tracking-normal">Encrypted Student-Instructor Communication Channel • TalentFlow Secure</p>
           </div>
         </div>
+        <BottomNav />
       </main>
     </div>
   );

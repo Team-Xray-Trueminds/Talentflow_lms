@@ -27,21 +27,21 @@ const LearnerCoursePlayerPage = () => {
         <div className="min-h-screen bg-[#000F29] text-white font-inter flex flex-col overflow-hidden">
             {/* 1. LAYERED HEADER */}
             <header className="h-16 md:h-20 bg-[#001946]/40 backdrop-blur-2xl border-b border-white/5 flex items-center justify-between px-4 lg:px-8 shrink-0 z-50">
-                <div className="flex items-center gap-8">
+                <div className="flex items-center gap-3 sm:gap-5 lg:gap-8 min-w-0">
                     <button 
                         onClick={() => navigate(-1)} 
                         className="w-12 h-12 rounded-2xl bg-white/5 hover:bg-white/10 flex items-center justify-center transition-all border-none cursor-pointer text-white group"
                     >
                         <span className="material-symbols-outlined group-hover:-translate-x-1 transition-transform">west</span>
                     </button>
-                    <div className="h-6 w-px bg-white/10" />
-                    <div>
+                    <div className="hidden sm:block h-6 w-px bg-white/10" />
+                    <div className="min-w-0">
                         <h1 className="text-base font-black tracking-tight font-manrope leading-none mb-1.5">Modern UI Design Principles</h1>
                         <p className="text-[10px] font-black text-[#57FAE9] uppercase tracking-[0.25em]">Session 1.2 • Visual Grammar & Logic</p>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-10">
+                <div className="flex items-center gap-3 sm:gap-6 lg:gap-10">
                     <div className="hidden xl:flex flex-col items-end">
                         <div className="flex items-center gap-3 mb-2">
                             <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">Architectural Progress</span>
@@ -61,11 +61,11 @@ const LearnerCoursePlayerPage = () => {
 
             <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
                 {/* 2. PLAYER CORE CANVAS */}
-                <main className="flex-1 overflow-y-auto bg-[#000F29] relative flex flex-col pt-8 md:pt-12 px-4 md:px-12 pb-24">
-                    <div className="max-w-[1400px] mx-auto w-full space-y-12">
+                <main className="flex-1 overflow-y-auto bg-[#000F29] relative flex flex-col pt-6 md:pt-12 px-4 sm:px-6 md:px-8 xl:px-12 pb-16 lg:pb-24">
+                    <div className="max-w-[1400px] mx-auto w-full space-y-8 md:space-y-12">
                         
                         {/* Immersive Player Shell */}
-                        <div className="w-full aspect-video bg-[#001C38] rounded-[3rem] shadow-[0px_48px_120px_rgba(0,0,0,0.5)] relative overflow-hidden group border border-white/5">
+                        <div className="w-full aspect-video bg-[#001C38] rounded-[1.75rem] sm:rounded-[2.25rem] lg:rounded-[3rem] shadow-[0px_48px_120px_rgba(0,0,0,0.5)] relative overflow-hidden group border border-white/5">
                             <img 
                                 src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&auto=format&fit=crop&q=80" 
                                 className="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-[3000ms]" 
@@ -80,7 +80,7 @@ const LearnerCoursePlayerPage = () => {
                             </div>
 
                             {/* Integrated Glass Controls */}
-                            <div className="absolute bottom-10 left-10 right-10 p-6 bg-black/30 backdrop-blur-3xl border border-white/10 rounded-3xl flex items-center gap-8 opacity-0 group-hover:opacity-100 transition-all transform translate-y-4 group-hover:translate-y-0 duration-700">
+                            <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 lg:bottom-10 lg:left-10 lg:right-10 p-4 sm:p-5 lg:p-6 bg-black/30 backdrop-blur-3xl border border-white/10 rounded-[1.5rem] lg:rounded-3xl flex items-center gap-4 lg:gap-8 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all transform lg:translate-y-4 lg:group-hover:translate-y-0 duration-700">
                                 <span className="material-symbols-outlined text-3xl cursor-pointer hover:text-[#57FAE9] transition-colors">play_circle</span>
                                 <div className="flex-1 space-y-2">
                                     <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-white/40">
@@ -91,7 +91,7 @@ const LearnerCoursePlayerPage = () => {
                                         <div className="absolute inset-y-0 left-0 w-[45%] bg-[#57FAE9] rounded-full"></div>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-6">
+                                <div className="hidden sm:flex items-center gap-4 lg:gap-6">
                                     <span className="material-symbols-outlined text-2xl cursor-pointer hover:text-[#57FAE9]">volume_up</span>
                                     <span className="material-symbols-outlined text-2xl cursor-pointer hover:text-[#57FAE9]">closed_caption</span>
                                     <span className="material-symbols-outlined text-2xl cursor-pointer hover:text-[#57FAE9]">fullscreen</span>
@@ -100,11 +100,11 @@ const LearnerCoursePlayerPage = () => {
                         </div>
 
                         {/* Lesson Contextual Data */}
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
                             <div className="lg:col-span-8 space-y-10">
                                 <div>
-                                    <h2 className="text-5xl font-black font-manrope tracking-tighter mb-6 text-white leading-tight">Visual Grammar & <br/>Tonal Logic</h2>
-                                    <p className="text-[#B1C5FF]/70 leading-relaxed text-lg font-medium max-w-[90%]">
+                                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-manrope tracking-tighter mb-6 text-white leading-tight">Visual Grammar & <br/>Tonal Logic</h2>
+                                    <p className="text-[#B1C5FF]/70 leading-relaxed text-base sm:text-lg font-medium max-w-none lg:max-w-[90%]">
                                         Exploration into the structural integrity of user interfaces. We define how "Architectural Tones" establish focus without the noise of traditional 1px borders. This lesson covers the "Curator's Sweep" technique for clean typography hierarchy.
                                     </p>
                                 </div>
@@ -116,7 +116,7 @@ const LearnerCoursePlayerPage = () => {
                                 </div>
                             </div>
 
-                            <div className="lg:col-span-4 bg-[#DAE2FF]/5 border border-white/5 rounded-[3rem] p-10 flex flex-col items-center text-center">
+                            <div className="lg:col-span-4 bg-[#DAE2FF]/5 border border-white/5 rounded-[2rem] lg:rounded-[3rem] p-6 sm:p-8 lg:p-10 flex flex-col items-center text-center">
                                 <div className="w-16 h-16 bg-[#57FAE9] rounded-[1.5rem] flex items-center justify-center text-[#001946] mb-6 shadow-2xl shadow-[#57FAE9]/20">
                                     <span className="material-symbols-outlined text-3xl">lightbulb</span>
                                 </div>
@@ -130,7 +130,7 @@ const LearnerCoursePlayerPage = () => {
                 </main>
 
                 {/* 3. CURRICULUM ARCHITECTURE (Right Panel) */}
-                <aside className="w-full lg:w-[450px] shrink-0 bg-[#001C38] border-l border-white/5 flex flex-col z-40 lg:h-full overflow-hidden">
+                <aside className="w-full lg:w-[420px] xl:w-[450px] shrink-0 bg-[#001C38] border-t lg:border-t-0 lg:border-l border-white/5 flex flex-col z-40 lg:h-full overflow-hidden">
                     <div className="p-6 md:p-10 sticky top-0 bg-[#001C38]/90 backdrop-blur-2xl z-10 border-b border-white/5 mb-4">
                         <div className="flex items-center justify-between mb-2">
                            <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30">Curriculum Structure</h3>

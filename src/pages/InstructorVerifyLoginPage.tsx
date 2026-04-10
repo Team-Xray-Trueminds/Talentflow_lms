@@ -34,7 +34,7 @@ export default function InstructorVerifyLoginPage() {
       // Verification successful
       setIsVerifying(false)
       navigate('/instructor/set-password')
-    } catch (error) {
+    } catch {
       setIsVerifying(false)
       setErrorMessage('Verification failed. Please check the code and try again.')
     }
@@ -50,7 +50,7 @@ export default function InstructorVerifyLoginPage() {
       await new Promise(resolve => setTimeout(resolve, 1000));
       setOtpResetTrigger((value) => value + 1)
       setInfoMessage('A new verification code has been dispatched to your email.')
-    } catch (error) {
+    } catch {
       setErrorMessage('Unable to resend the verification code.')
     } finally {
       setIsResending(false)

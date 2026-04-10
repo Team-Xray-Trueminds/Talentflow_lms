@@ -9,6 +9,8 @@ import FallbackImage from '../components/common/FallbackImage'
 
 export default function LearnerDashboard() {
   const { user } = useAuth()
+  const { resolvedTheme, setThemeMode } = useTheme()
+  const isDark = resolvedTheme === 'dark'
   const displayName = user?.fullName || 'Learner'
   const displayNameUpper = displayName.toUpperCase()
   const avatarAlt = `${displayName} avatar`
@@ -43,20 +45,51 @@ export default function LearnerDashboard() {
     <div className="flex bg-[#F7F9FB] min-h-screen font-body">
       <Sidebar />
       
-      <main className="grow p-10 max-w-[1600px] mx-auto w-full">
+      <main className="grow w-full max-w-[1600px] mx-auto px-4 py-6 sm:px-6 lg:px-8 xl:px-10 pb-28 lg:pb-10">
         {/* Top bar Profile Summary (Link 8 High-Fidelity) */}
-        <div className="flex justify-between items-center mb-10">
-           <div className="flex items-center gap-3">
+        <div className="mb-8">
+           <div className="mb-6 flex items-center justify-end rounded-[28px] border border-white/70 bg-white/90 px-4 py-4 shadow-[0_18px_40px_rgba(15,23,42,0.06)] backdrop-blur-xl sm:hidden">
+              <div className="ml-auto flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setThemeMode(isDark ? 'light' : 'dark')}
+                  aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                  title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[#E6ECF7] bg-white text-[#0D2240] shadow-sm transition-all hover:border-[#00327D]/20 hover:text-[#00327D] dark:border-[#28456E] dark:bg-[#0B1930] dark:text-[#DCE8FF] dark:hover:border-[#57FAE9]/30 dark:hover:text-brand-tip-accent"
+                >
+                  <span className="material-symbols-outlined text-[20px]">
+                    {isDark ? 'light_mode' : 'dark_mode'}
+                  </span>
+                </button>
+                <Link
+                  to="/learner/notifications"
+                  aria-label="Open notifications"
+                  className="relative flex h-11 w-11 items-center justify-center rounded-full border border-[#E6ECF7] bg-white text-[#0D2240] shadow-sm transition-all hover:border-[#00327D]/20 hover:text-[#00327D]"
+                >
+                  <span className="material-symbols-outlined text-[20px]">notifications</span>
+                </Link>
+                <Link
+                  to="/settings/profile-setup"
+                  aria-label="Open account settings"
+                  className="block h-12 w-12 overflow-hidden rounded-full border-2 border-[#FF7C57] bg-[#FF7C57] shadow-[0_10px_24px_rgba(255,124,87,0.28)] transition-transform hover:scale-105"
+                >
+                  <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk5utjN07mkZOhvtLZIyLzTlvKn2L4iPZCxU2HE03HITuSyf687NvYeKy1N3BB3ni_PXK6x68sbgc75rNQ2L2yaSJm-G8klfuPjgpLJwHX36NoMakdz6P_Z2afHIAebaZV13Q7a3n9L2hbMhTqfjyw74ubS7f51FH_QDX66YnHaXq9NSQwc_7KrIjpQkDJ-Yp3aaAhNu-vnGsNf7SIO4uN_S4bTdHe0MSfe9aqNGnaSUESsnPKSC5Ebl9BWs9kMIL9tpe4Ug-K6OI" alt={avatarAlt} className="h-full w-full object-cover" />
+                </Link>
+              </div>
+           </div>
+
+           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+           <div className="hidden sm:flex flex-wrap items-center gap-3">
               <span className="text-xs font-black uppercase tracking-widest text-[#74777F]">Curator Portal</span>
               <span className="w-1 h-1 bg-[#C3C6D5] rounded-full"></span>
               <span className="text-xs font-bold text-[#434653]">Manage your growth</span>
            </div>
-           <div className="flex items-center gap-6">
+           <div className="hidden sm:flex items-center justify-between gap-4 sm:justify-end sm:gap-6">
               <Link to="/learner/notifications" className="relative group p-2 hover:bg-white rounded-xl transition-all">
                 <span className="material-symbols-outlined text-[#434653] group-hover:text-[#00419E]">notifications</span>
                 <span className="absolute top-2 right-2 w-2 h-2 bg-[#BA1A1A] rounded-full border-2 border-[#F7F9FB]"></span>
               </Link>
-              <div className="text-right">
+              <div className="text-right min-w-0">
                 <p className="text-sm font-black text-[#191C1E]">{displayNameUpper}</p>
                 <p className="text-[10px] font-bold text-[#434653] uppercase tracking-wider">Talent Flow Catalyst</p>
               </div>
@@ -68,11 +101,12 @@ export default function LearnerDashboard() {
                  <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk5utjN07mkZOhvtLZIyLzTlvKn2L4iPZCxU2HE03HITuSyf687NvYeKy1N3BB3ni_PXK6x68sbgc75rNQ2L2yaSJm-G8klfuPjgpLJwHX36NoMakdz6P_Z2afHIAebaZV13Q7a3n9L2hbMhTqfjyw74ubS7f51FH_QDX66YnHaXq9NSQwc_7KrIjpQkDJ-Yp3aaAhNu-vnGsNf7SIO4uN_S4bTdHe0MSfe9aqNGnaSUESsnPKSC5Ebl9BWs9kMIL9tpe4Ug-K6OI" alt={avatarAlt} className="w-full h-full object-cover" />
               </Link>
            </div>
+           </div>
         </div>
 
         {/* Hero Welcome */}
         <div className="mb-12 animate-fade-in-up">
-           <h1 className="text-3xl md:text-5xl font-extrabold text-[#191C1E] tracking-tight font-headline mb-4">
+           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#191C1E] tracking-tight font-headline mb-4">
              Welcome, {displayNameUpper}
            </h1>
            <p className="text-[#434653] text-lg font-medium leading-relaxed max-w-2xl">
@@ -80,11 +114,11 @@ export default function LearnerDashboard() {
            </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
           {/* Main Content (8 cols) */}
           <div className="lg:col-span-8 space-y-10">
             {/* Mastery & Focus Card */}
-            <div className="bg-white rounded-[32px] p-10 shadow-ambient relative overflow-hidden flex flex-col md:flex-row gap-10 items-center animate-scale-in">
+            <div className="bg-white rounded-[28px] md:rounded-[32px] p-6 sm:p-8 md:p-10 shadow-ambient relative overflow-hidden flex flex-col md:flex-row gap-8 md:gap-10 items-center animate-scale-in">
               <div className="grow space-y-4">
                  <div className="inline-block px-4 py-1.5 bg-[#D3E4FE] text-[#00419E] text-xs font-black uppercase tracking-[0.1em] rounded-lg">
                     Mastery Summary
@@ -192,7 +226,7 @@ export default function LearnerDashboard() {
           {/* Sidebar Info (4 cols) */}
           <div className="lg:col-span-4 space-y-10">
             {/* Milestone List */}
-            <div className="bg-[#ECEEF0] rounded-[32px] p-8 space-y-8 animate-scale-in animate-stagger-2">
+            <div className="bg-[#ECEEF0] rounded-[28px] md:rounded-[32px] p-6 sm:p-8 space-y-8 animate-scale-in animate-stagger-2">
                <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-[#00327D] rounded-xl flex items-center justify-center text-white">
                      <span className="material-symbols-outlined text-[20px]">event_upcoming</span>
@@ -229,7 +263,7 @@ export default function LearnerDashboard() {
             </div>
 
             {/* Pro Plan Upsell */}
-            <div className="bg-linear-to-br from-[#003E38] to-[#005750] rounded-[32px] p-10 text-white relative overflow-hidden shadow-xl animate-scale-in animate-stagger-3">
+            <div className="bg-linear-to-br from-[#003E38] to-[#005750] rounded-[28px] md:rounded-[32px] p-6 sm:p-8 md:p-10 text-white relative overflow-hidden shadow-xl animate-scale-in animate-stagger-3">
                <div className="relative z-10">
                   <span className="material-symbols-outlined text-4xl mb-4 text-[#57FAE9] animate-pulse">new_releases</span>
                   <h3 className="text-2xl font-black font-headline mb-3">Upgrade to PRO</h3>
