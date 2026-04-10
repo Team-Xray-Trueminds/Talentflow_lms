@@ -1,5 +1,4 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
-import { Link } from 'react-router-dom';
 
 interface Props {
   children?: ReactNode;
@@ -42,12 +41,12 @@ class GlobalErrorBoundary extends Component<Props, State> {
               >
                 Rebuild Interface
               </button>
-              <Link 
-                to="/"
+              <a 
+                href="/"
                 className="block w-full py-4 text-[#00327D] font-black text-[10px] uppercase tracking-widest hover:underline no-underline"
               >
                 Return to Campus
-              </Link>
+              </a>
             </div>
             {import.meta.env.DEV && (
               <pre className="mt-8 p-4 bg-[#F2F4F6] rounded-xl text-[10px] text-left overflow-auto text-[#BA1A1A]">

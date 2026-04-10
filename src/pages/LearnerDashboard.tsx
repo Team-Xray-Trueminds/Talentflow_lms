@@ -6,6 +6,7 @@ import { getProgressOverview, getProgressTimeline, getRecommendedMentors } from 
 import { getNotifications } from '../lib/communicationsApi'
 import { useQuery } from '@tanstack/react-query'
 import FallbackImage from '../components/common/FallbackImage'
+import { useTheme } from '../components/theme/ThemeProvider'
 
 export default function LearnerDashboard() {
   const { user } = useAuth()
