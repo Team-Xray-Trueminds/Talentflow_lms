@@ -31,8 +31,8 @@ const LearnerCoursePreviewPage = () => {
             
             <main className="flex-1 flex flex-col min-w-0">
                 {/* 1. HERO SECTION */}
-                <section className="relative h-[520px] sm:h-[600px] w-full overflow-hidden shrink-0">
-                    <img src={courseData.img} className="absolute inset-0 w-full h-full object-cover" alt="Hero" />
+                <section className="relative h-[600px] w-full overflow-hidden shrink-0">
+                    <img src={((courseData as any).thumbnailUrl || courseData.img)} className="absolute inset-0 w-full h-full object-cover" alt="Hero" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#001946] via-[#001946]/40 to-transparent" />
 
                     <div className="absolute left-4 top-4 sm:left-8 sm:top-8 z-10">

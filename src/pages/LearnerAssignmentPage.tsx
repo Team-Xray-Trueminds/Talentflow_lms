@@ -1,29 +1,42 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useAuth } from '../components/auth/AuthProvider';
+import { getAssignmentDetails, getAssignmentAttempts } from '../lib/learnerApi';
 
 const LearnerAssignmentPage = () => {
     const navigate = useNavigate();
+    const { id } = useParams<{ id: string }>();
+    const { token } = useAuth();
+    const queryClient = useQueryClient();
+    
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [fileUploaded, setFileUploaded] = useState(false);
 
-    const assignmentData = {
-        title: 'Project: Urban Spatial Framework',
-        deadline: 'Oct 24, 2024 • 11:59 PM',
-        status: 'UNSUBMITTED',
-        points: 100,
-        description: 'Building upon the foundations of Tonal Logic and UI Architecture, design a multi-layered urban spatial dashboard. Focus on achieving depth through monochromatic shifts and editorial glassmorphism. Avoid the use of traditional borders.',
-        requirements: [
-            'Figma/Adobe XD Project Link',
-            'Full rationale document (PDF)',
-            'Video walkthrough (MP4 - optional)'
-        ]
-    };
+    // 1. Fetch Assignment Details
+    const { data: detailsRes, isLoading: isLoadingDetails } = useQuery({
+        queryKey: ['assignmentDetails', id],
+        queryFn: () => getAssignmentDetails(id!, token!),
+        enabled: !!id && !!token,
+    });
+
+    // 2. Fetch Attempts
+    const { data: attemptsRes } = useQuery({
+        queryKey: ['assignmentAttempts', id],
+        queryFn: () => getAssignmentAttempts(id!, token!),
+        enabled: !!id && !!token,
+    });
+
+    const assignment = detailsRes?.data;
+    const attempts = attemptsRes?.data || [];
 
     const handleFileUpload = () => {
         setIsSubmitting(true);
+        // This will eventually be a real mutation to /assignments/:id/submit
         setTimeout(() => {
             setIsSubmitting(false);
             setFileUploaded(true);
+            queryClient.invalidateQueries({ queryKey: ['assignmentAttempts', id] });
         }, 2000);
     };
 
@@ -40,14 +53,14 @@ const LearnerAssignmentPage = () => {
                     </button>
                     <div className="h-6 w-px bg-white/10" />
                     <div>
-                        <h1 className="text-base font-black tracking-tight font-manrope leading-none mb-1.5">{assignmentData.title}</h1>
-                        <p className="text-[10px] font-black text-[#57FAE9] uppercase tracking-[0.25em]">Assignment Portfolio • Modern UI Principles</p>
+                        <h1 className="text-base font-black tracking-tight font-manrope leading-none mb-1.5">{assignment?.title || 'Loading Artifact...'}</h1>
+                        <p className="text-[10px] font-black text-[#57FAE9] uppercase tracking-[0.25em]">Assignment Portfolio • System Architecture</p>
                     </div>
                  </div>
 
                  <div className="bg-[#57FAE9]/10 px-4 py-2 rounded-xl border border-[#57FAE9]/20 flex items-center gap-3">
                     <span className="material-symbols-outlined text-[#57FAE9] text-lg">schedule</span>
-                    <span className="text-[10px] font-black text-[#57FAE9] uppercase tracking-widest">{assignmentData.deadline}</span>
+                    <span className="text-[10px] font-black text-[#57FAE9] uppercase tracking-widest">{assignment?.dueDate ? new Date(assignment.dueDate).toLocaleDateString() : 'No Deadline'}</span>
                  </div>
             </header>
 
@@ -56,29 +69,60 @@ const LearnerAssignmentPage = () => {
                     
                     {/* Left: Assignment Brief */}
                     <div className="lg:col-span-8 space-y-12">
-                        <section>
-                            <h3 className="text-[11px] font-black uppercase tracking-[0.3em] text-white/30 mb-8 flex items-center gap-3">
-                                <span className="w-8 h-px bg-[#57FAE9]" />
-                                Project Manifest
-                            </h3>
-                            <p className="text-3xl font-medium leading-[1.6] text-white/90">
-                                {assignmentData.description}
-                            </p>
-                        </section>
-
-                        <section className="bg-white/5 border border-white/5 rounded-[3rem] p-10">
-                            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-[#57FAE9] mb-8">Technical Requirements</h4>
-                            <div className="space-y-6">
-                                {assignmentData.requirements.map((req, i) => (
-                                    <div key={i} className="flex items-center gap-5">
-                                        <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-[#57FAE9]">
-                                            <span className="material-symbols-outlined text-xl">verified</span>
-                                        </div>
-                                        <span className="text-sm font-bold text-white/70">{req}</span>
-                                    </div>
-                                ))}
+                        {isLoadingDetails ? (
+                            <div className="py-20 text-center opacity-20">
+                                <span className="material-symbols-outlined animate-spin text-6xl">progress_activity</span>
                             </div>
-                        </section>
+                        ) : (
+                            <>
+                                <section>
+                                    <h3 className="text-[11px] font-black uppercase tracking-[0.3em] text-white/30 mb-8 flex items-center gap-3">
+                                        <span className="w-8 h-px bg-[#57FAE9]" />
+                                        Project Manifest
+                                    </h3>
+                                    <p className="text-3xl font-medium leading-[1.6] text-white/90">
+                                        {assignment?.description}
+                                    </p>
+                                </section>
+
+                                <section className="bg-white/5 border border-white/5 rounded-[3rem] p-10">
+                                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-[#57FAE9] mb-8">Technical Requirements</h4>
+                                    <div className="space-y-6">
+                                        {(assignment?.attachments || ['Project Link', 'Rationale PDF']).map((req: string, i: number) => (
+                                            <div key={i} className="flex items-center gap-5">
+                                                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-[#57FAE9]">
+                                                    <span className="material-symbols-outlined text-xl">verified</span>
+                                                </div>
+                                                <span className="text-sm font-bold text-white/70">{req}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+
+                                {attempts.length > 0 && (
+                                    <section className="space-y-6">
+                                        <h3 className="text-[11px] font-black uppercase tracking-[0.3em] text-white/30 flex items-center gap-3">
+                                            <span className="w-8 h-px bg-[#57FAE9]" />
+                                            Submission History
+                                        </h3>
+                                        <div className="grid gap-4">
+                                            {attempts.map((attempt: any) => (
+                                                <div key={attempt.id} className="bg-white/5 p-6 rounded-2xl flex items-center justify-between">
+                                                    <div>
+                                                        <p className="text-sm font-black">Attempt #{attempt.attemptNumber}</p>
+                                                        <p className="text-[10px] text-white/40 uppercase tracking-widest mt-1">Submitted {new Date(attempt.submittedAt).toLocaleDateString()}</p>
+                                                    </div>
+                                                    <div className="text-right">
+                                                        <span className="text-lg font-black text-[#57FAE9]">{attempt.score || '--'}</span>
+                                                        <span className="text-[10px] text-white/20 ml-1">/ {assignment?.points || 100}</span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </section>
+                                )}
+                            </>
+                        )}
                     </div>
 
                     {/* Right: Submission Canvas */}
@@ -96,7 +140,12 @@ const LearnerAssignmentPage = () => {
                                 {fileUploaded ? (
                                     <div className="bg-[#57FAE9]/10 border border-[#57FAE9]/20 p-6 rounded-2xl flex flex-col items-center text-center gap-4">
                                         <p className="text-xs font-bold text-[#57FAE9]">Your submission is being reviewed by the curriculum board.</p>
-                                        <button className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors bg-transparent border-none cursor-pointer">Unsubmit & Update</button>
+                                        <button 
+                                            onClick={() => setFileUploaded(false)}
+                                            className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors bg-transparent border-none cursor-pointer"
+                                        >
+                                            Unsubmit & Update
+                                        </button>
                                     </div>
                                 ) : (
                                     <div className="space-y-6">
@@ -107,7 +156,7 @@ const LearnerAssignmentPage = () => {
                                         
                                         <button 
                                             onClick={handleFileUpload}
-                                            disabled={isSubmitting}
+                                            disabled={isSubmitting || isLoadingDetails}
                                             className="w-full bg-[#57FAE9] text-[#001946] py-5 rounded-2xl font-black text-xs uppercase tracking-[0.25em] shadow-2xl shadow-[#57FAE9]/20 hover:scale-[1.03] active:scale-95 transition-all border-none cursor-pointer flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
                                         >
                                             {isSubmitting ? (
@@ -128,7 +177,7 @@ const LearnerAssignmentPage = () => {
                                 <div className="h-px bg-white/5 my-10" />
                                 <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-white/30 px-2">
                                     <span>Weight</span>
-                                    <span className="text-white">{assignmentData.points} Points</span>
+                                    <span className="text-white">{assignment?.points || 100} Points</span>
                                 </div>
                             </div>
 

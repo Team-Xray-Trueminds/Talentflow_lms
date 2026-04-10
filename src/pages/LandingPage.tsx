@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import AppFooter from '../components/AppFooter';
 import { useTheme } from '../components/theme/ThemeProvider';
-
+import { getFeaturedCourses } from '../lib/learnerApi';
+import { useQuery } from '@tanstack/react-query';
 const ScrollReveal: React.FC<{ children: React.ReactNode; className?: string; threshold?: number }> = ({ 
   children, 
   className = '',
@@ -78,10 +79,15 @@ const LandingPage: React.FC = () => {
   const isDark = resolvedTheme === 'dark'
   const [showInstructorContact, setShowInstructorContact] = React.useState(false);
   const [interestSubmitted, setInterestSubmitted] = React.useState(false);
+  const { data: featuredResponse, isLoading: loadingCourses } = useQuery({
+    queryKey: ['featuredCourses'],
+    queryFn: getFeaturedCourses
+  });
+  
+  const featuredCourses = featuredResponse?.data || [];
 
   return (
-    <>
-      <Navbar
+    <>      <Navbar
         links={[
           { label: 'Platform', to: '/' },
           { label: 'Mentorship', to: '/' },
@@ -263,6 +269,50 @@ const LandingPage: React.FC = () => {
               <p className="text-sm text-on-surface-variant">Every mentor is vetted through a 5-tier architectural expertise framework.</p>
             </ScrollReveal>
           </div>
+        </section>
+
+        {/* Featured Courses Section */}
+        <section className="max-w-7xl mx-auto px-8 pb-24">
+          <ScrollReveal className="text-center mb-16">
+            <h2 className="mb-4 text-4xl font-bold font-headline transition-colors duration-300 dark:text-[#F5F9FF]">Featured Curriculums</h2>
+            <p className="mx-auto max-w-2xl text-[#434653] transition-colors duration-300 dark:text-[#9FB2D1]">Preview the blueprints crafted by our top 1% industry mentors.</p>
+          </ScrollReveal>
+          
+          {loadingCourses ? (
+            <div className="flex justify-center items-center h-48">
+              <div className="w-12 h-12 border-4 border-t-primary border-gray-200 rounded-full animate-spin dark:border-gray-800 dark:border-t-[#57FAE9]"></div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {featuredCourses.slice(0, 3).map((course, idx) => (
+                <ScrollReveal key={course.id || idx} className="rounded-2xl bg-white shadow-ambient overflow-hidden transition-all hover:-translate-y-2 hover:shadow-xl dark:bg-[#0D1E35] dark:border dark:border-[#8AB4FF]/15 group">
+                  <div className="aspect-video relative overflow-hidden bg-[#E0E3E5] dark:bg-[#0A1526]">
+                    {(course.thumbnailUrl || course.img) ? (
+                      <img src={(course.thumbnailUrl || course.img)} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-[#74777F]">No Image</div>
+                    )}
+                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-[10px] font-black uppercase text-[#00327D] dark:bg-[#021223]/90 dark:text-[#57FAE9]">
+                      {course.category}
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <p className="text-[10px] font-black uppercase tracking-widest text-[#74777F] mb-3 dark:text-[#A8B7D8]">{course.level}</p>
+                    <h3 className="text-xl font-bold font-headline mb-4 line-clamp-2 dark:text-[#F5F9FF]">{course.title}</h3>
+                    <div className="flex items-center justify-between border-t border-[#F2F4F6] pt-4 mt-6 dark:border-[#2B4663]">
+                      <span className="text-sm font-bold text-[#00419E] dark:text-[#57FAE9]">Explore Course</span>
+                      <span className="material-symbols-outlined text-[#00419E] dark:text-[#57FAE9]">arrow_forward</span>
+                    </div>
+                  </div>
+                </ScrollReveal>
+              ))}
+              {featuredCourses.length === 0 && (
+                <div className="col-span-full text-center py-10 text-[#74777F] dark:text-[#A8B7D8]">
+                  New curriculums arriving shortly.
+                </div>
+              )}
+            </div>
+          )}
         </section>
 
         {/* Become an Instructor Section */}

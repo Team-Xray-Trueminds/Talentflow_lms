@@ -17,6 +17,7 @@ interface Student {
     grade: string;
     lastActive: string;
     status: string;
+    thumbnailUrl?: string;
     assignments: Assignment[];
 }
 
@@ -176,7 +177,7 @@ const InstructorGradebookPage = () => {
                                                 <td className="px-8 py-8">
                                                     <div className="flex items-center gap-5">
                                                         <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-sm relative group-hover:scale-105 transition-transform">
-                                                            <img src={student.img} className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all" alt="" />
+                                                            <img src={(student.thumbnailUrl || student.img)} className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all" alt="" />
                                                             {student.status === 'Attention Needed' && (
                                                                 <div className="absolute top-0 right-0 w-3 h-3 bg-[#BA1A1A] rounded-full border-2 border-white ring-1 ring-[#BA1A1A]/20"></div>
                                                             )}
@@ -215,7 +216,7 @@ const InstructorGradebookPage = () => {
                                     <div className="flex justify-between items-start mb-10">
                                         <div className="flex items-center gap-5">
                                             <div className="w-20 h-20 rounded-[2rem] overflow-hidden shadow-2xl">
-                                                <img src={selectedStudent.img} className="w-full h-full object-cover" alt="" />
+                                                <img src={(selectedStudent.thumbnailUrl || selectedStudent.img)} className="w-full h-full object-cover" alt="" />
                                             </div>
                                             <div>
                                                 <h3 className="text-2xl font-black font-manrope tracking-tighter">{selectedStudent.name}</h3>
