@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react'
 import { authStorage, fetchCurrentUser, type UserProfile } from '../../lib/auth'
 
 type AuthContextValue = {
@@ -19,13 +19,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(authStorage.getToken())
   const [isLoading, setIsLoading] = useState(true)
 
-  const clearSession = () => {
+  const clearSession = useCallback(() => {
     authStorage.clearToken()
     authStorage.clearLegacyRole()
     authStorage.clearUser()
     setToken(null)
     setUser(null)
-  }
+  }, [])
 
   const setSession = (nextToken: string, nextUser: UserProfile) => {
     authStorage.setToken(nextToken)
@@ -41,7 +41,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(nextUser)
   }
 
-  const refreshUser = async (tokenOverride?: string) => {
+  const refreshUser = useCallback(async (tokenOverride?: string) => {
     const activeToken = tokenOverride || authStorage.getToken()
     if (!activeToken) {
       clearSession()
@@ -59,7 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       clearSession()
       return null
     }
-  }
+  }, [clearSession])
 
   useEffect(() => {
     let mounted = true
@@ -80,7 +80,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => {
       mounted = false
     }
-  }, [])
+  }, [refreshUser])
 
   return (
     <AuthContext.Provider value={{ user, token, isLoading, isAuthenticated: Boolean(user && token), setSession, updateUser, clearSession, refreshUser }}>
@@ -89,6 +89,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
   const context = useContext(AuthContext)
   if (!context) {

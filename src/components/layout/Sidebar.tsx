@@ -6,12 +6,14 @@ export interface NavItem {
     href: string;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const mainNavItems: NavItem[] = [
     { icon: 'dashboard', label: 'Dashboard', href: '/admin/dashboard' },
     { icon: 'person', label: 'User Management', href: '/admin/user-management' },
     { icon: 'group', label: 'Talent Directory', href: '/admin/talent-directory' },
 ];
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const footerNavItems: NavItem[] = [
     { icon: 'logout', label: 'Log Out', href: '/login' },
 ];

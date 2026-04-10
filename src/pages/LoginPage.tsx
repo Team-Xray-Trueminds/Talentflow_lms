@@ -17,6 +17,7 @@ export default function LoginPage() {
   const [errorMessage, setErrorMessage] = useState('')
   const navigate = useNavigate()
   const { setSession } = useAuth()
+  const resetSuccess = searchParams.get('resetSuccess') === '1'
 
   useEffect(() => {
     const token = searchParams.get('token')
@@ -104,6 +105,12 @@ export default function LoginPage() {
               Sign in to continue your growth journey.
             </p>
           </div>
+
+          {resetSuccess ? (
+            <div className="mb-5 rounded-lg border border-[#57FAE9]/20 bg-[#05131c] px-4 py-3 text-sm text-[#9EF7FF]">
+              Password updated successfully. Sign in with your new password.
+            </div>
+          ) : null}
 
           <form className="space-y-5" onSubmit={handleSubmit}>
             {errorMessage ? (

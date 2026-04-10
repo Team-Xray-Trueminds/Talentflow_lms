@@ -1,8 +1,27 @@
 import { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 
+interface Assignment {
+    title: string;
+    score: number | null;
+    status: string;
+}
+
+interface Student {
+    id: number;
+    name: string;
+    program: string;
+    email: string;
+    img: string;
+    progress: number;
+    grade: string;
+    lastActive: string;
+    status: string;
+    assignments: Assignment[];
+}
+
 const InstructorGradebookPage = () => {
-    const [selectedStudent, setSelectedStudent] = useState<any>(null);
+    const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
 
     const metrics = [
         { label: 'Avg Achievement', value: '88.4%', trend: '+2.4%', icon: 'trending_up', color: '#00327D' },
@@ -10,7 +29,7 @@ const InstructorGradebookPage = () => {
         { label: 'Review Latency', value: '1.2d', trend: '-0.4d', icon: 'schedule', color: '#F2C94C' }
     ];
 
-    const students = [
+    const students: Student[] = [
         { 
             id: 1, 
             name: 'Alexandru Chen', 
@@ -229,7 +248,7 @@ const InstructorGradebookPage = () => {
                                         </header>
 
                                         <div className="space-y-4">
-                                            {selectedStudent.assignments.map((asgn: any, i: number) => (
+                                            {selectedStudent.assignments.map((asgn: Assignment, i: number) => (
                                                 <div key={i} className="p-6 bg-[#F7F9FB] rounded-3xl group hover:bg-white hover:shadow-lg transition-all ring-1 ring-[#E0E3E5]/10">
                                                     <div className="flex justify-between items-start mb-6">
                                                         <div>

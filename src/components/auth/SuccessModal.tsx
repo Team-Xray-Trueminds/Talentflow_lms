@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 interface SuccessModalProps {
@@ -8,24 +7,13 @@ interface SuccessModalProps {
 }
 
 export default function SuccessModal({ isOpen, onClose, email }: SuccessModalProps) {
-  const [shouldRender, setShouldRender] = useState(isOpen)
-
-  useEffect(() => {
-    if (isOpen) setShouldRender(true)
-  }, [isOpen])
-
-  const handleAnimationEnd = () => {
-    if (!isOpen) setShouldRender(false)
-  }
-
-  if (!shouldRender) return null
+  if (!isOpen) return null
 
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-300 ${
         isOpen ? 'opacity-100' : 'opacity-0'
       }`}
-      onAnimationEnd={handleAnimationEnd}
     >
       {/* Backdrop */}
       <div

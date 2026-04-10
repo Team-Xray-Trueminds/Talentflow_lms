@@ -64,14 +64,6 @@ const MessagesPage: React.FC = () => {
     scrollToBottom();
   }, [chatHistory, activeContactId]);
 
-  // Handle case where URL param changes
-  useEffect(() => {
-    if (studentNameParam) {
-      const found = contacts.find(c => c.name.toLowerCase().includes(studentNameParam.toLowerCase()));
-      if (found) setActiveContactId(found.id);
-    }
-  }, [studentNameParam]);
-
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputText.trim()) return;

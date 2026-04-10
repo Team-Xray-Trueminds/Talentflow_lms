@@ -3,6 +3,7 @@ import { apiRequest } from './api'
 const AUTH_TOKEN_KEY = 'authToken'
 const USER_ROLE_KEY = 'userRole'
 const PENDING_VERIFICATION_EMAIL_KEY = 'pendingVerificationEmail'
+const PENDING_RESET_EMAIL_KEY = 'pendingResetEmail'
 const AUTH_USER_KEY = 'authUser'
 
 export type UserRole = 'learner' | 'tutor' | 'admin'
@@ -88,6 +89,9 @@ export const authStorage = {
   setPendingVerificationEmail: (email: string) => localStorage.setItem(PENDING_VERIFICATION_EMAIL_KEY, email),
   getPendingVerificationEmail: () => localStorage.getItem(PENDING_VERIFICATION_EMAIL_KEY),
   clearPendingVerificationEmail: () => localStorage.removeItem(PENDING_VERIFICATION_EMAIL_KEY),
+  setPendingResetEmail: (email: string) => localStorage.setItem(PENDING_RESET_EMAIL_KEY, email),
+  getPendingResetEmail: () => localStorage.getItem(PENDING_RESET_EMAIL_KEY),
+  clearPendingResetEmail: () => localStorage.removeItem(PENDING_RESET_EMAIL_KEY),
   setLegacyRole: (role: UserRole) => localStorage.setItem(USER_ROLE_KEY, role),
   getLegacyRole: () => localStorage.getItem(USER_ROLE_KEY),
   clearLegacyRole: () => localStorage.removeItem(USER_ROLE_KEY),
@@ -110,6 +114,7 @@ export async function register(payload: {
   email: string
   password: string
   confirmPassword: string
+  role?: string
 }) {
   const response = await apiRequest<unknown>('/auth/register', {
     method: 'POST',
@@ -136,7 +141,11 @@ export async function login(payload: { email: string; password: string }) {
   } satisfies ApiEnvelope<{ token: string }>
 }
 
-export async function verifyOtp(payload: { email: string; code: string }) {
+export async function verifyOtp(payload: {
+  email: string
+  code: string
+  purpose?: 'verify_email' | 'reset_password'
+}) {
   const response = await apiRequest<unknown>('/auth/verify-otp', {
     method: 'POST',
     body: JSON.stringify(payload),
@@ -148,7 +157,10 @@ export async function verifyOtp(payload: { email: string; code: string }) {
   } satisfies ApiEnvelope<null>
 }
 
-export async function resendOtp(payload: { email: string }) {
+export async function resendOtp(payload: {
+  email: string
+  purpose?: 'verify_email' | 'reset_password'
+}) {
   const response = await apiRequest<unknown>('/auth/resend-otp', {
     method: 'POST',
     body: JSON.stringify(payload),
@@ -173,7 +185,9 @@ export async function forgotPassword(payload: { email: string }) {
 }
 
 export async function resetPassword(payload: {
-  token: string
+  token?: string
+  email?: string
+  code?: string
   password: string
   confirmPassword: string
 }) {

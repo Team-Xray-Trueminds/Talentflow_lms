@@ -4,16 +4,16 @@ interface OTPInputProps {
   length?: number
   onComplete: (code: string) => void
   resetTrigger?: number
+  inputClassName?: string
 }
 
-export default function OTPInput({ length = 6, onComplete, resetTrigger = 0 }: OTPInputProps) {
-  const [code, setCode] = useState<string[]>(Array(length).fill(''))
+function OTPInputInner({ length, onComplete, inputClassName }: Required<OTPInputProps>) {
+  const [code, setCode] = useState<string[]>(() => Array(length).fill(''))
   const inputs = useRef<(HTMLInputElement | null)[]>([])
 
   useEffect(() => {
-    setCode(Array(length).fill(''))
     inputs.current[0]?.focus()
-  }, [length, resetTrigger])
+  }, [])
 
   const handleChange = (value: string, index: number) => {
     if (isNaN(Number(value))) return
@@ -47,8 +47,7 @@ export default function OTPInput({ length = 6, onComplete, resetTrigger = 0 }: O
       newCode[index] = char
     })
     setCode(newCode)
-    
-    // Focus last input or next empty
+
     const nextIndex = data.length < length ? data.length : length - 1
     inputs.current[nextIndex]?.focus()
 
@@ -72,9 +71,26 @@ export default function OTPInput({ length = 6, onComplete, resetTrigger = 0 }: O
           onChange={(e) => handleChange(e.target.value, index)}
           onKeyDown={(e) => handleKeyDown(e, index)}
           onPaste={handlePaste}
-          className="w-12 h-14 md:w-16 md:h-20 text-center text-2xl font-bold bg-[#E0E3E5] border-none rounded-xl focus:ring-2 focus:ring-[#2559BD] transition-all text-[#191C1E]"
+          className={`w-12 h-14 md:w-16 md:h-20 text-center text-2xl font-bold bg-[#E0E3E5] border-none rounded-xl focus:ring-2 focus:ring-[#2559BD] transition-all text-[#191C1E] ${inputClassName}`}
         />
       ))}
     </div>
+  )
+}
+
+export default function OTPInput({
+  length = 6,
+  onComplete,
+  resetTrigger = 0,
+  inputClassName = '',
+}: OTPInputProps) {
+  return (
+    <OTPInputInner
+      key={`${length}-${resetTrigger}`}
+      length={length}
+      onComplete={onComplete}
+      resetTrigger={resetTrigger}
+      inputClassName={inputClassName}
+    />
   )
 }
