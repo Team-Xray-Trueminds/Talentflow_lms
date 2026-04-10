@@ -113,21 +113,6 @@ export default function NotificationsPage() {
             </div>
           </div>
         </div>
-
-        {/* Mobile Navigation (Sync with other pages) */}
-        <nav className="lg:hidden fixed bottom-6 left-6 right-6 bg-white/90 backdrop-blur-2xl border border-[#C3C6D5]/15 h-20 rounded-[24px] shadow-2xl flex items-center justify-around px-4 z-50">
-          {[
-            { icon: 'dashboard', label: 'Home', to: '/learner/dashboard' },
-            { icon: 'search', label: 'Search', to: '/learner/courses' },
-            { icon: 'notifications', label: 'Alerts', to: '/learner/notifications', active: true },
-            { icon: 'person', label: 'Profile', to: '/settings/profile-setup' }
-          ].map((nav, i) => (
-            <Link key={i} to={nav.to} className={`flex flex-col items-center gap-1.5 transition-all ${nav.active ? 'text-[#00327D]' : 'text-[#737784]'}`}>
-              <span className={`material-symbols-outlined text-[26px] ${nav.active ? 'fill-1' : ''}`}>{nav.icon}</span>
-              <span className="text-[10px] font-black tracking-tight uppercase">{nav.label}</span>
-            </Link>
-          ))}
-        </nav>
       </main>
     </div>
   )
