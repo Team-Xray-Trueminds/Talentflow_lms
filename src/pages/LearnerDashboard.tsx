@@ -2,6 +2,10 @@ import Sidebar from '../components/Sidebar'
 import BottomNav from '../components/layout/BottomNav'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../components/auth/AuthProvider'
+import { getProgressOverview, getProgressTimeline, getRecommendedMentors } from '../lib/learnerApi'
+import { getNotifications } from '../lib/communicationsApi'
+import { useQuery } from '@tanstack/react-query'
+import FallbackImage from '../components/common/FallbackImage'
 import { useTheme } from '../components/theme/ThemeProvider'
 
 export default function LearnerDashboard() {
@@ -11,23 +15,32 @@ export default function LearnerDashboard() {
   const displayName = user?.fullName || 'Learner'
   const displayNameUpper = displayName.toUpperCase()
   const avatarAlt = `${displayName} avatar`
-  const announcements = [
-    { title: 'Live Q&A with Design Lead at 5 PM', desc: "Don't miss out on industry secrets...", icon: 'campaign' },
-    { title: 'New Resource: UI Kit v2.4 released', desc: 'Download the latest Figma components...', icon: 'description' }
-  ]
+  const token = localStorage.getItem('authToken') || ''
 
-  const mentors = [
-    { name: 'Sarah Jenkins', role: 'Senior Product Designer', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCVxrI9I5n58GFjq4GFTGavFlXmZe1bnwXPHtwHXeUg1aK1lVc7QKPvWr4O3EaYIjo56Qyp-AehpphzpbwI3peCA6mH3SMiUQnPK5y_zNT1ZmR_FblJnP7oSIdV4oTn4k_dpA6R5o9EVH256JTlGMsvpDvLW7E2Kt-iJ4839-mW_cxwIDVedGKFpDZyRrVl92Y3swdRuk9oj5AeAYnCk74RmRPjXJAt7mbdlVteunFv_yurekYAEQqpvZMJ4eMQZz3sBVC1ru3TwM0' },
-    { name: 'Marcus Chen', role: 'UX Strategy Lead', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBOob43RVwc0CW12KB2DOBUtlHf-ew8BT46J0LkWSlklYMWRvTXlfGxTj8f_hGk8DCjxYTFV0FYgMSdkIchWPU2n2hN7odES9Y79DF2NjAD-N8AdXIh5Jqwuyr3gqbeQ6gQO9lHGathfnZ8t7xnUX7qARnkKnypxwL4TgPHwGE30jrZpU1GLNKHnIrF5FFm7Q1ZpHlQVl4KPpTMjINcfIXSwtWpEM4tMy34N59zfkcEZQrDOxVXaSd1q8rnaMb9573149iRc69wJQw' },
-    { name: 'Lena Volkova', role: 'Visual Systems Designer', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCuSaxmsWaDeDfuFTFA6AOZfuiXWOiOZdbCDtc0TRm4vIvUnDcFYgxg-3GiykXQ6piGpupz92uli7GK-c88t_Bj236Eo0Jt4a3znXGpG2Abdywt_o3WxZdqHHQPHQcAQhhSSicLVV4oImwIvwoZMKi-0fUx9CbJsM4L2uLsI-eJ-r83k0tRbZ6kFQrc-HDWjTEkPsQUEG_jFBZK2FMzgroFpsZNaPaj4lKpHFBNQUodcY_ojab8pK4UaOyEVjPt82HwOmam6WsYV6E' }
-  ]
+  const { data: announcementsRes } = useQuery({
+    queryKey: ['notifications', token],
+    queryFn: () => getNotifications(token)
+  })
+  
+  const { data: mentorsRes } = useQuery({
+    queryKey: ['mentors', token],
+    queryFn: () => getRecommendedMentors(token)
+  })
+  
+  const { data: milestonesRes } = useQuery({
+    queryKey: ['milestones', token],
+    queryFn: () => getProgressTimeline(token)
+  })
+  
+  const { data: overviewRes } = useQuery({
+    queryKey: ['overview', token],
+    queryFn: () => getProgressOverview(token)
+  })
 
-  const milestones = [
-    { date: 'MAY 24', days: '2 DAYS', title: 'Project Workshop', desc: 'Present your initial wireframes for peer review.' },
-    { date: 'MAY 28', days: '6 DAYS', title: 'Portfolio Review', desc: 'One-on-one session with Senior Mentor Sarah.' },
-    { date: 'JUN 02', days: '11 DAYS', title: 'Final Design Submission', desc: 'Complete the high-fidelity prototype phase.' },
-    { date: 'JUN 05', days: '14 DAYS', title: 'Career Placement Prep', desc: 'Module 12 unlocked: Resume & Pitching.' }
-  ]
+  const announcements = announcementsRes?.data || []
+  const mentors = mentorsRes?.data || []
+  const milestones = milestonesRes?.data || []
+  const overview = overviewRes?.data || null
 
   return (
     <div className="flex bg-[#F7F9FB] min-h-screen font-body">
@@ -98,7 +111,7 @@ export default function LearnerDashboard() {
              Welcome, {displayNameUpper}
            </h1>
            <p className="text-[#434653] text-lg font-medium leading-relaxed max-w-2xl">
-              You've completed <span className="text-[#00419E] font-black">4.5 hours</span> of learning this week. Keep up the momentum!
+              You've completed <span className="text-[#00419E] font-black">{overview?.hoursCompleted || 0} hours</span> of learning this week. Keep up the momentum!
            </p>
         </div>
 
@@ -111,8 +124,8 @@ export default function LearnerDashboard() {
                  <div className="inline-block px-4 py-1.5 bg-[#D3E4FE] text-[#00419E] text-xs font-black uppercase tracking-[0.1em] rounded-lg">
                     Mastery Summary
                  </div>
-                 <h2 className="text-3xl font-black text-[#191C1E] font-headline">You are in the Top 5% of learners this month.</h2>
-                 <p className="text-[#434653] font-medium leading-relaxed">Your consistency in "Modern UI Design Principles" is architecting a strong professional foundation.</p>
+                 <h2 className="text-3xl font-black text-[#191C1E] font-headline">You are in the Top {overview?.percentile || 5}% of learners this month.</h2>
+                 <p className="text-[#434653] font-medium leading-relaxed">Your consistency in "{overview?.activeCourse || 'Modern UI Design Principles'}" is architecting a strong professional foundation.</p>
               </div>
               <div className="shrink-0 relative w-40 h-40 flex items-center justify-center">
                  <svg className="w-full h-full" viewBox="0 0 100 100">
@@ -120,7 +133,7 @@ export default function LearnerDashboard() {
                     <circle cx="50" cy="50" r="45" fill="none" stroke="#00327D" strokeWidth="10" strokeDasharray="212" strokeDashoffset="42" strokeLinecap="round" className="rotate-[-90deg] origin-center" />
                  </svg>
                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-2xl font-black text-[#00327D]">85%</span>
+                    <span className="text-2xl font-black text-[#00327D]">{overview?.focus || 0}%</span>
                     <span className="text-[10px] font-bold text-[#434653] uppercase">Focus</span>
                  </div>
               </div>
@@ -133,29 +146,41 @@ export default function LearnerDashboard() {
                   Announcements
                </h3>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {announcements.map((ann, i) => (
-                    <div key={i} className="bg-white p-6 rounded-3xl shadow-ambient hover:shadow-xl transition-all cursor-pointer group flex gap-4 items-start">
-                       <div className="w-12 h-12 bg-[#F2F4F6] rounded-xl flex items-center justify-center text-[#00327D] group-hover:bg-[#00327D] group-hover:text-white transition-colors">
-                          <span className="material-symbols-outlined">{ann.icon}</span>
-                       </div>
-                       <div>
-                          <p className="font-bold text-[#191C1E] mb-1">{ann.title}</p>
-                          <p className="text-xs text-[#74777F] font-medium leading-relaxed">{ann.desc}</p>
-                       </div>
+                  {announcements.length > 0 ? (
+                    announcements.slice(0, 4).map((ann, i) => (
+                      <div key={i} className="bg-white p-6 rounded-3xl shadow-ambient hover:shadow-xl transition-all cursor-pointer group flex gap-4 items-start">
+                         <div className="w-12 h-12 bg-[#F2F4F6] rounded-xl flex items-center justify-center text-[#00327D] group-hover:bg-[#00327D] group-hover:text-white transition-colors shrink-0">
+                            <span className="material-symbols-outlined">{ann.icon || 'notifications'}</span>
+                         </div>
+                         <div>
+                            <p className="font-bold text-[#191C1E] mb-1">{ann.title}</p>
+                            <p className="text-xs text-[#74777F] font-medium leading-relaxed">{ann.desc}</p>
+                         </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="col-span-full p-6 text-center text-[#74777F] bg-white rounded-3xl shadow-sm">
+                      No new announcements.
                     </div>
-                  ))}
+                  )}
                </div>
             </div>
 
             {/* Current Course Focus */}
             <div className="space-y-6">
                <h3 className="text-sm font-black text-[#74777F] uppercase tracking-[0.2em]">Current Engagement</h3>
-               <div className="bg-[#00327D] rounded-[32px] md:rounded-[40px] p-6 sm:p-8 md:p-12 text-white relative overflow-hidden min-h-[320px] md:min-h-[400px] flex flex-col justify-end group shadow-2xl">
-                  <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB06ZF4rJWSKN23zp2wWsqwcW2AAK2QkSoDP8VJd3XcOmygrHupDSMRzlmq1pV7oIZmyGUWmoHieax_B0EhzWAKlA3mVAirTYUI7btKWWdLkEFw7NS5SmkEjHY-urpnaWWOzby9uwXtVCfd0xjLeIluwlQol8d9sOChqyuzLcu8hwIJZKuYVi7WMjsB_7DuwjZ7MBOWgf9H2W7DOYgCqdKZeTdDRVZqyp5Ox8q3TvJ3ndRGc5lXidkY5yfCJZDARcfbOl7kxPydQ1M" alt="Course" className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:scale-105 transition-transform duration-1000" />
+               <div className="bg-[#00327D] rounded-[40px] p-12 text-white relative overflow-hidden min-h-[400px] flex flex-col justify-end group shadow-2xl">
+                  <FallbackImage 
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuB06ZF4rJWSKN23zp2wWsqwcW2AAK2QkSoDP8VJd3XcOmygrHupDSMRzlmq1pV7oIZmyGUWmoHieax_B0EhzWAKlA3mVAirTYUI7btKWWdLkEFw7NS5SmkEjHY-urpnaWWOzby9uwXtVCfd0xjLeIluwlQol8d9sOChqyuzLcu8hwIJZKuYVi7WMjsB_7DuwjZ7MBOWgf9H2W7DOYgCqdKZeTdDRVZqyp5Ox8q3TvJ3ndRGc5lXidkY5yfCJZDARcfbOl7kxPydQ1M" 
+                    alt="Course" 
+                    seedName={overview?.activeCourse}
+                    fallbackType="course"
+                    className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:scale-105 transition-transform duration-1000" 
+                  />
                   <div className="absolute inset-0 bg-linear-to-t from-[#00327D] via-[#00327D]/20 to-transparent"></div>
                   <div className="relative z-10">
                      <p className="text-xs font-black uppercase tracking-[0.2em] text-[#D3E4FE] mb-4">Intermediate Flow</p>
-                     <h2 className="text-3xl md:text-4xl font-black font-headline mb-6 max-w-md leading-tight">Modern UI Design Principles</h2>
+                     <h2 className="text-4xl font-black font-headline mb-6 max-w-md leading-tight">{overview?.activeCourse || 'Modern UI Design Principles'}</h2>
                      <button className="px-8 py-4 bg-white text-[#00327D] font-black rounded-xl hover:bg-[#D3E4FE] transition-all flex items-center gap-2 w-fit">
                         Continue Learning
                         <span className="material-symbols-outlined">play_arrow</span>
@@ -170,16 +195,31 @@ export default function LearnerDashboard() {
                   <h3 className="text-sm font-black text-[#74777F] uppercase tracking-[0.2em]">Recommended Mentors</h3>
                   <button className="text-xs font-black text-[#00419E] hover:underline uppercase tracking-widest">View All</button>
                </div>
-               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {mentors.map((mentor, i) => (
-                    <div key={i} className="bg-white p-6 rounded-3xl shadow-ambient hover:translate-y-[-4px] transition-all cursor-pointer flex flex-col items-center text-center">
-                       <div className="w-16 h-16 rounded-2xl overflow-hidden mb-4 border-2 border-[#D3E4FE]">
-                          <img src={mentor.img} alt={mentor.name} className="w-full h-full object-cover" />
-                       </div>
-                       <p className="font-bold text-[#191C1E]">{mentor.name}</p>
-                       <p className="text-[10px] text-[#74777F] font-bold uppercase tracking-wider mt-1">{mentor.role}</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {mentors.length > 0 ? (
+                    mentors.map((mentor: any, i: number) => (
+                      <div key={i} className="bg-white p-6 rounded-3xl shadow-ambient hover:translate-y-[-4px] transition-all cursor-pointer flex flex-col items-center text-center">
+                         <div className="w-16 h-16 rounded-2xl overflow-hidden mb-4 border-2 border-[#D3E4FE] bg-[#F2F4F6] flex items-center justify-center">
+                            {(mentor?.thumbnailUrl || mentor?.img) ? (
+                              <FallbackImage 
+                                src={(mentor?.thumbnailUrl || mentor?.img)} 
+                                alt={mentor?.name || 'Mentor'} 
+                                fallbackType="avatar"
+                                className="w-full h-full object-cover" 
+                              />
+                            ) : (
+                              <span className="text-[#00327D] font-bold">{(mentor?.name || '?')[0].toUpperCase()}</span>
+                            )}
+                         </div>
+                         <p className="font-bold text-[#191C1E]">{mentor?.name}</p>
+                         <p className="text-[10px] text-[#74777F] font-bold uppercase tracking-wider mt-1">{mentor?.role}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="col-span-full p-6 text-center text-[#74777F] bg-white rounded-3xl shadow-sm">
+                      No mentors recommended at this time.
                     </div>
-                  ))}
+                  )}
                </div>
             </div>
           </div>
@@ -199,21 +239,27 @@ export default function LearnerDashboard() {
                   {/* Vertical Line */}
                   <div className="absolute left-[19px] top-2 bottom-2 w-0.5 bg-[#C3C6D5]/30"></div>
                   
-                  {milestones.map((m, i) => (
-                    <div key={i} className="relative pl-10">
-                       {/* Circle node */}
-                       <div className={`absolute left-0 top-1.5 w-10 h-10 rounded-xl bg-white border-2 flex items-center justify-center transition-all ${i === 0 ? 'border-[#00327D] text-[#00327D]' : 'border-[#C3C6D5]/50 text-[#C3C6D5]'}`}>
-                          <div className={`w-2 h-2 rounded-full ${i === 0 ? 'bg-[#00327D]' : 'bg-[#C3C6D5]'}`}></div>
-                       </div>
-                       <div>
-                          <p className={`text-[10px] font-black uppercase tracking-[0.2em] mb-1 ${i === 0 ? 'text-[#00419E]' : 'text-[#74777F]'}`}>
-                             {m.date} <span className="text-[#C3C6D5] mx-1">•</span> {m.days}
-                          </p>
-                          <h4 className="font-bold text-[#191C1E] mb-1">{m.title}</h4>
-                          <p className="text-xs text-[#74777F] leading-relaxed font-medium">{m.desc}</p>
-                       </div>
+                  {milestones.length > 0 ? (
+                    milestones.map((m, i) => (
+                      <div key={i} className="relative pl-10">
+                         {/* Circle node */}
+                         <div className={`absolute left-0 top-1.5 w-10 h-10 rounded-xl bg-white border-2 flex items-center justify-center transition-all ${i === 0 ? 'border-[#00327D] text-[#00327D]' : 'border-[#C3C6D5]/50 text-[#C3C6D5]'}`}>
+                            <div className={`w-2 h-2 rounded-full ${i === 0 ? 'bg-[#00327D]' : 'bg-[#C3C6D5]'}`}></div>
+                         </div>
+                         <div>
+                            <p className={`text-[10px] font-black uppercase tracking-[0.2em] mb-1 ${i === 0 ? 'text-[#00419E]' : 'text-[#74777F]'}`}>
+                               {m.date} <span className="text-[#C3C6D5] mx-1">•</span> {m.days}
+                            </p>
+                            <h4 className="font-bold text-[#191C1E] mb-1">{m.title}</h4>
+                            <p className="text-xs text-[#74777F] leading-relaxed font-medium">{m.desc}</p>
+                         </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-4 text-[#74777F] text-center border-2 border-dashed border-[#C3C6D5] rounded-2xl">
+                      No milestones tracked.
                     </div>
-                  ))}
+                  )}
                </div>
             </div>
 

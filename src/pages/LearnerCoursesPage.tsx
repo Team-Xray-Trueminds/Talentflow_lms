@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import BottomNav from '../components/layout/BottomNav'
 import { useAuth } from '../components/auth/AuthProvider'
+import { getCourses } from '../lib/learnerApi'
+import { useQuery } from '@tanstack/react-query'
 
 export default function LearnerCoursesPage() {
   const { user } = useAuth()
@@ -20,14 +22,14 @@ export default function LearnerCoursesPage() {
     { title: 'System Design', icon: 'hub', count: '7 Courses' }
   ]
 
-  const courses = [
-    { title: 'Modern UI Design Principles', category: 'UI Architecture', level: 'Intermediate', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCk5utjN07mkZOhvtLZIyLzTlvKn2L4iPZCxU2HE03HITuSyf687NvYeKy1N3BB3ni_PXK6x68sbgc75rNQ2L2yaSJm-G8klfuPjgpLJwHX36NoMakdz6P_Z2afHIAebaZV13Q7a3n9L2hbMhTqfjyw74ubS7f51FH_QDX66YnHaXq9NSQwc_7KrIjpQkDJ-Yp3aaAhNu-vnGsNf7SIO4uN_S4bTdHe0MSfe9aqNGnaSUESsnPKSC5Ebl9BWs9kMIL9tpe4Ug-K6OI' },
-    { title: 'Advanced React for Architects', category: 'Frontend Engineering', level: 'Advanced', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB06ZF4rJWSKN23zp2wWsqwcW2AAK2QkSoDP8VJd3XcOmygrHupDSMRzlmq1pV7oIZmyGUWmoHieax_B0EhzWAKlA3mVAirTYUI7btKWWdLkEFw7NS5SmkEjHY-urpnaWWOzby9uwXtVCfd0xjLeIluwlQol8d9sOChqyuzLcu8hwIJZKuYVi7WMjsB_7DuwjZ7MBOWgf9H2W7DOYgCqdKZeTdDRVZqyp5Ox8q3TvJ3ndRGc5lXidkY5yfCJZDARcfbOl7kxPydQ1M' },
-    { title: 'Sustainable Urban Frameworks', category: 'System Design', level: 'Advanced', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCVxrI9I5n58GFjq4GFTGavFlXmZe1bnwXPHtwHXeUg1aK1lVc7QKPvWr4O3EaYIjo56Qyp-AehpphzpbwI3peCA6mH3SMiUQnPK5y_zNT1ZmR_FblJnP7oSIdV4oTn4k_dpA6R5o9EVH256JTlGMsvpDvLW7E2Kt-iJ4839-mW_cxwIDVedGKFpDZyRrVl92Y3swdRuk9oj5AeAYnCk74RmRPjXJAt7mbdlVteunFv_yurekYAEQqpvZMJ4eMQZz3sBVC1ru3TwM0' },
-    { title: 'Visualizing Large Data Sets', category: 'Visual Logic', level: 'Master', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBOob43RVwc0CW12KB2DOBUtlHf-ew8BT46J0LkWSlklYMWRvTXlfGxTj8f_hGk8DCjxYTFV0FYgMSdkIchWPU2n2hN7odES9Y79DF2NjAD-N8AdXIh5Jqwuyr3gqbeQ6gQO9lHGathfnZ8t7xnUX7qARnkKnypxwL4TgPHwGE30jrZpU1GLNKHnIrF5FFm7Q1ZpHlQVl4KPpTMjINcfIXSwtWpEM4tMy34N59zfkcEZQrDOxVXaSd1q8rnaMb9573149iRc69wJQw' },
-    { title: 'The Psychology of Space', category: 'UI Architecture', level: 'Foundational', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCuSaxmsWaDeDfuFTFA6AOZfuiXWOiOZdbCDtc0TRm4vIvUnDcFYgxg-3GiykXQ6piGpupz92uli7GK-c88t_Bj236Eo0Jt4a3znXGpG2Abdywt_o3WxZdqHHQPHQcAQhhSSicLVV4oImwIvwoZMKi-0fUx9CbJsM4L2uLsI-eJ-r83k0tRbZ6kFQrc-HDWjTEkPsQUEG_jFBZK2FMzgroFpsZNaPaj4lKpHFBNQUodcY_ojab8pK4UaOyEVjPt82HwOmam6WsYV6E' },
-    { title: 'TypeScript for Design Systems', category: 'Frontend Engineering', level: 'Advanced', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCuSaxmsWaDeDfuFTFA6AOZfuiXWOiOZdbCDtc0TRm4vIvUnDcFYgxg-3GiykXQ6piGpupz92uli7GK-c88t_Bj236Eo0Jt4a3znXGpG2Abdywt_o3WxZdqHHQPHQcAQhhSSicLVV4oImwIvwoZMKi-0fUx9CbJsM4L2uLsI-eJ-r83k0tRbZ6kFQrc-HDWjTEkPsQUEG_jFBZK2FMzgroFpsZNaPaj4lKpHFBNQUodcY_ojab8pK4UaOyEVjPt82HwOmam6WsYV6E' }
-  ]
+  const token = localStorage.getItem('authToken') || undefined
+  
+  const { data: coursesRes, isLoading: loading } = useQuery({
+    queryKey: ['courses', token],
+    queryFn: () => getCourses(token)
+  })
+
+  const courses = coursesRes?.data || []
 
   const filteredCourses = courses.filter(c => {
     const matchesTrack = selectedTrack ? c.category === selectedTrack : true
@@ -144,12 +146,17 @@ export default function LearnerCoursesPage() {
           {/* Main Grid Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
             {/* Courses Column */}
-            <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 min-h-[600px]">
-              {filteredCourses.length > 0 ? (
+            <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-10 min-h-[600px]">
+              {loading ? (
+                <div className="col-span-full flex flex-col items-center justify-center p-20 animate-fade-in-up">
+                  <div className="w-12 h-12 border-4 border-t-[#00327D] border-[#C3C6D5]/20 rounded-full animate-spin mb-4"></div>
+                  <p className="text-[#434653] font-bold">Syncing paths...</p>
+                </div>
+              ) : filteredCourses.length > 0 ? (
                 filteredCourses.map((course, i) => (
-                  <div key={i} className="bg-white rounded-[28px] md:rounded-[40px] p-4 shadow-ambient hover:shadow-xl transition-all group animate-fade-in-up h-fit" style={{ animationDelay: `${i * 0.1}s` }}>
-                    <div className="aspect-video rounded-[24px] md:rounded-[32px] overflow-hidden mb-6 md:mb-8 relative">
-                      <img src={course.img} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <div key={i} className="bg-white rounded-[40px] p-4 shadow-ambient hover:shadow-xl transition-all group animate-fade-in-up h-fit" style={{ animationDelay: `${i * 0.1}s` }}>
+                    <div className="aspect-video rounded-[32px] overflow-hidden mb-8 relative">
+                      <img src={(course.thumbnailUrl || course.img)} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                       <div className="absolute top-5 left-5">
                         <span className="px-4 py-1.5 bg-white/90 backdrop-blur-md rounded-xl text-[10px] font-black uppercase tracking-widest text-[#00327D]">
                           {course.category}
@@ -168,7 +175,7 @@ export default function LearnerCoursesPage() {
                           ))}
                         </div>
                         <Link 
-                          to={`/learner/course-preview/${i + 1}`}
+                          to={`/learner/course-preview/${course.id || i + 1}`}
                           className="flex items-center gap-2 text-sm font-black text-[#00327D] group no-underline"
                         >
                           Explore Course

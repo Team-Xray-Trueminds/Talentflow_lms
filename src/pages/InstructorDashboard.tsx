@@ -1,17 +1,55 @@
+import { useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import { Link } from 'react-router-dom'
+import { getTutorOverview, scheduleOfficeHour } from '../lib/tutorApi'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 export default function InstructorDashboard() {
-  const stats = [
-    { label: 'Total Revenue', value: '$12,840.00', icon: 'payments', trend: '+14%', color: '#005049' },
-    { label: 'Total Students', value: '842', icon: 'group', trend: '+42', color: '#00327D' },
-    { label: 'Course Rating', value: '4.9', icon: 'star', subtext: 'Across 12 courses', color: '#F2C94C' }
-  ]
+  const token = localStorage.getItem('authToken') || ''
+  const queryClient = useQueryClient()
+  
+  const [isOfficeHourModalOpen, setIsOfficeHourModalOpen] = useState(false)
+  const [officeHourForm, setOfficeHourForm] = useState({
+    title: 'Office Hours',
+    startsAt: '',
+    durationMinutes: 60,
+    meetingUrl: '',
+    courseId: ''
+  })
 
-  const activities = [
-    { user: 'Elena Vance', action: 'submitted Final Portfolio', time: '12 minutes ago', course: 'Advanced UI Systems', icon: 'description', attachment: 'portfolio_v2.pdf', status: 'Pending Review' },
-    { user: 'Marcus Thorne', action: 'commented', time: '45 minutes ago', course: 'Module 4: Grids', comment: '"The section on asymmetrical balance really clicked for me!"', icon: 'chat_bubble' },
-    { user: 'Sarah Chen', action: 'completed', time: '2 hours ago', course: 'Visual Design Principles', icon: 'workspace_premium', status: 'Certificate Issued' }
+  const { data: overviewRes } = useQuery({
+    queryKey: ['tutorOverview', token],
+    queryFn: () => getTutorOverview(token),
+    enabled: !!token
+  })
+
+  const scheduleMutation = useMutation({
+    mutationFn: (payload: any) => scheduleOfficeHour(token, payload),
+    onSuccess: () => {
+      setIsOfficeHourModalOpen(false)
+      alert('Office hour scheduled successfully!')
+      queryClient.invalidateQueries({ queryKey: ['tutorOverview'] })
+    },
+    onError: (error: any) => {
+      alert(`Failed to schedule: ${error.message}`)
+    }
+  })
+
+  const handleScheduleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    scheduleMutation.mutate(officeHourForm)
+  }
+
+  const stats = overviewRes?.data?.stats || null
+  const activities = overviewRes?.data?.activities || []
+  const activeCourses = overviewRes?.data?.activeCourses || []
+  const pendingReviews = overviewRes?.data?.pendingReviews || 0
+  const pendingCourseName = overviewRes?.data?.pendingCourseName || ''
+
+  const displayStats = [
+    { label: 'Total Revenue', value: stats?.totalRevenue || '$0.00', icon: 'payments', trend: stats?.revenueTrend, color: '#005049' },
+    { label: 'Total Students', value: stats?.totalStudents || 0, icon: 'group', trend: stats?.studentsTrend, color: '#00327D' },
+    { label: 'Course Rating', value: stats?.courseRating || 0, icon: 'star', subtext: stats?.ratingSubtext, color: '#F2C94C' }
   ]
 
   return (
@@ -57,8 +95,8 @@ export default function InstructorDashboard() {
           <div className="lg:col-span-8 space-y-10">
             {/* Stats Overview */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-               {stats.map((stat, i) => (
-                 <div key={i} className="bg-white p-6 sm:p-8 rounded-3xl shadow-ambient animate-scale-in">
+               {displayStats.map((stat, i) => (
+                 <div key={i} className="bg-white p-8 rounded-3xl shadow-ambient animate-scale-in">
                     <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#74777F] mb-2">{stat.label}</p>
                     <h3 className="text-3xl font-black text-[#191C1E] font-headline mb-1">{stat.value}</h3>
                     {stat.trend && (
@@ -74,32 +112,33 @@ export default function InstructorDashboard() {
                ))}
             </div>
 
-            {/* Action Required Callout */}
-            <div className="bg-[#FFDAD6] border-2 border-[#BA1A1A]/10 p-6 sm:p-8 rounded-[28px] md:rounded-[32px] flex flex-col md:flex-row gap-6 md:gap-8 items-center animate-scale-in animate-stagger-1 shadow-sm">
-               <div className="w-16 h-16 bg-[#BA1A1A] rounded-2xl flex items-center justify-center text-white shrink-0">
-                  <span className="material-symbols-outlined text-3xl">assignment_late</span>
-               </div>
-               <div className="grow">
-                  <h4 className="text-xl font-black text-[#410002] font-headline mb-1">14 Pending Reviews</h4>
-                  <p className="text-[#410002]/70 font-medium">Action required: Assignments from <span className="font-bold underline cursor-pointer">"Advanced UI Systems"</span> need feedback.</p>
-               </div>
-               <button className="px-8 py-4 bg-[#BA1A1A] text-white font-black rounded-xl hover:bg-[#93000A] transition-all whitespace-nowrap">
-                  Start Reviewing
-               </button>
-            </div>
+            {pendingReviews > 0 && (
+              <div className="bg-[#FFDAD6] border-2 border-[#BA1A1A]/10 p-8 rounded-[32px] flex flex-col md:flex-row gap-8 items-center animate-scale-in animate-stagger-1 shadow-sm">
+                 <div className="w-16 h-16 bg-[#BA1A1A] rounded-2xl flex items-center justify-center text-white shrink-0">
+                    <span className="material-symbols-outlined text-3xl">assignment_late</span>
+                 </div>
+                 <div className="grow">
+                    <h4 className="text-xl font-black text-[#410002] font-headline mb-1">{pendingReviews} Pending Reviews</h4>
+                    <p className="text-[#410002]/70 font-medium">Action required: Assignments from <span className="font-bold underline cursor-pointer">"{pendingCourseName}"</span> need feedback.</p>
+                 </div>
+                 <Link 
+                    to="/instructor/submissions-queue"
+                    className="px-8 py-4 bg-[#BA1A1A] text-white font-black rounded-xl hover:bg-[#93000A] transition-all whitespace-nowrap no-underline inline-block"
+                 >
+                    Start Reviewing
+                 </Link>
+              </div>
+            )}
 
             {/* Active Courses */}
             <div className="space-y-6">
                <h3 className="text-sm font-black text-[#74777F] uppercase tracking-[0.2em]">Active Courses</h3>
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                   {[
-                    { title: 'Advanced UI Systems', students: 420, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCk5utjN07mkZOhvtLZIyLzTlvKn2L4iPZCxU2HE03HITuSyf687NvYeKy1N3BB3ni_PXK6x68sbgc75rNQ2L2yaSJm-G8klfuPjgpLJwHX36NoMakdz6P_Z2afHIAebaZV13Q7a3n9L2hbMhTqfjyw74ubS7f51FH_QDX66YnHaXq9NSQwc_7KrIjpQkDJ-Yp3aaAhNu-vnGsNf7SIO4uN_S4bTdHe0MSfe9aqNGnaSUESsnPKSC5Ebl9BWs9kMIL9tpe4Ug-K6OI' },
-                    { title: 'Product Strategy 101', students: 382, img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB06ZF4rJWSKN23zp2wWsqwcW2AAK2QkSoDP8VJd3XcOmygrHupDSMRzlmq1pV7oIZmyGUWmoHieax_B0EhzWAKlA3mVAirTYUI7btKWWdLkEFw7NS5SmkEjHY-urpnaWWOzby9uwXtVCfd0xjLeIluwlQol8d9sOChqyuzLcu8hwIJZKuYVi7WMjsB_7DuwjZ7MBOWgf9H2W7DOYgCqdKZeTdDRVZqyp5Ox8q3TvJ3ndRGc5lXidkY5yfCJZDARcfbOl7kxPydQ1M' }
-                  ].map((course, i) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                   {activeCourses.length > 0 ? activeCourses.map((course, i) => (
                     <div key={i} className="bg-white p-6 rounded-[32px] shadow-ambient hover:shadow-xl transition-all group flex flex-col gap-6 relative overflow-hidden ring-1 ring-[#F2F4F6]">
                        <div className="flex items-center gap-6">
                           <div className="w-16 h-16 rounded-2xl overflow-hidden shrink-0 shadow-sm">
-                             <img src={course.img} alt="Course" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                             <img src={(course.thumbnailUrl || course.img)} alt="Course" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                           </div>
                           <div className="flex-1 min-w-0">
                              <p className="font-black text-[#191C1E] text-md mb-0.5 line-clamp-1 truncate">{course.title}</p>
@@ -130,7 +169,11 @@ export default function InstructorDashboard() {
                           </div>
                        </div>
                     </div>
-                  ))}
+                  )) : (
+                    <div className="col-span-full text-center py-6 text-[#74777F] border-2 border-dashed border-[#F2F4F6] rounded-3xl">
+                      No active courses managed.
+                    </div>
+                  )}
                </div>
             </div>
           </div>
@@ -143,7 +186,7 @@ export default function InstructorDashboard() {
                <div className="grid grid-cols-2 gap-4">
                   {[
                     { label: 'New Course', icon: 'add_circle', to: '/instructor/course-builder' },
-                    { label: 'Live Stream', icon: 'videocam' },
+                    { label: 'Office Hour', icon: 'videocam', onClick: () => setIsOfficeHourModalOpen(true) },
                     { label: 'Analytics', icon: 'monitoring' },
                     { label: 'Broadcast', icon: 'podcasts' }
                   ].map((btn, i) => (
@@ -153,7 +196,11 @@ export default function InstructorDashboard() {
                          <span className="text-[10px] font-bold uppercase tracking-widest">{btn.label}</span>
                       </Link>
                     ) : (
-                      <button key={i} className="flex flex-col items-center justify-center p-4 bg-white/10 rounded-2xl hover:bg-white/20 transition-all gap-2 border border-white/10">
+                      <button 
+                        key={i} 
+                        onClick={btn.onClick}
+                        className="flex flex-col items-center justify-center p-4 bg-white/10 rounded-2xl hover:bg-white/20 transition-all gap-2 border border-white/10"
+                      >
                          <span className="material-symbols-outlined">{btn.icon}</span>
                          <span className="text-[10px] font-bold uppercase tracking-widest">{btn.label}</span>
                       </button>
@@ -167,39 +214,45 @@ export default function InstructorDashboard() {
                <h3 className="text-xl font-black text-[#191C1E] font-headline mb-8">Learner Activity</h3>
                <div className="space-y-8 relative">
                   <div className="absolute left-[20px] top-4 bottom-4 w-0.5 bg-[#F2F4F6]"></div>
-                  {activities.map((act, i) => (
-                    <div key={i} className="relative pl-12">
-                       <div className="absolute left-0 top-0 w-10 h-10 rounded-xl bg-[#F2F4F6] flex items-center justify-center text-[#00327D]">
-                          <span className="material-symbols-outlined text-[20px]">{act.icon}</span>
-                       </div>
-                       <div>
-                          <p className="text-sm font-bold text-[#191C1E] leading-tight">
-                             <span className="text-[#00419E]">{act.user}</span> {act.action}
-                          </p>
-                          <p className="text-[10px] text-[#74777F] font-bold uppercase tracking-wider mt-1">
-                             {act.time} <span className="text-[#C3C6D5] mx-1">•</span> {act.course}
-                          </p>
-                          {act.attachment && (
-                            <div className="mt-3 flex items-center gap-2 p-3 bg-[#F2F4F6] rounded-xl text-xs font-bold text-[#00327D] border border-[#00327D]/5">
-                               <span className="material-symbols-outlined text-[16px]">description</span>
-                               {act.attachment}
-                            </div>
-                          )}
-                          {act.status && (
-                            <div className={`mt-2 inline-block px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
-                              act.status === 'Pending Review' ? 'bg-[#FFDAD6] text-[#BA1A1A]' : 'bg-[#57FAE9]/20 text-[#005049]'
-                            }`}>
-                               {act.status}
-                            </div>
-                          )}
-                          {act.comment && (
-                            <div className="mt-3 p-3 bg-[#F2F4F6] rounded-xl italic text-xs text-[#434653] font-medium leading-relaxed">
-                               {act.comment}
-                            </div>
-                          )}
-                       </div>
-                    </div>
-                  ))}
+                  {activities.length > 0 ? (
+                    activities.map((act, i) => (
+                      <div key={i} className="relative pl-12">
+                         <div className="absolute left-0 top-0 w-10 h-10 rounded-xl bg-[#F2F4F6] flex items-center justify-center text-[#00327D]">
+                            <span className="material-symbols-outlined text-[20px]">{act.icon}</span>
+                         </div>
+                         <div>
+                            <p className="text-sm font-bold text-[#191C1E] leading-tight">
+                               <span className="text-[#00419E]">{act.user}</span> {act.action}
+                            </p>
+                            <p className="text-[10px] text-[#74777F] font-bold uppercase tracking-wider mt-1">
+                               {act.time} <span className="text-[#C3C6D5] mx-1">•</span> {act.course}
+                            </p>
+                            {act.attachment && (
+                              <div className="mt-3 flex items-center gap-2 p-3 bg-[#F2F4F6] rounded-xl text-xs font-bold text-[#00327D] border border-[#00327D]/5">
+                                 <span className="material-symbols-outlined text-[16px]">description</span>
+                                 {act.attachment}
+                              </div>
+                            )}
+                            {act.status && (
+                              <div className={`mt-2 inline-block px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
+                                act.status === 'Pending Review' ? 'bg-[#FFDAD6] text-[#BA1A1A]' : 'bg-[#57FAE9]/20 text-[#005049]'
+                              }`}>
+                                 {act.status}
+                              </div>
+                            )}
+                            {act.comment && (
+                              <div className="mt-3 p-3 bg-[#F2F4F6] rounded-xl italic text-xs text-[#434653] font-medium leading-relaxed">
+                                 {act.comment}
+                              </div>
+                            )}
+                         </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-6 text-[#74777F]">
+                       No recent learner activity.
+                     </div>
+                  )}
                </div>
                <button className="w-full mt-10 py-4 text-[#00419E] font-black text-xs uppercase tracking-[0.2em] border-2 border-[#D3E4FE] rounded-2xl hover:bg-[#D3E4FE] transition-all">
                   View Full Audit Log
@@ -207,6 +260,73 @@ export default function InstructorDashboard() {
             </div>
           </div>
         </div>
+
+        {/* Office Hour Modal */}
+        {isOfficeHourModalOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center px-4 bg-[#191C1E]/60 backdrop-blur-sm animate-fade-in">
+            <div className="bg-white rounded-[40px] p-10 max-w-lg w-full shadow-2xl animate-scale-in">
+              <div className="flex justify-between items-center mb-8">
+                <h3 className="text-3xl font-black text-[#191C1E] font-headline tracking-tight">Schedule Session</h3>
+                <button onClick={() => setIsOfficeHourModalOpen(false)} className="text-[#74777F] hover:text-[#191C1E] transition-colors">
+                  <span className="material-symbols-outlined text-3xl">close</span>
+                </button>
+              </div>
+              
+              <form onSubmit={handleScheduleSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#74777F]">Session Title</label>
+                  <input 
+                    type="text" 
+                    value={officeHourForm.title}
+                    onChange={e => setOfficeHourForm({...officeHourForm, title: e.target.value})}
+                    placeholder="e.g. Portfolio Review Q&A"
+                    className="w-full px-6 py-4 rounded-2xl bg-[#F7F9FB] border-none text-sm font-bold ring-1 ring-[#E0E3E5] focus:ring-2 focus:ring-[#00327D]/30 outline-none" 
+                    required 
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#74777F]">Starts At</label>
+                    <input 
+                      type="datetime-local" 
+                      onChange={e => setOfficeHourForm({...officeHourForm, startsAt: e.target.value})}
+                      className="w-full px-6 py-4 rounded-2xl bg-[#F7F9FB] border-none text-xs font-bold ring-1 ring-[#E0E3E5] focus:ring-2 focus:ring-[#00327D]/30 outline-none" 
+                      required 
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#74777F]">Duration (Min)</label>
+                    <input 
+                      type="number" 
+                      value={officeHourForm.durationMinutes}
+                      onChange={e => setOfficeHourForm({...officeHourForm, durationMinutes: parseInt(e.target.value)})}
+                      className="w-full px-6 py-4 rounded-2xl bg-[#F7F9FB] border-none text-sm font-bold ring-1 ring-[#E0E3E5] focus:ring-2 focus:ring-[#00327D]/30 outline-none" 
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#74777F]">Meeting URL</label>
+                  <input 
+                    type="url" 
+                    placeholder="https://zoom.us/..."
+                    onChange={e => setOfficeHourForm({...officeHourForm, meetingUrl: e.target.value})}
+                    className="w-full px-6 py-4 rounded-2xl bg-[#F7F9FB] border-none text-sm font-bold ring-1 ring-[#E0E3E5] focus:ring-2 focus:ring-[#00327D]/30 outline-none" 
+                  />
+                </div>
+
+                <button 
+                  type="submit" 
+                  disabled={scheduleMutation.isPending}
+                  className="w-full py-5 bg-[#00327D] text-white rounded-2xl font-black text-xs uppercase tracking-[0.3em] shadow-xl shadow-[#00327D]/20 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50"
+                >
+                  {scheduleMutation.isPending ? 'Scheduling...' : 'Confirm Session'}
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   )

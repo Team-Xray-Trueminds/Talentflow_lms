@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Sidebar from "../components/Sidebar";
 import TopBar from "../components/layout/TopBar";
 import BottomNav from "../components/layout/BottomNav";
@@ -7,6 +6,8 @@ import { Link } from "react-router-dom";
 import UserGrowthChart from "../components/UserGrowthChart";
 import MentorshipFlow from "../components/MentorshipFlow";
 import AuditTrail from "../components/AuditTrail";
+import { getAdminDashboard } from '../lib/adminApi';
+import { useQuery } from '@tanstack/react-query';
 
 interface MetricConfig {
     icon: string;
@@ -19,62 +20,61 @@ interface MetricConfig {
     label: string;
 }
 
-interface Instructor {
-    id: string;
-    name: string;
-    email: string;
-    expertise: string;
-    status: 'active' | 'pending';
-}
 
-const metrics: MetricConfig[] = [
-    {
-        icon: 'person_add',
-        iconBgClass: 'bg-blue-50',
-        iconTextClass: 'text-primary',
-        borderClass: 'md:border-primary',
-        badgeText: '+12.5%',
-        badgeClass: 'text-teal-800 bg-teal-100',
-        value: '12,842',
-        label: 'Total Users',
-    },
-    {
-        icon: 'auto_stories',
-        iconBgClass: 'bg-slate-50',
-        iconTextClass: 'text-slate-700',
-        borderClass: 'md:border-blue-400',
-        badgeText: 'Stable',
-        badgeClass: 'text-slate-500 bg-slate-200',
-        value: '458',
-        label: 'Active Courses',
-    },
-    {
-        icon: 'assignment_late',
-        iconBgClass: 'bg-red-50',
-        iconTextClass: 'text-red-700',
-        borderClass: 'md:border-error',
-        badgeText: 'Action Required',
-        badgeClass: 'text-red-600 bg-red-100',
-        value: '32',
-        label: 'Pending Allocations',
-    },
-    {
-        icon: 'speed',
-        iconBgClass: 'bg-teal-50',
-        iconTextClass: 'text-teal-800',
-        borderClass: 'md:border-tertiary',
-        badgeText: '99.9% Uptime',
-        badgeClass: 'text-teal-800 bg-teal-300',
-        value: '14ms',
-        label: 'Avg. Latency',
-    },
-];
 
 const AdminDashboard = () => {
-    const [instructors] = useState<Instructor[]>([
-        { id: '1', name: 'Dr. Sarah Chen', email: 'sarah.chen@talentflow.edu', expertise: 'System Architecture', status: 'active' },
-        { id: '2', name: 'Prof. James Wilson', email: 'j.wilson@talentflow.edu', expertise: 'Data Engineering', status: 'active' }
-    ]);
+    const token = localStorage.getItem('authToken') || ''
+    
+    const { data: dashboardRes } = useQuery({
+        queryKey: ['adminDashboard', token],
+        queryFn: () => getAdminDashboard(token)
+    })
+
+    const metrics = dashboardRes?.data?.metrics || null
+    const instructors = dashboardRes?.data?.instructors || []
+
+    const displayMetrics: MetricConfig[] = [
+        {
+            icon: 'person_add',
+            iconBgClass: 'bg-blue-50',
+            iconTextClass: 'text-primary',
+            borderClass: 'md:border-primary',
+            badgeText: metrics?.usersTrend || '+0%',
+            badgeClass: 'text-teal-800 bg-teal-100',
+            value: metrics?.totalUsers || '0',
+            label: 'Total Users',
+        },
+        {
+            icon: 'auto_stories',
+            iconBgClass: 'bg-slate-50',
+            iconTextClass: 'text-slate-700',
+            borderClass: 'md:border-blue-400',
+            badgeText: 'Stable',
+            badgeClass: 'text-slate-500 bg-slate-200',
+            value: metrics?.activeCourses || '0',
+            label: 'Active Courses',
+        },
+        {
+            icon: 'assignment_late',
+            iconBgClass: 'bg-red-50',
+            iconTextClass: 'text-red-700',
+            borderClass: 'md:border-error',
+            badgeText: 'Action Required',
+            badgeClass: 'text-red-600 bg-red-100',
+            value: metrics?.pendingAllocations || '0',
+            label: 'Pending Allocations',
+        },
+        {
+            icon: 'speed',
+            iconBgClass: 'bg-teal-50',
+            iconTextClass: 'text-teal-800',
+            borderClass: 'md:border-tertiary',
+            badgeText: '99.9% Uptime',
+            badgeClass: 'text-teal-800 bg-teal-300',
+            value: metrics?.avgLatency || '0ms',
+            label: 'Avg. Latency',
+        },
+    ];
 
     return (
         <div className="bg-[#F8FAFC] min-h-screen text-on-surface">
@@ -116,7 +116,7 @@ const AdminDashboard = () => {
 
                     {/* Key Metric Grid */}
                     <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-                        {metrics.map((metric) => (
+                        {displayMetrics.map((metric) => (
                             <MetricCard key={metric.label} {...metric} />
                         ))}
                     </section>
@@ -165,7 +165,7 @@ const AdminDashboard = () => {
                                                     inst.status === 'active' ? 'bg-[#DCFCE7] text-[#166534]' : 'bg-[#FEE2E2] text-[#991B1B]'
                                                 }`}>
                                                     <div className={`w-1.5 h-1.5 rounded-full ${inst.status === 'active' ? 'bg-[#22C55E]' : 'bg-[#EF4444]'}`}></div>
-                                                    {inst.status.charAt(0).toUpperCase() + inst.status.slice(1)}
+                                                    {inst.status ? inst.status.charAt(0).toUpperCase() + inst.status.slice(1) : 'Unknown'}
                                                 </span>
                                             </td>
                                             <td className="px-8 py-6">
@@ -175,6 +175,11 @@ const AdminDashboard = () => {
                                             </td>
                                         </tr>
                                     ))}
+                                    {instructors.length === 0 && (
+                                        <tr>
+                                            <td colSpan={4} className="px-8 py-6 text-center text-[#64748B]">No instructors found</td>
+                                        </tr>
+                                    )}
                                 </tbody>
                             </table>
                         </div>

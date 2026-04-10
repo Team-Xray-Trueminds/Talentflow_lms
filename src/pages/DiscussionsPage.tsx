@@ -1,30 +1,14 @@
 import { useMemo, useState } from 'react'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useAuth } from '../components/auth/AuthProvider'
 import Sidebar from '../components/Sidebar'
 import BottomNav from '../components/layout/BottomNav'
-
-type ReplyItem = {
-  author: string
-  role: string
-  body: string
-  time: string
-  reaction: string
-}
-
-type ThreadItem = {
-  id: number
-  title: string
-  author: string
-  role: string
-  body: string
-  time: string
-  pinned?: boolean
-  notifyLabel: string
-  tag: string
-  participants: number
-  views: number
-  unresolved?: boolean
-  replies: ReplyItem[]
-}
+import { 
+  getDiscussionThreads, 
+  createDiscussionThread, 
+  getThreadReplies, 
+  addThreadReply 
+} from '../lib/discussionsApi'
 
 const discussionFlow = {
   title: 'Discussion Area',
@@ -33,134 +17,53 @@ const discussionFlow = {
   destination: 'Thread View',
 }
 
-const initialThreads: ThreadItem[] = [
-  {
-    id: 1,
-    title: 'How are you structuring final portfolio case studies?',
-    author: 'Alex Rivera',
-    role: 'Learner',
-    body:
-      'I am refining my final portfolio narrative and want to balance process, visuals, and impact. How are you sequencing problem, system decisions, and measurable results without making the case study feel too long?',
-    time: '12 min ago',
-    pinned: true,
-    notifyLabel: '8 participants notified',
-    tag: 'Portfolio',
-    participants: 8,
-    views: 126,
-    unresolved: true,
-    replies: [
-      {
-        author: 'Seyi Daniels',
-        role: 'Learner',
-        body: 'I open with one summary frame, then move into the key system constraints before showing the polished screens.',
-        time: '9 min ago',
-        reaction: 'Useful framing',
-      },
-      {
-        author: 'Mara Kent',
-        role: 'Mentor',
-        body: 'Try using a three-part structure: challenge, structural decisions, and outcome evidence. That usually keeps the story clear.',
-        time: '4 min ago',
-        reaction: 'Mentor pick',
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: 'Best way to prepare for mentor critique sessions',
-    author: 'Nina Cole',
-    role: 'Learner',
-    body:
-      'What do you bring into a critique so the session becomes more actionable? I want sharper feedback instead of very broad comments.',
-    time: '31 min ago',
-    notifyLabel: '5 participants notified',
-    tag: 'Critique',
-    participants: 5,
-    views: 84,
-    replies: [
-      {
-        author: 'Jesse Ward',
-        role: 'Learner',
-        body: 'I usually prepare two questions only: what is unclear, and what looks weakest in the hierarchy.',
-        time: '18 min ago',
-        reaction: 'Tactical tip',
-      },
-      {
-        author: 'Hawa Bello',
-        role: 'Learner',
-        body: 'I also attach one screenshot with annotations. That gives mentors something concrete to react to immediately.',
-        time: '7 min ago',
-        reaction: 'High signal',
-      },
-    ],
-  },
-  {
-    id: 3,
-    title: 'Frontend vs UI/UX learning order for faster progress',
-    author: 'Lena Yusuf',
-    role: 'Learner',
-    body:
-      'For people balancing design and implementation, which path created better momentum for you first: interface thinking or frontend fundamentals?',
-    time: '1 hr ago',
-    notifyLabel: '11 participants notified',
-    tag: 'Growth Path',
-    participants: 11,
-    views: 152,
-    replies: [
-      {
-        author: 'Ayo Mensah',
-        role: 'Mentor',
-        body: 'If your goal is product execution, pair them. Learn hierarchy and spacing while building real components at the same time.',
-        time: '46 min ago',
-        reaction: 'Mentor insight',
-      },
-      {
-        author: 'Rachel Stone',
-        role: 'Learner',
-        body: 'Frontend first helped me remove fear. Once I could build, the design lessons became easier to retain.',
-        time: '21 min ago',
-        reaction: 'Perspective',
-      },
-    ],
-  },
-  {
-    id: 4,
-    title: 'How are people documenting design system decisions for handoff?',
-    author: 'Mide Okafor',
-    role: 'Learner',
-    body:
-      'I want a lightweight handoff format that explains component intent, spacing rules, and edge cases without writing a giant spec.',
-    time: '2 hr ago',
-    notifyLabel: '6 participants notified',
-    tag: 'Design Systems',
-    participants: 6,
-    views: 67,
-    unresolved: true,
-    replies: [
-      {
-        author: 'Jordan Lake',
-        role: 'Learner',
-        body: 'I keep one page per component with intent, constraints, variants, and one anti-pattern example.',
-        time: '1 hr ago',
-        reaction: 'Clean workflow',
-      },
-      {
-        author: 'Tara Obi',
-        role: 'Mentor',
-        body: 'Short principle notes beat long specs. Teams usually need decision rationale more than decoration-level detail.',
-        time: '34 min ago',
-        reaction: 'Mentor pick',
-      },
-    ],
-  },
-]
-
 export default function DiscussionsPage() {
-  const [threads, setThreads] = useState(initialThreads)
-  const [activeThreadId, setActiveThreadId] = useState(initialThreads[0].id)
+  const { token } = useAuth()
+  const queryClient = useQueryClient()
+  
+  const [activeThreadId, setActiveThreadId] = useState<string | null>(null)
   const [questionText, setQuestionText] = useState('')
   const [replyText, setReplyText] = useState('')
   const [searchText, setSearchText] = useState('')
+
+  // 1. Fetch Threads
+  const { data: threadsData, isLoading: isLoadingThreads } = useQuery({
+    queryKey: ['discussionThreads'],
+    queryFn: () => getDiscussionThreads(token!),
+    enabled: !!token,
+  })
+
+  const threads = threadsData?.data || []
+
+  // 2. Fetch Replies for active thread
+  const { data: repliesData, isLoading: isLoadingReplies } = useQuery({
+    queryKey: ['discussionReplies', activeThreadId],
+    queryFn: () => getThreadReplies(activeThreadId!, token!),
+    enabled: !!token && !!activeThreadId,
+  })
+
+  const replies = repliesData?.data || []
+
+  // 3. Mutations
+  const createThreadMutation = useMutation({
+    mutationFn: (payload: { title: string, body: string }) => 
+      createDiscussionThread(token!, payload),
+    onSuccess: (newThread) => {
+      queryClient.invalidateQueries({ queryKey: ['discussionThreads'] })
+      setActiveThreadId(newThread.data.id)
+      setQuestionText('')
+    }
+  })
+
+  const addReplyMutation = useMutation({
+    mutationFn: (payload: { body: string }) => 
+      addThreadReply(activeThreadId!, token!, payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['discussionReplies', activeThreadId] })
+      queryClient.invalidateQueries({ queryKey: ['discussionThreads'] })
+      setReplyText('')
+    }
+  })
 
   const filteredThreads = useMemo(() => {
     const query = searchText.trim().toLowerCase()
@@ -169,69 +72,40 @@ export default function DiscussionsPage() {
     return threads.filter(
       (thread) =>
         thread.title.toLowerCase().includes(query) ||
-        thread.body.toLowerCase().includes(query) ||
-        thread.replies.some((reply) => reply.body.toLowerCase().includes(query)),
+        thread.body.toLowerCase().includes(query)
     )
   }, [searchText, threads])
 
-  const activeThread =
-    filteredThreads.find((thread) => thread.id === activeThreadId) ?? filteredThreads[0] ?? null
+  const activeThread = useMemo(() => {
+    if (!activeThreadId && filteredThreads.length > 0) {
+      // Set first thread as active if none selected
+      return filteredThreads[0]
+    }
+    return filteredThreads.find((thread) => thread.id === activeThreadId) || filteredThreads[0] || null
+  }, [activeThreadId, filteredThreads])
 
-  const totalReplies = threads.reduce((total, thread) => total + thread.replies.length, 0)
-  const totalParticipants = threads.reduce((total, thread) => total + thread.participants, 0)
-  const unresolvedCount = threads.filter((thread) => thread.unresolved).length
+  // Sync activeThreadId if it was null
+  if (activeThread && !activeThreadId) {
+    setActiveThreadId(activeThread.id)
+  }
+
+  const totalReplies = threads.reduce((total, thread) => total + (thread.replyCount || 0), 0)
+  const totalParticipants = threads.length * 2 // Mocking for now since participants count isn't in top level API
+  const unresolvedCount = threads.length // Mocking as all new threads for now
 
   const handlePostQuestion = () => {
     const value = questionText.trim()
     if (!value) return
-
     const title = value.length > 68 ? `${value.slice(0, 68)}...` : value
-    const newThread: ThreadItem = {
-      id: Date.now(),
-      title,
-      author: 'Alex Rivera',
-      role: 'Learner',
-      body: value,
-      time: 'Just now',
-      notifyLabel: 'Participants notified',
-      tag: 'New Thread',
-      participants: 1,
-      views: 1,
-      unresolved: true,
-      replies: [],
-    }
-
-    setThreads((current) => [newThread, ...current])
-    setActiveThreadId(newThread.id)
-    setQuestionText('')
+    createThreadMutation.mutate({ title, body: value })
   }
 
   const handleReply = () => {
     const value = replyText.trim()
-    if (!value || !activeThread) return
-
-    setThreads((current) =>
-      current.map((thread) =>
-        thread.id === activeThread.id
-          ? {
-              ...thread,
-              replies: [
-                ...thread.replies,
-                {
-                  author: 'Alex Rivera',
-                  role: 'Learner',
-                  body: value,
-                  time: 'Just now',
-                  reaction: 'New reply',
-                },
-              ],
-              notifyLabel: 'Participants notified',
-            }
-          : thread,
-      ),
-    )
-    setReplyText('')
+    if (!value || !activeThreadId) return
+    addReplyMutation.mutate({ body: value })
   }
+
 
   return (
     <div className="flex min-h-screen bg-[#F7F9FB] font-body text-[#191C1E]">
@@ -399,9 +273,19 @@ export default function DiscussionsPage() {
                 </label>
               </div>
 
-              <div className="mt-5 space-y-3">
+              <div className="mt-5 space-y-3 relative">
+                {isLoadingThreads && (
+                  <div className="absolute inset-0 bg-white/50 backdrop-blur-sm z-10 flex items-center justify-center rounded-[22px]">
+                    <div className="flex flex-col items-center gap-2">
+                      <span className="material-symbols-outlined animate-spin text-[#00327D]">progress_activity</span>
+                      <p className="text-xs font-bold text-[#00327D]">Updating Queue...</p>
+                    </div>
+                  </div>
+                )}
                 {filteredThreads.map((thread) => {
                   const isActive = activeThread?.id === thread.id
+                  const time = new Date(thread.createdAt).toLocaleDateString()
+                  const tag = 'Discussion' 
 
                   return (
                     <button
@@ -414,16 +298,10 @@ export default function DiscussionsPage() {
                       }`}
                     >
                       <div className="flex items-center gap-2 text-xs text-slate-500">
-                        {thread.pinned ? (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-[#DBE7FB] px-2.5 py-1 font-bold text-[#00327D]">
-                            <span className="material-symbols-outlined text-[14px]">keep</span>
-                            Pinned
-                          </span>
-                        ) : null}
                         <span className="rounded-full bg-[#EEF2F6] px-2.5 py-1 font-bold text-[#35566F]">
-                          {thread.tag}
+                          {tag}
                         </span>
-                        <span>{thread.time}</span>
+                        <span>{time}</span>
                       </div>
 
                       <h3 className="mt-3 text-base font-black tracking-tight text-[#191C1E]">
@@ -433,11 +311,9 @@ export default function DiscussionsPage() {
                         {thread.body}
                       </p>
                       <div className="mt-3 flex flex-wrap items-center gap-4 text-xs font-bold uppercase tracking-[0.16em] text-[#64748B]">
-                        <span>{thread.replies.length} replies</span>
-                        <span>{thread.participants} participants</span>
-                        <span>{thread.views} views</span>
-                        {thread.unresolved ? <span className="text-[#9A5B2A]">open topic</span> : null}
-                        <span>{thread.notifyLabel}</span>
+                        <span>{thread.replyCount || 0} replies</span>
+                        <span>{thread.authorName || '1'} participants</span>
+                        <span>Active Thread</span>
                       </div>
                     </button>
                   )
@@ -449,17 +325,11 @@ export default function DiscussionsPage() {
               {activeThread ? (
                 <>
                   <div className="flex flex-wrap items-center gap-3">
-                    {activeThread.pinned ? (
-                      <span className="inline-flex items-center gap-2 rounded-full bg-[#DBE7FB] px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-[#00327D]">
-                        <span className="material-symbols-outlined text-[16px]">keep</span>
-                        Pinned Thread
-                      </span>
-                    ) : null}
                     <span className="inline-flex items-center gap-2 rounded-full bg-[#EEF2F6] px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-[#35566F]">
-                      {activeThread.tag}
+                      Discussion
                     </span>
                     <span className="text-sm text-[#64748B]">
-                      Started by {activeThread.author} • {activeThread.role}
+                      Started by {activeThread.authorName} • {new Date(activeThread.createdAt).toLocaleDateString()}
                     </span>
                   </div>
 
@@ -471,19 +341,11 @@ export default function DiscussionsPage() {
                   <div className="mt-5 flex flex-wrap items-center gap-5 text-sm text-[#64748B]">
                     <span className="inline-flex items-center gap-2">
                       <span className="material-symbols-outlined text-[#35566F]">chat</span>
-                      {activeThread.replies.length} replies
-                    </span>
-                    <span className="inline-flex items-center gap-2">
-                      <span className="material-symbols-outlined text-[#35566F]">notifications_active</span>
-                      {activeThread.notifyLabel}
+                      {activeThread.replyCount || 0} replies
                     </span>
                     <span className="inline-flex items-center gap-2">
                       <span className="material-symbols-outlined text-[#35566F]">groups</span>
-                      {activeThread.participants} participants
-                    </span>
-                    <span className="inline-flex items-center gap-2">
-                      <span className="material-symbols-outlined text-[#35566F]">visibility</span>
-                      {activeThread.views} views
+                      Active Participants
                     </span>
                   </div>
 
@@ -497,21 +359,27 @@ export default function DiscussionsPage() {
                     </div>
 
                     <div className="mt-5 space-y-4">
-                      {activeThread.replies.map((reply, index) => (
-                        <article key={`${reply.author}-${index}`} className="rounded-[20px] bg-white p-4">
-                          <div className="flex items-center justify-between gap-3">
-                            <div>
-                              <p className="text-sm font-black text-[#191C1E]">{reply.author}</p>
-                              <p className="text-xs text-slate-500">{reply.role}</p>
+                      {isLoadingReplies ? (
+                        <div className="text-center py-8">Loading replies...</div>
+                      ) : replies.length === 0 ? (
+                        <div className="text-center py-8 text-slate-400">No replies yet. Start the conversation!</div>
+                      ) : (
+                        replies.map((reply) => (
+                          <article key={reply.id} className="rounded-[20px] bg-white p-4">
+                            <div className="flex items-center justify-between gap-3">
+                              <div>
+                                <p className="text-sm font-black text-[#191C1E]">{reply.authorName}</p>
+                                <p className="text-xs text-slate-500">Learner</p>
+                              </div>
+                              <span className="text-xs text-slate-400">{new Date(reply.createdAt).toLocaleTimeString()}</span>
                             </div>
-                            <span className="text-xs text-slate-400">{reply.time}</span>
-                          </div>
-                          <p className="mt-3 text-sm leading-7 text-[#434653]">{reply.body}</p>
-                          <div className="mt-3 inline-flex rounded-full bg-[#EEF2F6] px-3 py-1 text-[11px] font-bold text-[#35566F]">
-                            {reply.reaction}
-                          </div>
-                        </article>
-                      ))}
+                            <p className="mt-3 text-sm leading-7 text-[#434653]">{reply.body}</p>
+                            <div className="mt-3 inline-flex rounded-full bg-[#EEF2F6] px-3 py-1 text-[11px] font-bold text-[#35566F]">
+                              Response
+                            </div>
+                          </article>
+                        ))
+                      )}
                     </div>
                   </div>
 
@@ -521,7 +389,7 @@ export default function DiscussionsPage() {
                       <div className="rounded-[20px] bg-white p-4">
                         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#64748B]">Thread Status</p>
                         <p className="mt-2 text-sm font-bold text-[#191C1E]">
-                          {activeThread.unresolved ? 'Open for fresh answers' : 'Mostly resolved'}
+                          Open for fresh answers
                         </p>
                       </div>
                       <div className="rounded-[20px] bg-white p-4">
@@ -530,7 +398,7 @@ export default function DiscussionsPage() {
                       </div>
                       <div className="rounded-[20px] bg-white p-4">
                         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#64748B]">Momentum Signal</p>
-                        <p className="mt-2 text-sm font-bold text-[#191C1E]">{activeThread.notifyLabel}</p>
+                        <p className="mt-2 text-sm font-bold text-[#191C1E]">Active Discussion</p>
                       </div>
                     </div>
                   </aside>
