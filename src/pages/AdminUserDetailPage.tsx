@@ -4,12 +4,12 @@ import BottomNav from "../components/layout/BottomNav";
 
 const AdminUserDetailPage = () => {
     return (
-        <div className="bg-[#F8FAFC] min-h-screen text-on-surface">
+        <div className="bg-[#F8FAFC] h-screen overflow-hidden text-on-surface">
             {/* Side Navigation */}
             <Sidebar />
 
             {/* Main Workspace Content */}
-            <main className="pl-0 lg:pl-80 min-h-screen pb-24 md:pb-0">
+            <main className="pl-0 lg:pl-80 h-full overflow-y-auto pb-24 md:pb-0">
                 {/* Top Navigation */}
                 <TopBar />
 
