@@ -6,17 +6,10 @@ import SocialAuthButton from '../components/auth/SocialAuthButton'
 import { ApiError, API_BASE_URL } from '../lib/api'
 import { authStorage, register } from '../lib/auth'
 
-const TEAM_OPTIONS = [
-  { value: 'learner', label: 'Learner' },
-  { value: 'tutor', label: 'Instructor' },
-  { value: 'admin', label: 'Admin' },
-] as const
-
 export default function SignUpPage() {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    role: 'learner',
     password: '',
     confirmPassword: '',
     termsAgreed: false,
@@ -54,7 +47,6 @@ export default function SignUpPage() {
         email: formData.email,
         password: formData.password,
         confirmPassword: formData.confirmPassword,
-        role: formData.role,
       })
       authStorage.setPendingVerificationEmail(formData.email)
       navigate('/verify-email')
@@ -217,26 +209,6 @@ export default function SignUpPage() {
                   required
                 />
               </div>
-
-              <div className="animate-fade-in-up animate-stagger-2">
-                <label className="block text-sm font-semibold text-[#434653] mb-2">
-                  Select Role
-                </label>
-                <select
-                  className="w-full px-4 py-3 rounded-lg bg-[#E0E3E5] border-none focus:ring-2 focus:ring-[#2559BD] text-[#191C1E] transition-all outline-none"
-                  name="role"
-                  value={formData.role}
-                  onChange={handleChange}
-                  required
-                >
-                  {TEAM_OPTIONS.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
 
               <div>
                 <label className="block text-sm font-semibold text-on-surface-variant mb-2">
