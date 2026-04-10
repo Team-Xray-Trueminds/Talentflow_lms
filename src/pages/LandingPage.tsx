@@ -132,9 +132,9 @@ const LandingPage: React.FC = () => {
               TalentFlow provides the blueprints for professional evolution. We connect visionaries with curated expertise to build the next generation of global industry leaders.
             </p>
             <div className="flex flex-col sm:flex-row items-center gap-4 pt-4 animate-fade-in-up animate-stagger-3">
-              <button className="w-full sm:w-auto rounded-lg bg-[#002C70] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl active:scale-95 dark:bg-[linear-gradient(135deg,#6A8FDB,#7CE5DC)] dark:text-[#122032]">
+              <Link to="/signup" className="w-full sm:w-auto inline-flex items-center justify-center rounded-lg bg-[#002C70] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl active:scale-95 dark:bg-[linear-gradient(135deg,#6A8FDB,#7CE5DC)] dark:text-[#122032]">
                 Get Started
-              </button>
+              </Link>
               <button className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-lg px-8 py-4 font-bold text-[#002C70] transition-colors hover:bg-[#E6E8EA] dark:text-[#DCE8FF] dark:hover:bg-[#22374F]">
                 <span className="material-symbols-outlined">play_circle</span>
                 The TalentFlow Vision

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from './auth/AuthProvider'
 
@@ -55,6 +56,7 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
   const location = useLocation()
   const navigate = useNavigate()
   const { clearSession, user } = useAuth()
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
   const storedRole = user?.role === 'admin' ? 'Admin' : user?.role === 'tutor' ? 'Instructor' : 'Learner'
   // Use forceRole prop if provided, otherwise fallback to path detection, then finally localStorage
   const pathRole = location.pathname.startsWith('/admin') ? 'Admin' : (location.pathname.startsWith('/instructor') ? 'Instructor' : (location.pathname.startsWith('/learner') ? 'Learner' : null));
@@ -81,27 +83,70 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
       }
 
   const handleLogout = () => {
+    setIsMobileOpen(false)
     clearSession()
     navigate('/login', { replace: true })
   }
 
-  return (
-    <aside className={`hidden lg:flex w-80 h-screen sticky top-0 flex-col p-6 z-10 transition-colors duration-500 overflow-y-auto scrollbar-hide ${themeClasses.aside}`}>
-      <div className="mb-12 px-4 shrink-0">
+  useEffect(() => {
+    setIsMobileOpen(false)
+  }, [location.pathname])
+
+  useEffect(() => {
+    if (!isMobileOpen) return undefined
+
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      document.body.style.overflow = originalOverflow
+    }
+  }, [isMobileOpen])
+
+  const mobileButtonClasses = isInstructor
+    ? 'border-white/10 bg-[#0A214D] text-white shadow-[0_16px_32px_rgba(0,0,0,0.28)]'
+    : isAdmin
+      ? 'border-[#C3D4F6] bg-white text-[#00327D] shadow-[0_16px_32px_rgba(0,50,125,0.14)]'
+      : 'border-[#DDE6F7] bg-white text-[#00327D] shadow-[0_16px_32px_rgba(0,50,125,0.14)]'
+
+  const mobileDrawerClasses = isInstructor
+    ? 'border-white/10 bg-[#03152E] text-white'
+    : isAdmin
+      ? 'border-[#DCE5F5] bg-[#F8FAFC] text-[#191C1E]'
+      : 'border-[#DCE5F5] bg-[#F7F9FB] text-[#191C1E]'
+
+  const renderSidebarContent = (mobile = false) => (
+    <>
+      <div className={`mb-10 px-4 shrink-0 ${mobile ? 'pt-2' : ''}`}>
         <div className="flex items-center justify-between mb-1">
           <h2 className={`text-2xl font-black font-headline tracking-tighter ${isInstructor ? 'text-white' : 'text-[#00327D]'}`}>
             Talent Flow
           </h2>
-          <div className={`px-2 py-0.5 rounded-md text-[8px] font-black uppercase tracking-widest ${isAdmin ? 'bg-[#00327D] text-white' : (isInstructor ? 'bg-[#57FAE9] text-[#001946]' : 'bg-[#00327D] text-white')}`}>
-            {role === 'Admin' ? 'Director' : (role === 'Instructor' ? 'Studio' : 'Path')}
-          </div>
+          {mobile ? (
+            <button
+              type="button"
+              onClick={() => setIsMobileOpen(false)}
+              aria-label="Close navigation menu"
+              className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
+                isInstructor
+                  ? 'bg-white/8 text-white hover:bg-white/14'
+                  : 'bg-white text-[#5B6480] hover:bg-[#EEF3FF]'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[20px]">close</span>
+            </button>
+          ) : (
+            <div className={`px-2 py-0.5 rounded-md text-[8px] font-black uppercase tracking-widest ${isAdmin ? 'bg-[#00327D] text-white' : (isInstructor ? 'bg-[#57FAE9] text-[#001946]' : 'bg-[#00327D] text-white')}`}>
+              {role === 'Admin' ? 'Director' : (role === 'Instructor' ? 'Studio' : 'Path')}
+            </div>
+          )}
         </div>
         <p className={`text-[10px] font-black uppercase tracking-[0.2em] mt-1 ${isInstructor ? 'text-[#D3E4FE]/80' : 'text-[#434653]'}`}>
           {isAdmin ? 'Academic Governance Suite' : (isInstructor ? 'Professional Educator Suite' : 'Career Growth Platform')}
         </p>
       </div>
 
-      <nav className="grow">
+      <nav className="grow overflow-y-auto pr-1">
         {isAdmin ? (
           <>
             <SidebarGroup label="Governance Core">
@@ -320,7 +365,7 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
         <button
           type="button"
           onClick={handleLogout}
-          className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+          className={`flex w-full items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
             isInstructor 
               ? 'text-[#FF8A8A] hover:bg-white/5' 
               : 'text-[#BA1A1A] hover:bg-[#FFDAD6]'
@@ -330,6 +375,35 @@ export default function Sidebar({ forceRole }: { forceRole?: 'Instructor' | 'Lea
           <span className="text-sm font-bold tracking-tight">Logout</span>
         </button>
       </div>
-    </aside>
+    </>
+  )
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setIsMobileOpen(true)}
+        aria-label="Open navigation menu"
+        className={`fixed left-4 top-4 z-[60] flex h-12 w-12 items-center justify-center rounded-2xl border xl:hidden ${mobileButtonClasses}`}
+      >
+        <span className="material-symbols-outlined text-[24px]">menu</span>
+      </button>
+
+      <div className={`fixed inset-0 z-[70] xl:hidden transition-all duration-300 ${isMobileOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}>
+        <button
+          type="button"
+          onClick={() => setIsMobileOpen(false)}
+          aria-label="Close navigation overlay"
+          className={`absolute inset-0 bg-[#0F172A]/35 backdrop-blur-[2px] transition-opacity duration-300 ${isMobileOpen ? 'opacity-100' : 'opacity-0'}`}
+        />
+        <aside className={`absolute inset-y-0 left-0 flex w-[min(84vw,320px)] flex-col border-r px-5 py-6 shadow-[0_24px_64px_rgba(15,23,42,0.2)] transition-transform duration-300 ${mobileDrawerClasses} ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+          {renderSidebarContent(true)}
+        </aside>
+      </div>
+
+      <aside className={`hidden xl:flex w-72 2xl:w-80 h-screen sticky top-0 flex-col p-5 2xl:p-6 z-10 transition-colors duration-500 overflow-y-auto scrollbar-hide ${themeClasses.aside}`}>
+        {renderSidebarContent(false)}
+      </aside>
+    </>
   )
 }

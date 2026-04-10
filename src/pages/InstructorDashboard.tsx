@@ -17,15 +17,15 @@ export default function InstructorDashboard() {
   return (
     <div className="flex bg-[#F7F9FB] min-h-screen">
       <Sidebar />
-      <main className="grow p-10 max-w-[1600px] mx-auto w-full">
+      <main className="grow w-full max-w-[1600px] mx-auto px-4 py-6 sm:px-6 lg:px-8 xl:px-10 pb-28 lg:pb-10">
         {/* Top Nav */}
-        <div className="flex justify-between items-center mb-10">
-          <div className="flex items-center gap-4 text-sm font-bold text-[#434653]">
+        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-wrap items-center gap-4 text-sm font-bold text-[#434653]">
             <span className="text-[#00419E]">Talent Flow</span>
             <span className="text-[#C3C6D5]">/</span>
             <span>Studio</span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center justify-between gap-4 md:justify-end">
              <div className="text-right">
                 <p className="text-sm font-black text-[#191C1E]">Instructor Julian</p>
                 <p className="text-[10px] font-bold text-[#434653] uppercase tracking-wider">Senior Instructor</p>
@@ -38,8 +38,8 @@ export default function InstructorDashboard() {
 
         {/* Hero Welcome */}
         <div className="mb-12 animate-fade-in-up">
-           <div className="flex justify-between items-end mb-4">
-             <h1 className="text-4xl md:text-5xl font-extrabold text-[#191C1E] tracking-tight font-headline">
+           <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#191C1E] tracking-tight font-headline">
                Good morning, Instructor Julian
              </h1>
              <div className="text-right hidden md:block">
@@ -58,7 +58,7 @@ export default function InstructorDashboard() {
             {/* Stats Overview */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                {stats.map((stat, i) => (
-                 <div key={i} className="bg-white p-8 rounded-3xl shadow-ambient animate-scale-in">
+                 <div key={i} className="bg-white p-6 sm:p-8 rounded-3xl shadow-ambient animate-scale-in">
                     <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#74777F] mb-2">{stat.label}</p>
                     <h3 className="text-3xl font-black text-[#191C1E] font-headline mb-1">{stat.value}</h3>
                     {stat.trend && (
@@ -75,7 +75,7 @@ export default function InstructorDashboard() {
             </div>
 
             {/* Action Required Callout */}
-            <div className="bg-[#FFDAD6] border-2 border-[#BA1A1A]/10 p-8 rounded-[32px] flex flex-col md:flex-row gap-8 items-center animate-scale-in animate-stagger-1 shadow-sm">
+            <div className="bg-[#FFDAD6] border-2 border-[#BA1A1A]/10 p-6 sm:p-8 rounded-[28px] md:rounded-[32px] flex flex-col md:flex-row gap-6 md:gap-8 items-center animate-scale-in animate-stagger-1 shadow-sm">
                <div className="w-16 h-16 bg-[#BA1A1A] rounded-2xl flex items-center justify-center text-white shrink-0">
                   <span className="material-symbols-outlined text-3xl">assignment_late</span>
                </div>
@@ -138,7 +138,7 @@ export default function InstructorDashboard() {
           {/* Sidebar Stats/Activity (4 cols) */}
           <div className="lg:col-span-4 space-y-8">
             {/* Quick Actions */}
-            <div className="bg-[#00327D] rounded-[40px] p-8 text-white shadow-xl animate-scale-in animate-stagger-2">
+            <div className="bg-[#00327D] rounded-[32px] md:rounded-[40px] p-6 sm:p-8 text-white shadow-xl animate-scale-in animate-stagger-2">
                <h3 className="text-xl font-black font-headline mb-6">Quick Actions</h3>
                <div className="grid grid-cols-2 gap-4">
                   {[
@@ -163,7 +163,7 @@ export default function InstructorDashboard() {
             </div>
 
             {/* Learner Activity Feed */}
-            <div className="bg-white rounded-[40px] p-8 shadow-ambient animate-scale-in animate-stagger-3">
+            <div className="bg-white rounded-[32px] md:rounded-[40px] p-6 sm:p-8 shadow-ambient animate-scale-in animate-stagger-3">
                <h3 className="text-xl font-black text-[#191C1E] font-headline mb-8">Learner Activity</h3>
                <div className="space-y-8 relative">
                   <div className="absolute left-[20px] top-4 bottom-4 w-0.5 bg-[#F2F4F6]"></div>

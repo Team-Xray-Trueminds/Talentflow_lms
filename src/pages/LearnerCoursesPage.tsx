@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
+import BottomNav from '../components/layout/BottomNav'
 import { useAuth } from '../components/auth/AuthProvider'
 
 export default function LearnerCoursesPage() {
@@ -39,13 +40,13 @@ export default function LearnerCoursesPage() {
       <Sidebar />
       <main className="grow flex flex-col">
         {/* Top bar Profile Summary (Link 8 High-Fidelity) */}
-        <div className="px-10 py-8 flex justify-between items-center bg-[#F7F9FB]">
-           <div className="flex items-center gap-3">
+        <div className="px-4 py-6 sm:px-6 lg:px-8 xl:px-10 flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center bg-[#F7F9FB]">
+           <div className="flex flex-wrap items-center gap-3">
               <span className="text-xs font-black uppercase tracking-widest text-[#74777F]">Curator Portal</span>
               <span className="w-1 h-1 bg-[#C3C6D5] rounded-full"></span>
               <span className="text-xs font-bold text-[#434653]">Manage your growth</span>
            </div>
-           <div className="flex items-center gap-6">
+           <div className="flex items-center justify-between gap-4 sm:justify-end sm:gap-6">
               <Link to="/learner/notifications" className="relative group p-2 hover:bg-white rounded-xl transition-all">
                 <span className="material-symbols-outlined text-[#434653] group-hover:text-[#00419E]">notifications</span>
                 <span className="absolute top-2 right-2 w-2 h-2 bg-[#BA1A1A] rounded-full border-2 border-[#F7F9FB]"></span>
@@ -61,10 +62,10 @@ export default function LearnerCoursesPage() {
         </div>
 
         {/* Content Area */}
-        <div className="px-10 pb-20 max-w-[1600px] w-full mx-auto">
+        <div className="px-4 sm:px-6 lg:px-8 xl:px-10 pb-28 lg:pb-20 max-w-[1600px] w-full mx-auto">
           {/* Hero Section */}
           <div className="mb-16 animate-fade-in-up">
-            <h1 className="text-[3.5rem] font-black leading-[1.1] tracking-[-0.03em] font-headline mb-6 text-[#191C1E]">
+            <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-black leading-[1.1] tracking-[-0.03em] font-headline mb-6 text-[#191C1E]">
               Curated Wisdom for Modern Builders.
             </h1>
             <p className="text-lg font-medium text-[#434653] max-w-2xl leading-relaxed mb-10">
@@ -75,7 +76,7 @@ export default function LearnerCoursesPage() {
                <input 
                  type="text" 
                  placeholder="Search specific courses or methodologies..." 
-                 className="w-full pl-16 pr-6 py-6 bg-white rounded-[24px] shadow-ambient border-none outline-none focus:ring-2 focus:ring-[#00327D]/10 text-lg font-medium placeholder:text-[#C3C6D5] transition-all"
+                 className="w-full pl-14 sm:pl-16 pr-6 py-4 sm:py-5 lg:py-6 bg-white rounded-[20px] sm:rounded-[24px] shadow-ambient border-none outline-none focus:ring-2 focus:ring-[#00327D]/10 text-base sm:text-lg font-medium placeholder:text-[#C3C6D5] transition-all"
                  value={searchQuery}
                  onChange={(e) => setSearchQuery(e.target.value)}
                />
@@ -92,13 +93,13 @@ export default function LearnerCoursesPage() {
 
           {/* Choose Track Section */}
           <section className="mb-20 animate-fade-in-up animate-stagger-1">
-             <div className="flex justify-between items-end mb-8">
+             <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                <h2 className="text-xs font-black uppercase tracking-[0.3em] text-[#00327D]">Choose your track</h2>
                {selectedTrack && (
                  <button onClick={() => setSelectedTrack(null)} className="text-[10px] font-black uppercase text-[#BA1A1A] hover:underline">Clear Filter</button>
                )}
              </div>
-             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
                 {tracks.map((track, i) => (
                   <div 
                     key={i} 
@@ -122,7 +123,7 @@ export default function LearnerCoursesPage() {
           </section>
 
           {/* Stats Bar (Talent Flow Style: Shift in color, no lines) */}
-          <div className="bg-[#F2F4F6] rounded-[32px] p-8 mb-16 grid grid-cols-1 md:grid-cols-3 gap-12 animate-fade-in-up animate-stagger-1">
+          <div className="bg-[#F2F4F6] rounded-[28px] md:rounded-[32px] p-6 sm:p-8 mb-16 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 animate-fade-in-up animate-stagger-1">
             {[
               { label: 'Active Learners', value: '1,280', icon: 'groups' },
               { label: 'Average Completion', value: '84%', icon: 'task_alt' },
@@ -141,13 +142,13 @@ export default function LearnerCoursesPage() {
           </div>
 
           {/* Main Grid Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
             {/* Courses Column */}
-            <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-10 min-h-[600px]">
+            <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 min-h-[600px]">
               {filteredCourses.length > 0 ? (
                 filteredCourses.map((course, i) => (
-                  <div key={i} className="bg-white rounded-[40px] p-4 shadow-ambient hover:shadow-xl transition-all group animate-fade-in-up h-fit" style={{ animationDelay: `${i * 0.1}s` }}>
-                    <div className="aspect-video rounded-[32px] overflow-hidden mb-8 relative">
+                  <div key={i} className="bg-white rounded-[28px] md:rounded-[40px] p-4 shadow-ambient hover:shadow-xl transition-all group animate-fade-in-up h-fit" style={{ animationDelay: `${i * 0.1}s` }}>
+                    <div className="aspect-video rounded-[24px] md:rounded-[32px] overflow-hidden mb-6 md:mb-8 relative">
                       <img src={course.img} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                       <div className="absolute top-5 left-5">
                         <span className="px-4 py-1.5 bg-white/90 backdrop-blur-md rounded-xl text-[10px] font-black uppercase tracking-widest text-[#00327D]">
@@ -155,7 +156,7 @@ export default function LearnerCoursesPage() {
                         </span>
                       </div>
                     </div>
-                    <div className="px-6 pb-6">
+                    <div className="px-3 sm:px-6 pb-3 sm:pb-6">
                       <p className="text-[10px] font-black text-[#00419E] uppercase tracking-[0.25em] mb-4">{course.level}</p>
                       <h3 className="text-xl font-bold font-headline mb-8 leading-tight line-clamp-2 h-14">
                         {course.title}
@@ -188,7 +189,7 @@ export default function LearnerCoursesPage() {
 
             {/* Elite Sidebar Column */}
             <div className="lg:col-span-4">
-              <div className="sticky top-10 bg-linear-to-br from-[#00327D] to-[#2559BD] p-12 rounded-[48px] text-white shadow-2xl overflow-hidden group">
+              <div className="sticky top-6 lg:top-10 bg-linear-to-br from-[#00327D] to-[#2559BD] p-6 sm:p-8 lg:p-12 rounded-[32px] md:rounded-[48px] text-white shadow-2xl overflow-hidden group">
                 <div className="relative z-10 flex flex-col h-full min-h-[500px]">
                   <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-[20px] flex items-center justify-center mb-10">
                     <span className="material-symbols-outlined text-3xl">workspace_premium</span>
@@ -212,20 +213,7 @@ export default function LearnerCoursesPage() {
           </div>
         </div>
 
-        {/* Mobile Nav (Mobile version of Link 8) */}
-        <nav className="lg:hidden fixed bottom-6 left-6 right-6 bg-white/90 backdrop-blur-2xl border border-[#C3C6D5]/15 h-20 rounded-[24px] shadow-2xl flex items-center justify-around px-4 z-50">
-          {[
-            { icon: 'dashboard', label: 'Overview', to: '/learner/dashboard' },
-            { icon: 'school', label: 'Catalog', to: '/learner/courses', active: true },
-            { icon: 'menu_book', label: 'Learning', to: '/learner/my-learning' },
-            { icon: 'person', label: 'Profile', to: '/settings/profile-setup' }
-          ].map((nav, i) => (
-            <Link key={i} to={nav.to} className={`flex flex-col items-center gap-1.5 transition-all ${nav.active ? 'text-[#00327D]' : 'text-[#737784]'}`}>
-              <span className={`material-symbols-outlined text-[26px] ${nav.active ? 'fill-1' : ''}`}>{nav.icon}</span>
-              <span className="text-[10px] font-black tracking-tight uppercase">{nav.label}</span>
-            </Link>
-          ))}
-        </nav>
+        <BottomNav />
       </main>
     </div>
   )
