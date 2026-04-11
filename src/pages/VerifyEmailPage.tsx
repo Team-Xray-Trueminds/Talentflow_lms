@@ -84,7 +84,7 @@ export default function VerifyEmailPage() {
 
         <div className="w-full max-w-140 bg-white rounded-2xl shadow-ambient p-8 md:p-16 flex flex-col items-center text-center animate-scale-in">
           <div className="mb-10 max-w-lg">
-            <h1 className="font-headline text-3xl md:text-4xl font-extrabold tracking-tight text-[#191C1E] mb-4">
+            <h1 className="font-headline text-xl sm:text-2xl md:text-3xl md:text-4xl font-extrabold tracking-tight text-[#191C1E] mb-4">
               Verify your email
             </h1>
             <p className="text-[#434653] text-base md:text-lg font-medium leading-relaxed">

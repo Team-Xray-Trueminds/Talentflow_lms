@@ -46,7 +46,7 @@ export default function LearnerDashboard() {
     <div className="flex bg-[#F7F9FB] min-h-screen font-body">
       <Sidebar />
       
-      <main className="grow w-full max-w-[1600px] mx-auto px-4 py-6 sm:px-6 lg:px-8 xl:px-10 pb-28 lg:pb-10">
+      <main className="grow w-full max-w-[1600px] mx-auto px-4 py-6 sm:px-6 lg:px-8 xl:px-10 pb-24 lg:pb-8">
         {/* Top bar Profile Summary (Link 8 High-Fidelity) */}
         <div className="mb-8">
            <div className="mb-6 flex items-center justify-end rounded-[28px] border border-white/70 bg-white/90 px-4 py-4 shadow-[0_18px_40px_rgba(15,23,42,0.06)] backdrop-blur-xl sm:hidden">
@@ -107,7 +107,7 @@ export default function LearnerDashboard() {
 
         {/* Hero Welcome */}
         <div className="mb-12 animate-fade-in-up">
-           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#191C1E] tracking-tight font-headline mb-4">
+           <h1 className="text-xl sm:text-2xl md:text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#191C1E] tracking-tight font-headline mb-4">
              Welcome, {displayNameUpper}
            </h1>
            <p className="text-[#434653] text-lg font-medium leading-relaxed max-w-2xl">
@@ -124,7 +124,7 @@ export default function LearnerDashboard() {
                  <div className="inline-block px-4 py-1.5 bg-[#D3E4FE] text-[#00419E] text-xs font-black uppercase tracking-[0.1em] rounded-lg">
                     Mastery Summary
                  </div>
-                 <h2 className="text-3xl font-black text-[#191C1E] font-headline">You are in the Top {overview?.percentile || 5}% of learners this month.</h2>
+                 <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#191C1E] font-headline">You are in the Top {overview?.percentile || 5}% of learners this month.</h2>
                  <p className="text-[#434653] font-medium leading-relaxed">Your consistency in "{overview?.activeCourse || 'Modern UI Design Principles'}" is architecting a strong professional foundation.</p>
               </div>
               <div className="shrink-0 relative w-40 h-40 flex items-center justify-center">
@@ -180,7 +180,7 @@ export default function LearnerDashboard() {
                   <div className="absolute inset-0 bg-linear-to-t from-[#00327D] via-[#00327D]/20 to-transparent"></div>
                   <div className="relative z-10">
                      <p className="text-xs font-black uppercase tracking-[0.2em] text-[#D3E4FE] mb-4">Intermediate Flow</p>
-                     <h2 className="text-4xl font-black font-headline mb-6 max-w-md leading-tight">{overview?.activeCourse || 'Modern UI Design Principles'}</h2>
+                     <h2 className="text-2xl sm:text-3xl md:text-4xl font-black font-headline mb-6 max-w-md leading-tight">{overview?.activeCourse || 'Modern UI Design Principles'}</h2>
                      <button className="px-8 py-4 bg-white text-[#00327D] font-black rounded-xl hover:bg-[#D3E4FE] transition-all flex items-center gap-2 w-fit">
                         Continue Learning
                         <span className="material-symbols-outlined">play_arrow</span>
@@ -266,7 +266,7 @@ export default function LearnerDashboard() {
             {/* Pro Plan Upsell */}
             <div className="bg-linear-to-br from-[#003E38] to-[#005750] rounded-[28px] md:rounded-[32px] p-6 sm:p-8 md:p-10 text-white relative overflow-hidden shadow-xl animate-scale-in animate-stagger-3">
                <div className="relative z-10">
-                  <span className="material-symbols-outlined text-4xl mb-4 text-[#57FAE9] animate-pulse">new_releases</span>
+                  <span className="material-symbols-outlined text-2xl sm:text-3xl md:text-4xl mb-4 text-[#57FAE9] animate-pulse">new_releases</span>
                   <h3 className="text-2xl font-black font-headline mb-3">Upgrade to PRO</h3>
                   <p className="text-[#DAE2FF] text-sm leading-relaxed mb-8">Unlock advanced portfolio reviews and direct 1:1 sessions with industry experts.</p>
                   <button className="w-full py-4 bg-[#57FAE9] text-[#00201D] font-black rounded-xl hover:scale-105 active:scale-95 transition-all">

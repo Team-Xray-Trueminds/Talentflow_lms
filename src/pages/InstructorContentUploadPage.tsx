@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import BottomNav from '../components/layout/BottomNav';
 
 interface Lesson {
     id: number;
@@ -82,7 +83,7 @@ const InstructorContentUploadPage = () => {
             <input type="file" ref={fileInputRef} onChange={onFileChange} className="hidden" />
             
             {/* 1. EDITORIAL HEADER */}
-            <header className="h-20 bg-[#F7F9FB]/80 backdrop-blur-xl sticky top-0 z-50 flex items-center justify-between px-10 w-full shrink-0">
+            <header className="h-20 bg-[#F7F9FB]/80 backdrop-blur-xl sticky top-0 z-50 flex items-center justify-between px-4 sm:px-6 lg:px-10 w-full shrink-0">
                 <div className="flex items-center gap-12">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-gradient-to-tr from-[#00327D] to-[#2559BD] rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
@@ -118,7 +119,7 @@ const InstructorContentUploadPage = () => {
             </header>
 
             {/* 2. PROGRESS STEPPER (Stitch Node Reference) */}
-            <section className="bg-white border-b border-[#E0E3E5]/40 py-4 px-10">
+            <section className="bg-white border-b border-[#E0E3E5]/40 py-4 px-4 sm:px-6 lg:px-10">
                 <div className="max-w-7xl mx-auto flex items-center justify-between">
                     {[
                         { label: 'Details', icon: 'info', status: 'COMPLETE' },
@@ -150,7 +151,7 @@ const InstructorContentUploadPage = () => {
             </section>
 
             {/* 3. LAYOUT WRAPPER */}
-            <div className="max-w-[1440px] mx-auto w-full px-10 flex gap-12 flex-1 pt-12 pb-24">
+            <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-10 flex gap-12 flex-1 pt-12 pb-24">
                 
                 {/* 4. LEFT NAVIGATION SIDEBAR */}
                 <aside className="w-56 shrink-0 space-y-10">
@@ -201,9 +202,9 @@ const InstructorContentUploadPage = () => {
                 </aside>
 
                 {/* 5. MAIN CONTENT WORKSPACE */}
-                <main className="flex-1 space-y-10">
+                <main className="flex-1 space-y-10 pb-24 lg:pb-8">
                     <header>
-                        <h1 className="text-4xl font-black tracking-tighter text-[#1C1B1F] font-manrope mb-2">Upload Content</h1>
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter text-[#1C1B1F] font-manrope mb-2">Upload Content</h1>
                         <p className="text-[#434653] text-[15px] font-medium leading-relaxed max-w-xl">
                             Attach your primary teaching materials, video lectures, and support documents to each module.
                         </p>
@@ -269,7 +270,7 @@ const InstructorContentUploadPage = () => {
                                     
                                     {mod.lessons.length === 0 && (
                                         <div className="col-span-full py-12 bg-white rounded-[2rem] border-2 border-dashed border-[#E0E3E5] flex flex-col items-center justify-center text-center opacity-60">
-                                            <span className="material-symbols-outlined text-4xl text-[#737784] mb-4">folder_open</span>
+                                            <span className="material-symbols-outlined text-2xl sm:text-3xl md:text-4xl text-[#737784] mb-4">folder_open</span>
                                             <p className="text-xs font-bold text-[#737784] uppercase tracking-widest">{mod.description}</p>
                                         </div>
                                     )}
@@ -287,7 +288,7 @@ const InstructorContentUploadPage = () => {
                             </button>
                             <button 
                                 onClick={() => navigate('/instructor/assignment-builder')} 
-                                className="bg-gradient-to-r from-[#00327D] to-[#2559BD] text-white px-10 py-4 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 flex items-center gap-4 hover:translate-x-[4px] transition-all border-none cursor-pointer group"
+                                className="bg-gradient-to-r from-[#00327D] to-[#2559BD] text-white px-4 sm:px-6 lg:px-10 py-4 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 flex items-center gap-4 hover:translate-x-[4px] transition-all border-none cursor-pointer group"
                             >
                                 Build Assignment
                                 <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform text-lg">arrow_forward</span>
@@ -300,7 +301,7 @@ const InstructorContentUploadPage = () => {
                 <aside className="w-80 shrink-0 space-y-8">
                     
                     {/* Media Guidelines Card */}
-                    <div className="bg-[#191C1E] rounded-[2.5rem] p-8 text-white relative overflow-hidden group shadow-2xl">
+                    <div className="bg-[#191C1E] rounded-[2.5rem] px-4 py-6 sm:px-6 lg:p-8 text-white relative overflow-hidden group shadow-2xl">
                         <div className="relative z-10">
                             <div className="flex items-center gap-3 mb-8">
                                 <div className="w-10 h-10 bg-white/10 backdrop-blur-xl rounded-2xl flex items-center justify-center text-[#57FAE9]">
@@ -331,7 +332,7 @@ const InstructorContentUploadPage = () => {
                     </div>
 
                     {/* Support Bento */}
-                    <div className="bg-white rounded-[2.5rem] p-8 shadow-[0px_12px_32px_rgba(25,28,30,0.04)] ring-1 ring-[#E0E3E5]/30">
+                    <div className="bg-white rounded-[2.5rem] px-4 py-6 sm:px-6 lg:p-8 shadow-[0px_12px_32px_rgba(25,28,30,0.04)] ring-1 ring-[#E0E3E5]/30">
                         <div className="flex flex-col items-center text-center">
                             <div className="w-12 h-12 bg-[#F2F4F6] rounded-2xl flex items-center justify-center text-[#00327D] mb-4">
                                 <span className="material-symbols-outlined text-2xl">help_outline</span>
@@ -346,6 +347,7 @@ const InstructorContentUploadPage = () => {
                 </aside>
 
             </div>
+            <BottomNav />
         </div>
     );
 };

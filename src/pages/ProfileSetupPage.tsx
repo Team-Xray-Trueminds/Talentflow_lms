@@ -1,3 +1,4 @@
+import BottomNav from '../components/layout/BottomNav';
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
@@ -159,14 +160,14 @@ export default function ProfileSetupPage() {
     <div className="flex min-h-screen bg-[#F7F9FB] text-[#191C1E]">
       <Sidebar forceRole="Learner" />
 
-      <main className="grow w-full px-4 py-6 md:px-8 lg:px-10">
+      <main className="grow w-full px-4 py-6 md:px-8 lg:px-10 pb-24 lg:pb-8">
         <div className="mx-auto max-w-7xl">
           <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="text-xs font-black uppercase tracking-[0.35em] text-[#2559BD]/70">
                 Profile Control Center
               </p>
-              <h1 className="mt-3 text-3xl font-black tracking-tight text-[#191C1E] md:text-5xl">
+              <h1 className="mt-3 text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-[#191C1E] md:text-5xl">
                 Profile Setup
               </h1>
               <p className="mt-3 max-w-2xl text-sm leading-7 text-[#434653] md:text-base">
@@ -204,7 +205,7 @@ export default function ProfileSetupPage() {
 
                   <div className="mt-8 flex justify-center">
                     <div className="relative h-32 w-32 rounded-[28px] border border-white/25 bg-white/15 p-1 shadow-xl">
-                      <div className="flex h-full w-full items-center justify-center rounded-[24px] border border-white/10 bg-[#0B1733]/50 text-4xl font-black text-white">
+                      <div className="flex h-full w-full items-center justify-center rounded-[24px] border border-white/10 bg-[#0B1733]/50 text-2xl sm:text-3xl md:text-4xl font-black text-white">
                         AR
                       </div>
                       <button
@@ -565,6 +566,7 @@ export default function ProfileSetupPage() {
           </div>
         </div>
       </main>
-    </div>
+        <BottomNav />
+        </div>
   )
 }

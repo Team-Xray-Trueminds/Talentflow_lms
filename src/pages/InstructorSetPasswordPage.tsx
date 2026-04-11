@@ -1,3 +1,4 @@
+import BottomNav from '../components/layout/BottomNav';
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
@@ -56,16 +57,16 @@ export default function InstructorSetPasswordPage() {
         ]}
       />
 
-      <main className="grow flex items-center justify-center px-4 pt-24 pb-20 relative overflow-hidden">
+      <main className="grow flex items-center justify-center px-4 pt-24 relative overflow-hidden pb-24 lg:pb-8">
         {/* Background Decorative Element */}
         <div className="absolute top-[-20%] left-[-10%] w-[140%] h-[140%] bg-[radial-gradient(circle_at_center,rgba(0,71,171,0.03)_0%,transparent_70%)] -z-10"></div>
         
         <div className="w-full max-w-xl bg-white rounded-[2.5rem] shadow-[0_40px_120px_rgba(0,0,0,0.08)] p-12 md:p-16 flex flex-col animate-in fade-in slide-in-from-bottom-8 duration-700">
           <div className="mb-10 text-center">
             <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mx-auto mb-6">
-              <span className="material-symbols-outlined text-3xl">lock_reset</span>
+              <span className="material-symbols-outlined text-xl sm:text-2xl md:text-3xl">lock_reset</span>
             </div>
-            <h1 className="font-headline text-4xl font-extrabold tracking-tighter text-[#121417] mb-2 italic">
+            <h1 className="font-headline text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tighter text-[#121417] mb-2 italic">
               Credential Setup
             </h1>
             <p className="text-[#434653] text-lg font-medium">
@@ -143,6 +144,7 @@ export default function InstructorSetPasswordPage() {
       </main>
 
       <AppFooter />
-    </div>
+        <BottomNav />
+        </div>
   )
 }

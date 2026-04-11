@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '../components/auth/AuthProvider';
 import { getAssignmentDetails, getAssignmentAttempts } from '../lib/learnerApi';
+import BottomNav from '../components/layout/BottomNav';
 
 const LearnerAssignmentPage = () => {
     const navigate = useNavigate();
@@ -43,7 +44,7 @@ const LearnerAssignmentPage = () => {
     return (
         <div className="min-h-screen bg-[#000F29] text-white font-inter flex flex-col">
             {/* 1. CINEMATIC HEADER */}
-            <header className="h-20 bg-[#001946]/40 backdrop-blur-2xl border-b border-white/5 flex items-center justify-between px-10 shrink-0 z-50">
+            <header className="h-20 bg-[#001946]/40 backdrop-blur-2xl border-b border-white/5 flex items-center justify-between px-4 sm:px-6 lg:px-10 shrink-0 z-50">
                  <div className="flex items-center gap-6">
                     <button 
                         onClick={() => navigate(-1)} 
@@ -64,14 +65,14 @@ const LearnerAssignmentPage = () => {
                  </div>
             </header>
 
-            <main className="flex-1 overflow-y-auto pt-16 px-10 pb-32">
+            <main className="flex-1 overflow-y-auto pt-16 px-4 sm:px-6 lg:px-10 pb-24 lg:pb-8">
                 <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
                     
                     {/* Left: Assignment Brief */}
                     <div className="lg:col-span-8 space-y-12">
                         {isLoadingDetails ? (
                             <div className="py-20 text-center opacity-20">
-                                <span className="material-symbols-outlined animate-spin text-6xl">progress_activity</span>
+                                <span className="material-symbols-outlined animate-spin text-2xl sm:text-3xl md:text-4xl sm:text-5xl lg:text-6xl">progress_activity</span>
                             </div>
                         ) : (
                             <>
@@ -80,12 +81,12 @@ const LearnerAssignmentPage = () => {
                                         <span className="w-8 h-px bg-[#57FAE9]" />
                                         Project Manifest
                                     </h3>
-                                    <p className="text-3xl font-medium leading-[1.6] text-white/90">
+                                    <p className="text-xl sm:text-2xl md:text-3xl font-medium leading-[1.6] text-white/90">
                                         {assignment?.description}
                                     </p>
                                 </section>
 
-                                <section className="bg-white/5 border border-white/5 rounded-[3rem] p-10">
+                                <section className="bg-white/5 border border-white/5 rounded-[3rem] px-4 py-6 sm:px-6 lg:p-10">
                                     <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-[#57FAE9] mb-8">Technical Requirements</h4>
                                     <div className="space-y-6">
                                         {(assignment?.attachments || ['Project Link', 'Rationale PDF']).map((req: string, i: number) => (
@@ -128,10 +129,10 @@ const LearnerAssignmentPage = () => {
                     {/* Right: Submission Canvas */}
                     <div className="lg:col-span-4">
                         <div className="sticky top-8 space-y-8">
-                            <div className="bg-[#001C38] border border-white/5 rounded-[3rem] p-10 shadow-2xl">
+                            <div className="bg-[#001C38] border border-white/5 rounded-[3rem] px-4 py-6 sm:px-6 lg:p-10 shadow-2xl">
                                 <div className="text-center mb-10">
                                     <div className="w-20 h-20 bg-white/5 rounded-[2.5rem] flex items-center justify-center text-[#57FAE9] mx-auto mb-6">
-                                        <span className="material-symbols-outlined text-4xl">{fileUploaded ? 'check_circle' : 'cloud_upload'}</span>
+                                        <span className="material-symbols-outlined text-2xl sm:text-3xl md:text-4xl">{fileUploaded ? 'check_circle' : 'cloud_upload'}</span>
                                     </div>
                                     <h3 className="text-lg font-black font-manrope mb-2">{fileUploaded ? 'Artifact Submitted' : 'Submit Architectural Work'}</h3>
                                     <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest leading-relaxed">Max Filesize: 500MB • PDF, ZIP, MP4</p>
@@ -149,8 +150,8 @@ const LearnerAssignmentPage = () => {
                                     </div>
                                 ) : (
                                     <div className="space-y-6">
-                                        <div className="group bg-white/5 border-2 border-dashed border-white/10 p-10 rounded-[2rem] flex flex-col items-center justify-center cursor-pointer hover:border-[#57FAE9]/40 hover:bg-white/[0.07] transition-all">
-                                            <span className="material-symbols-outlined text-3xl text-white/20 group-hover:text-[#57FAE9] group-hover:scale-110 transition-all mb-4">add_circle</span>
+                                        <div className="group bg-white/5 border-2 border-dashed border-white/10 px-4 py-6 sm:px-6 lg:p-10 rounded-[2rem] flex flex-col items-center justify-center cursor-pointer hover:border-[#57FAE9]/40 hover:bg-white/[0.07] transition-all">
+                                            <span className="material-symbols-outlined text-xl sm:text-2xl md:text-3xl text-white/20 group-hover:text-[#57FAE9] group-hover:scale-110 transition-all mb-4">add_circle</span>
                                             <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Select Artifacts</span>
                                         </div>
                                         
@@ -182,7 +183,7 @@ const LearnerAssignmentPage = () => {
                             </div>
 
                             {/* Protip */}
-                            <div className="bg-[#191919] rounded-[2.5rem] p-8 relative overflow-hidden group shadow-xl">
+                            <div className="bg-[#191919] rounded-[2.5rem] px-4 py-6 sm:px-6 lg:p-8 relative overflow-hidden group shadow-xl">
                                 <div className="relative z-10 flex items-start gap-4">
                                     <span className="material-symbols-outlined text-[#57FAE9] text-xl mt-1">lightbulb</span>
                                     <p className="text-xs text-white/60 leading-relaxed font-medium">
@@ -195,6 +196,7 @@ const LearnerAssignmentPage = () => {
                     </div>
                 </div>
             </main>
+            <BottomNav />
         </div>
     );
 };

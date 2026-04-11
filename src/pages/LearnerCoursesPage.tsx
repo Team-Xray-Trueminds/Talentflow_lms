@@ -40,7 +40,7 @@ export default function LearnerCoursesPage() {
   return (
     <div className="flex bg-[#F7F9FB] min-h-screen font-body text-[#191C1E]">
       <Sidebar />
-      <main className="grow flex flex-col">
+      <main className="grow flex flex-col pb-24 lg:pb-8">
         {/* Top bar Profile Summary (Link 8 High-Fidelity) */}
         <div className="px-4 py-6 sm:px-6 lg:px-8 xl:px-10 flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center bg-[#F7F9FB]">
            <div className="flex flex-wrap items-center gap-3">
@@ -67,7 +67,7 @@ export default function LearnerCoursesPage() {
         <div className="px-4 sm:px-6 lg:px-8 xl:px-10 pb-28 lg:pb-20 max-w-[1600px] w-full mx-auto">
           {/* Hero Section */}
           <div className="mb-16 animate-fade-in-up">
-            <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-black leading-[1.1] tracking-[-0.03em] font-headline mb-6 text-[#191C1E]">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl sm:text-5xl lg:text-[3.5rem] font-black leading-[1.1] tracking-[-0.03em] font-headline mb-6 text-[#191C1E]">
               Curated Wisdom for Modern Builders.
             </h1>
             <p className="text-lg font-medium text-[#434653] max-w-2xl leading-relaxed mb-10">
@@ -137,7 +137,7 @@ export default function LearnerCoursesPage() {
                 </div>
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-[0.15em] text-[#74777F] mb-1">{s.label}</p>
-                  <p className="text-3xl font-black">{s.value}</p>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-black">{s.value}</p>
                 </div>
               </div>
             ))}
@@ -187,7 +187,7 @@ export default function LearnerCoursesPage() {
                 ))
               ) : (
                 <div className="col-span-full flex flex-col items-center justify-center bg-[#F2F4F6] rounded-[48px] p-20 animate-scale-in">
-                   <span className="material-symbols-outlined text-6xl text-[#C3C6D5] mb-6">search_off</span>
+                   <span className="material-symbols-outlined text-2xl sm:text-3xl md:text-4xl sm:text-5xl lg:text-6xl text-[#C3C6D5] mb-6">search_off</span>
                    <p className="text-xl font-bold text-[#434653]">No courses found for this track</p>
                    <button onClick={() => setSelectedTrack(null)} className="mt-4 text-[#00327D] font-black uppercase text-xs tracking-widest hover:underline">View All Programs</button>
                 </div>
@@ -199,9 +199,9 @@ export default function LearnerCoursesPage() {
               <div className="sticky top-6 lg:top-10 bg-linear-to-br from-[#00327D] to-[#2559BD] p-6 sm:p-8 lg:p-12 rounded-[32px] md:rounded-[48px] text-white shadow-2xl overflow-hidden group">
                 <div className="relative z-10 flex flex-col h-full min-h-[500px]">
                   <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-[20px] flex items-center justify-center mb-10">
-                    <span className="material-symbols-outlined text-3xl">workspace_premium</span>
+                    <span className="material-symbols-outlined text-xl sm:text-2xl md:text-3xl">workspace_premium</span>
                   </div>
-                  <h2 className="text-3xl font-black font-headline mb-6 leading-[1.1]">Elite Mentorship Program 2024</h2>
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-black font-headline mb-6 leading-[1.1]">Elite Mentorship Program 2024</h2>
                   <p className="text-white/80 text-lg leading-relaxed mb-12">
                     An exclusive 6-month journey with top architectural leads from Silicon Valley. Limited seats available for Q3 cohorts.
                   </p>

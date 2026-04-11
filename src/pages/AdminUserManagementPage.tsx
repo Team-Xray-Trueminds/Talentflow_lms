@@ -22,7 +22,7 @@ const UserManagementPage = () => {
                     <div className="hidden md:block">
                         <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
                             <div>
-                                <h1 className="text-4xl font-extrabold tracking-tight text-on-surface mb-2">User Directory</h1>
+                                <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-on-surface mb-2">User Directory</h1>
                                 <p className="text-on-surface-variant max-w-xl leading-relaxed">Oversee and manage the talent ecosystem of TalentFlow LMS.</p>
                             </div>
                             <Link to="/admin/add-instructor" className="bg-[#00327D] text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:shadow-lg transition-all active:scale-95 no-underline">
@@ -86,7 +86,7 @@ const UserManagementPage = () => {
                     {/* MOBILE VIEW */}
                     <div className="md:hidden space-y-8">
                         <div>
-                            <h1 className="text-3xl font-black tracking-tight text-slate-900 mb-2">User Directory</h1>
+                            <h1 className="text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-slate-900 mb-2">User Directory</h1>
                             <p className="text-sm font-medium text-slate-500">Curation of the talent ecosystem.</p>
                         </div>
 

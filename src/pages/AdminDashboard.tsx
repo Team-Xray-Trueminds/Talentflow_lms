@@ -82,12 +82,12 @@ const AdminDashboard = () => {
             <Sidebar />
 
             {/* Main Workspace Content */}
-            <main className="pl-0 lg:pl-80 min-h-screen pb-24 md:pb-0">
+            <main className="pl-0 lg:pl-80 min-h-screen pb-24 lg:pb-8">
                 {/* Top Navigation */}
                 <TopBar />
 
                 {/* Dashboard Content Area */}
-                <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8">
+                <div className="px-4 py-6 sm:px-6 md:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8">
                     {/* Summary Header */}
                     <section className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                         <div>
@@ -138,7 +138,40 @@ const AdminDashboard = () => {
                             </span>
                         </div>
                         
-                        <div className="overflow-x-auto">
+                        
+                        {/* Mobile Cards View */}
+                        <div className="md:hidden flex flex-col gap-4 p-4 border-t border-[#E0E3E5]/50 bg-[#F8FAFC]">
+                            {instructors.map(inst => (
+                                <div key={inst.id} className="bg-white border border-[#E0E3E5]/50 rounded-2xl p-5 shadow-[0_4px_12px_rgba(0,0,0,0.02)] flex flex-col gap-4">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <div className="font-bold text-[#1E293B] text-lg">{inst.name}</div>
+                                            <div className="text-sm text-[#64748B]">{inst.email}</div>
+                                        </div>
+                                        <button className="text-[#64748B] hover:text-[#3730A3] transition-colors p-2 bg-slate-50 rounded-full">
+                                            <span className="material-symbols-outlined text-lg">settings</span>
+                                        </button>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <span className="px-3 py-1.5 rounded-lg bg-[#E0E7FF] text-[#3730A3] text-xs font-bold">
+                                            {inst.expertise}
+                                        </span>
+                                        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${
+                                            inst.status === 'active' ? 'bg-[#DCFCE7] text-[#166534]' : 'bg-[#FEE2E2] text-[#991B1B]'
+                                        }`}>
+                                            <div className={`w-1.5 h-1.5 rounded-full ${inst.status === 'active' ? 'bg-[#22C55E]' : 'bg-[#EF4444]'}`}></div>
+                                            {inst.status ? inst.status.charAt(0).toUpperCase() + inst.status.slice(1) : 'Unknown'}
+                                        </span>
+                                    </div>
+                                </div>
+                            ))}
+                            {instructors.length === 0 && (
+                                <div className="text-center text-[#64748B] py-8 bg-slate-50 rounded-2xl border border-dashed border-slate-200">No instructors found</div>
+                            )}
+                        </div>
+
+                        {/* Desktop Table View */}
+                        <div className="hidden md:block overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
                                     <tr className="bg-[#F8FAFC]">

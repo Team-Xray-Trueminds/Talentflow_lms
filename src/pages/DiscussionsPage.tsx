@@ -111,14 +111,14 @@ export default function DiscussionsPage() {
     <div className="flex min-h-screen bg-[#F7F9FB] font-body text-[#191C1E]">
       <Sidebar />
 
-      <main className="grow px-6 py-8 lg:px-10 pb-32 lg:pb-8">
+      <main className="grow px-6 py-8 lg:px-10 pb-24 lg:pb-8">
         <div className="mx-auto max-w-7xl">
           <section className="mb-8 grid gap-6 xl:grid-cols-[1fr_0.95fr]">
-            <div className="rounded-[32px] bg-[linear-gradient(135deg,#25415F_0%,#325B7A_58%,#557D9A_100%)] p-8 text-white shadow-[0_24px_60px_rgba(50,77,103,0.18)]">
+            <div className="rounded-[32px] bg-[linear-gradient(135deg,#25415F_0%,#325B7A_58%,#557D9A_100%)] px-4 py-6 sm:px-6 lg:p-8 text-white shadow-[0_24px_60px_rgba(50,77,103,0.18)]">
               <p className="text-xs font-black uppercase tracking-[0.3em] text-[#D8E7F3]">
                 Curator Portal
               </p>
-              <h1 className="mt-4 max-w-xl text-4xl font-black tracking-tight lg:text-5xl">
+              <h1 className="mt-4 max-w-xl text-2xl sm:text-3xl md:text-4xl font-black tracking-tight lg:text-5xl">
                 Discussion Area
               </h1>
               <p className="mt-4 max-w-2xl text-sm font-medium leading-7 text-[#E8F0F8]">
@@ -175,7 +175,7 @@ export default function DiscussionsPage() {
               </div>
             </div>
 
-            <div className="rounded-[32px] bg-white p-8 shadow-ambient">
+            <div className="rounded-[32px] bg-white px-4 py-6 sm:px-6 lg:p-8 shadow-ambient">
               <div>
                 <h2 className="text-2xl font-black tracking-tight text-[#191C1E]">
                   {discussionFlow.title}
@@ -440,7 +440,7 @@ export default function DiscussionsPage() {
                   </div>
                 </>
               ) : (
-                <div className="rounded-[24px] bg-[#F7F9FB] p-8 text-center text-[#64748B]">
+                <div className="rounded-[24px] bg-[#F7F9FB] px-4 py-6 sm:px-6 lg:p-8 text-center text-[#64748B]">
                   No threads match your search.
                 </div>
               )}

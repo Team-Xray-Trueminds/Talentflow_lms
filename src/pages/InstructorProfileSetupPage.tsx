@@ -1,3 +1,4 @@
+import BottomNav from '../components/layout/BottomNav';
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
@@ -33,11 +34,11 @@ export default function InstructorProfileSetupPage() {
     <div className="flex bg-[#F7F9FB] min-h-screen">
       <Sidebar forceRole="Instructor" />
 
-      <main className="grow p-6 md:p-12 max-w-5xl mx-auto w-full">
+      <main className="grow p-6 md:p-12 max-w-5xl mx-auto w-full pb-24 lg:pb-8">
         {/* Header Content */}
         <div className="flex flex-col md:flex-row justify-between items-start mb-8 md:mb-12 gap-4">
           <div className="animate-fade-in-up">
-            <h1 className="text-3xl md:text-4xl font-extrabold text-[#191C1E] tracking-tight font-headline mb-2 leading-tight">
+            <h1 className="text-xl sm:text-2xl md:text-3xl md:text-4xl font-extrabold text-[#191C1E] tracking-tight font-headline mb-2 leading-tight">
               Configure your Studio
             </h1>
             <p className="text-[#434653] font-medium text-base md:text-lg">
@@ -57,7 +58,7 @@ export default function InstructorProfileSetupPage() {
           {/* Cover Placeholder */}
           <div className="h-32 md:h-40 bg-linear-to-r from-[#00327D] to-[#2559BD] relative">
             <div className="absolute -bottom-12 md:-bottom-16 left-6 md:left-12 w-24 md:w-32 h-24 md:h-32 rounded-2xl md:rounded-3xl border-[6px] md:border-8 border-white bg-[#E0E3E5] flex items-center justify-center overflow-hidden shadow-lg group cursor-pointer">
-              <span className="material-symbols-outlined text-3xl md:text-4xl text-[#434653] group-hover:scale-110 transition-transform">add_a_photo</span>
+              <span className="material-symbols-outlined text-xl sm:text-2xl md:text-3xl md:text-4xl text-[#434653] group-hover:scale-110 transition-transform">add_a_photo</span>
               <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" />
             </div>
             <div className="absolute top-4 right-4 px-3 py-1 bg-white/20 backdrop-blur-md text-white text-[10px] font-black uppercase rounded-lg tracking-widest">
@@ -199,7 +200,7 @@ export default function InstructorProfileSetupPage() {
             <div className="pt-4 md:pt-8 flex flex-col md:flex-row justify-end gap-3 md:gap-4">
               <button
                 type="submit"
-                className="order-1 md:order-2 w-full md:w-auto px-10 py-4 rounded-xl bg-linear-to-r from-[#00327D] to-[#2559BD] text-white font-bold text-lg shadow-xl shadow-[#00327D]/20 hover:scale-[1.02] active:scale-95 transition-all"
+                className="order-1 md:order-2 w-full md:w-auto px-4 sm:px-6 lg:px-10 py-4 rounded-xl bg-linear-to-r from-[#00327D] to-[#2559BD] text-white font-bold text-lg shadow-xl shadow-[#00327D]/20 hover:scale-[1.02] active:scale-95 transition-all"
               >
                 Activate Studio
               </button>
@@ -214,6 +215,7 @@ export default function InstructorProfileSetupPage() {
           </form>
         </div>
       </main>
-    </div>
+        <BottomNav />
+        </div>
   )
 }

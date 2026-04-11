@@ -1,3 +1,4 @@
+import BottomNav from '../components/layout/BottomNav';
 import { Link, useParams } from 'react-router-dom'
 import { useAuth } from '../components/auth/AuthProvider'
 
@@ -189,6 +190,7 @@ export default function CertificatePage() {
           }
         }
       `}</style>
-    </div>
+        <BottomNav />
+        </div>
   )
 }

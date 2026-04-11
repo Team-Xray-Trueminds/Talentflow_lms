@@ -44,7 +44,7 @@ export default function MyLearningPage() {
   return (
     <div className="flex bg-[#F7F9FB] min-h-screen font-body text-[#191C1E]">
       <Sidebar />
-      <main className="grow flex flex-col pb-28 lg:pb-10">
+      <main className="grow flex flex-col pb-24 lg:pb-8">
         {/* Top bar */}
         <div className="bg-[#F7F9FB] px-4 pt-20 pb-6 sm:px-6 lg:px-10 lg:py-8">
            <div className="mb-6 flex items-center justify-end rounded-[28px] border border-white/70 bg-white/90 px-4 py-4 shadow-[0_18px_40px_rgba(15,23,42,0.06)] backdrop-blur-xl sm:hidden">
@@ -76,7 +76,7 @@ export default function MyLearningPage() {
         {/* Content Area */}
         <div className="w-full max-w-[1200px] mx-auto px-4 pb-20 sm:px-6 lg:px-10">
           <header className="mb-12 animate-fade-in-up">
-            <h1 className="mb-4 text-3xl font-black tracking-tight text-[#191C1E] font-headline sm:text-4xl">
+            <h1 className="mb-4 text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-[#191C1E] font-headline sm:text-4xl">
               My Learning Journey
             </h1>
             <p className="text-[#434653] font-medium">Continue your architectual mastery. Consistency is the key to depth.</p>
@@ -84,7 +84,7 @@ export default function MyLearningPage() {
 
           <div className="space-y-16">
             <section className="animate-fade-in-up">
-              <div className="rounded-[32px] bg-white p-8 shadow-ambient">
+              <div className="rounded-[32px] bg-white px-4 py-6 sm:px-6 lg:p-8 shadow-ambient">
                 <div>
                   <div>
                     <h2 className="text-2xl font-black tracking-tight text-[#191C1E]">

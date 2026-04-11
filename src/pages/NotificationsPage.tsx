@@ -1,3 +1,4 @@
+import BottomNav from '../components/layout/BottomNav';
 import Sidebar from '../components/Sidebar'
 import { Link } from 'react-router-dom'
 
@@ -40,7 +41,7 @@ export default function NotificationsPage() {
   return (
     <div className="flex bg-[#F7F9FB] min-h-screen font-body text-[#191C1E]">
       <Sidebar />
-      <main className="grow flex flex-col">
+      <main className="grow flex flex-col pb-24 lg:pb-8">
         {/* Top bar (Consistent with Curator Portal branding) */}
         <div className="px-6 lg:px-10 py-8 flex justify-between items-center bg-[#F7F9FB]">
            <div className="flex items-center gap-3">
@@ -57,7 +58,7 @@ export default function NotificationsPage() {
 
         {/* Content Area */}
         <div className="px-6 lg:px-10 pb-20 max-w-[800px] w-full mx-auto">
-          <h1 className="text-4xl font-black font-headline mb-12 tracking-tight">Notifications</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black font-headline mb-12 tracking-tight">Notifications</h1>
 
           <div className="space-y-12">
             {/* Today Section */}
@@ -108,12 +109,13 @@ export default function NotificationsPage() {
             </section>
 
             <div className="flex flex-col items-center pt-8 animate-fade-in animate-stagger-2">
-               <span className="material-symbols-outlined text-4xl text-[#C3C6D5] mb-4">check_circle</span>
+               <span className="material-symbols-outlined text-2xl sm:text-3xl md:text-4xl text-[#C3C6D5] mb-4">check_circle</span>
                <p className="text-sm font-bold text-[#74777F] uppercase tracking-widest">You're all caught up!</p>
             </div>
           </div>
         </div>
       </main>
-    </div>
+        <BottomNav />
+        </div>
   )
 }

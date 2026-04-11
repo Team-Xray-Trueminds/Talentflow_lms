@@ -9,7 +9,7 @@ const AdminUserDetailPage = () => {
             <Sidebar />
 
             {/* Main Workspace Content */}
-            <main className="pl-0 lg:pl-80 h-full overflow-y-auto pb-24 md:pb-0">
+            <main className="pl-0 lg:pl-80 h-full overflow-y-auto pb-24 lg:pb-8">
                 {/* Top Navigation */}
                 <TopBar />
 
@@ -87,7 +87,7 @@ const AdminUserDetailPage = () => {
                             
                             {/* Center Column: Role History Timeline */}
                             <div className="col-span-12 xl:col-span-5">
-                                <div className="bg-surface-container-lowest rounded-xl p-8 h-full shadow-sm">
+                                <div className="bg-surface-container-lowest rounded-xl px-4 py-6 sm:px-6 lg:p-8 h-full shadow-sm">
                                     <div className="flex justify-between items-center mb-8">
                                         <h2 className="text-xl font-extrabold text-on-surface tracking-tight">Role History</h2>
                                         <span className="text-xs font-bold text-primary px-3 py-1 bg-primary-fixed rounded-full">8 Year Tenure</span>
@@ -234,7 +234,7 @@ const AdminUserDetailPage = () => {
                                     <span className="material-symbols-outlined text-xs">chevron_right</span>
                                     <span className="text-primary font-semibold">User Details</span>
                                 </nav>
-                                <h1 className="text-4xl font-extrabold tracking-tight text-on-surface">Elena Rodriguez</h1>
+                                <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-on-surface">Elena Rodriguez</h1>
                                 <p className="text-on-surface-variant mt-1">Senior Architectural Lead • Staff ID: #TF-8829</p>
                             </div>
                             <div className="flex flex-wrap gap-3">
@@ -258,7 +258,7 @@ const AdminUserDetailPage = () => {
                             {/* Left Column: Profile Card */}
                             <div className="lg:col-span-4 flex flex-col gap-6">
                                 {/* User Identity Card */}
-                                <div className="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden p-8 flex flex-col items-center text-center">
+                                <div className="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden px-4 py-6 sm:px-6 lg:p-8 flex flex-col items-center text-center">
                                     <div className="relative mb-6">
                                         <img 
                                             className="w-32 h-32 rounded-2xl object-cover shadow-lg" 
@@ -285,7 +285,7 @@ const AdminUserDetailPage = () => {
                                     </div>
                                 </div>
                                 {/* Role Stats Card */}
-                                <div className="bg-surface-container-low rounded-xl p-8 space-y-6">
+                                <div className="bg-surface-container-low rounded-xl px-4 py-6 sm:px-6 lg:p-8 space-y-6">
                                     <h4 className="text-xs font-black uppercase tracking-[0.2em] text-on-surface-variant">Engagement Metrics</h4>
                                     <div className="space-y-4">
                                         <div className="flex items-center gap-4">
@@ -313,7 +313,7 @@ const AdminUserDetailPage = () => {
                             {/* Right Column: Details & Logs */}
                             <div className="lg:col-span-8 flex flex-col gap-6">
                                 {/* Role History Section */}
-                                <div className="bg-surface-container-lowest rounded-xl p-8 shadow-sm">
+                                <div className="bg-surface-container-lowest rounded-xl px-4 py-6 sm:px-6 lg:p-8 shadow-sm">
                                     <div className="flex items-center justify-between mb-8">
                                         <h3 className="text-xl font-bold flex items-center gap-2">
                                             <span className="material-symbols-outlined text-primary">assignment_ind</span>
@@ -357,7 +357,7 @@ const AdminUserDetailPage = () => {
                                     </div>
                                 </div>
                                 {/* Activity Log Section */}
-                                <div className="bg-surface-container-lowest rounded-xl p-8 flex-grow shadow-sm">
+                                <div className="bg-surface-container-lowest rounded-xl px-4 py-6 sm:px-6 lg:p-8 flex-grow shadow-sm">
                                     <div className="flex items-center justify-between mb-8">
                                         <h3 className="text-xl font-bold flex items-center gap-2">
                                             <span className="material-symbols-outlined text-primary">analytics</span>

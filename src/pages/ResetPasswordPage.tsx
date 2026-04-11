@@ -131,7 +131,7 @@ export default function ResetPasswordPage() {
             <p className="mb-3 text-xs font-black uppercase tracking-[0.22em] text-[#2559BD]">
               Password Recovery
             </p>
-            <h1 className="font-headline text-3xl font-extrabold tracking-tight text-on-surface">
+            <h1 className="font-headline text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-on-surface">
               {step === 'otp' ? 'Reset - Enter OTP' : 'Reset - New Password'}
             </h1>
             <p className="mt-3 text-sm font-medium text-[#434653] leading-relaxed">

@@ -34,14 +34,14 @@ export default function SubmissionsPage() {
           <div className="mb-10 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="rounded-[32px] border border-white/70 bg-white/75 p-8 shadow-[0_24px_80px_rgba(0,50,125,0.12)] backdrop-blur-xl">
               <p className="text-xs font-black uppercase tracking-[0.3em] text-[#64748B]">Curator Portal</p>
-              <h1 className="mt-4 text-4xl font-black tracking-tight text-[#0F172A]">Submissions</h1>
+              <h1 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-[#0F172A]">Submissions</h1>
               <p className="mt-4 max-w-2xl text-sm font-medium leading-7 text-[#475569]">
                 Track what you have turned in, what needs revision, and what is ready to showcase.
               </p>
             </div>
             <div className="rounded-[32px] bg-[linear-gradient(135deg,_#031B4E_0%,_#00327D_60%,_#00B7FF_100%)] p-8 text-white shadow-[0_22px_60px_rgba(0,50,125,0.28)]">
               <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#B8DCFF]">Submission Rate</p>
-              <p className="mt-4 text-5xl font-black tracking-tight">92%</p>
+              <p className="mt-4 text-xl sm:text-2xl md:text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight">92%</p>
               <p className="mt-3 text-sm font-medium text-[#D9F4FF]">You are ahead of the cohort average this week.</p>
             </div>
           </div>

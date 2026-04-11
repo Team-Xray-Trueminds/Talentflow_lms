@@ -21,11 +21,11 @@ export default function InstructorCoursesPage() {
   return (
     <div className="flex bg-[#F7F9FB] min-h-screen">
       <Sidebar />
-      <main className="grow p-6 md:p-10 max-w-[1600px] mx-auto w-full pb-32 lg:pb-10">
+      <main className="grow p-6 md:p-10 max-w-[1600px] mx-auto w-full pb-24 lg:pb-8">
         {/* Header */}
         <div className="flex justify-between items-start mb-12 animate-fade-in-up">
             <div>
-              <h1 className="text-3xl md:text-4xl font-extrabold text-[#191C1E] font-headline mb-2">
+              <h1 className="text-xl sm:text-2xl md:text-3xl md:text-4xl font-extrabold text-[#191C1E] font-headline mb-2">
                 {isAdmin ? 'System-Wide Curricula' : 'Academic Explorer'}
               </h1>
               <p className="text-base font-medium text-[#434653]">
@@ -50,7 +50,7 @@ export default function InstructorCoursesPage() {
         {/* Departments Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {departments.map((dept, i) => (
-            <div key={i} className="bg-white p-8 rounded-[32px] shadow-ambient hover:shadow-xl transition-all group cursor-pointer border border-[#C3C6D5]/10 animate-fade-in-up" style={{ animationDelay: `${i * 0.1}s` }}>
+            <div key={i} className="bg-white px-4 py-6 sm:px-6 lg:p-8 rounded-[32px] shadow-ambient hover:shadow-xl transition-all group cursor-pointer border border-[#C3C6D5]/10 animate-fade-in-up" style={{ animationDelay: `${i * 0.1}s` }}>
               <div className="w-14 h-14 bg-[#F2F4F6] rounded-2xl flex items-center justify-center text-[#00327D] mb-6 group-hover:scale-110 transition-transform">
                 <span className="material-symbols-outlined text-[28px]">{dept.icon}</span>
               </div>
@@ -70,7 +70,7 @@ export default function InstructorCoursesPage() {
         </div>
 
         {/* Global Overview Section */}
-        <div className="bg-[#00327D] rounded-[32px] p-10 text-white relative overflow-hidden shadow-2xl">
+        <div className="bg-[#00327D] rounded-[32px] px-4 py-6 sm:px-6 lg:p-10 text-white relative overflow-hidden shadow-2xl">
            <div className="relative z-10 max-w-lg">
               <h2 className="text-2xl font-black font-headline mb-4">
                 {isInstructor ? 'Curriculum Health Summary' : 'Elite Academic Pathways'}

@@ -47,12 +47,12 @@ export default function ForgotPasswordPage() {
         <div className="w-full max-w-115 bg-white rounded-[2rem] shadow-ambient p-8 md:p-12 flex flex-col animate-scale-in border border-white/40">
           <div className="mb-10 text-center">
             <div className="w-16 h-16 bg-[#D3E4FE] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm">
-              <span className="material-symbols-outlined text-[#00419E] text-3xl">mark_email_read</span>
+              <span className="material-symbols-outlined text-[#00419E] text-xl sm:text-2xl md:text-3xl">mark_email_read</span>
             </div>
             <p className="mb-3 text-xs font-black uppercase tracking-[0.22em] text-[#2559BD]">
               Reset - Enter Email
             </p>
-            <h1 className="font-headline text-3xl font-extrabold tracking-tight text-on-surface mb-3">
+            <h1 className="font-headline text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-on-surface mb-3">
               Send reset code
             </h1>
             <p className="text-[#434653] text-sm font-medium px-4 leading-relaxed">

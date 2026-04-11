@@ -7,7 +7,7 @@ const AdminInstructorProfilePage = () => {
     return (
         <div className="bg-[#F8FAFC] min-h-screen text-on-surface">
             <Sidebar />
-            <main className="pl-0 lg:pl-80 min-h-screen pb-24 md:pb-0">
+            <main className="pl-0 lg:pl-80 min-h-screen pb-24 lg:pb-8">
                 <TopBar />
                 
                 <div className="p-6 md:p-8 max-w-7xl mx-auto">
@@ -19,7 +19,7 @@ const AdminInstructorProfilePage = () => {
                                 <span className="material-symbols-outlined text-xs">chevron_right</span>
                                 <span className="text-primary font-semibold">Instructor Profile</span>
                             </nav>
-                            <h1 className="text-4xl font-extrabold tracking-tight text-on-surface">Dr. Julian Vance</h1>
+                            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-on-surface">Dr. Julian Vance</h1>
                             <p className="text-on-surface-variant mt-1">Lead Architect • Faculty ID: #INST-0042</p>
                         </div>
                         <div className="flex flex-wrap gap-3">
@@ -108,7 +108,7 @@ const AdminInstructorProfilePage = () => {
                             </div>
 
                             {/* Active Courses */}
-                            <div className="bg-surface-container-lowest rounded-2xl p-8 border border-outline-variant/30 shadow-sm">
+                            <div className="bg-surface-container-lowest rounded-2xl px-4 py-6 sm:px-6 lg:p-8 border border-outline-variant/30 shadow-sm">
                                 <div className="flex justify-between items-center mb-8">
                                     <h3 className="text-xl font-black tracking-tight flex items-center gap-2">
                                         <span className="material-symbols-outlined text-primary">school</span>
@@ -144,7 +144,7 @@ const AdminInstructorProfilePage = () => {
                             </div>
 
                             {/* Performance Insights */}
-                            <div className="bg-surface-container-lowest rounded-2xl p-8 border border-outline-variant/30 shadow-sm">
+                            <div className="bg-surface-container-lowest rounded-2xl px-4 py-6 sm:px-6 lg:p-8 border border-outline-variant/30 shadow-sm">
                                 <h3 className="text-xl font-black tracking-tight flex items-center gap-2 mb-8">
                                     <span className="material-symbols-outlined text-primary">insights</span>
                                     Teaching Insights

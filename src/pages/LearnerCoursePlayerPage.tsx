@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BottomNav from '../components/layout/BottomNav';
 
 const LearnerCoursePlayerPage = () => {
     const navigate = useNavigate();
@@ -61,7 +62,7 @@ const LearnerCoursePlayerPage = () => {
 
             <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
                 {/* 2. PLAYER CORE CANVAS */}
-                <main className="flex-1 overflow-y-auto bg-[#000F29] relative flex flex-col pt-6 md:pt-12 px-4 sm:px-6 md:px-8 xl:px-12 pb-16 lg:pb-24">
+                <main className="flex-1 overflow-y-auto bg-[#000F29] relative flex flex-col pt-6 md:pt-12 px-4 sm:px-6 md:px-8 xl:px-12 pb-24 lg:pb-8">
                     <div className="max-w-[1400px] mx-auto w-full space-y-8 md:space-y-12">
                         
                         {/* Immersive Player Shell */}
@@ -75,13 +76,13 @@ const LearnerCoursePlayerPage = () => {
                             {/* Cinematic Overlay */}
                             <div className="absolute inset-0 flex items-center justify-center">
                                 <button className="w-24 h-24 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border-2 border-white/20 text-white shadow-2xl transform scale-90 hover:scale-100 group-hover:scale-100 transition-all duration-700 cursor-pointer">
-                                    <span className="material-symbols-outlined text-5xl fill-1">play_arrow</span>
+                                    <span className="material-symbols-outlined text-xl sm:text-2xl md:text-3xl sm:text-4xl lg:text-5xl fill-1">play_arrow</span>
                                 </button>
                             </div>
 
                             {/* Integrated Glass Controls */}
                             <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 lg:bottom-10 lg:left-10 lg:right-10 p-4 sm:p-5 lg:p-6 bg-black/30 backdrop-blur-3xl border border-white/10 rounded-[1.5rem] lg:rounded-3xl flex items-center gap-4 lg:gap-8 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all transform lg:translate-y-4 lg:group-hover:translate-y-0 duration-700">
-                                <span className="material-symbols-outlined text-3xl cursor-pointer hover:text-[#57FAE9] transition-colors">play_circle</span>
+                                <span className="material-symbols-outlined text-xl sm:text-2xl md:text-3xl cursor-pointer hover:text-[#57FAE9] transition-colors">play_circle</span>
                                 <div className="flex-1 space-y-2">
                                     <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-white/40">
                                         <span>Current Execution</span>
@@ -103,7 +104,7 @@ const LearnerCoursePlayerPage = () => {
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
                             <div className="lg:col-span-8 space-y-10">
                                 <div>
-                                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-manrope tracking-tighter mb-6 text-white leading-tight">Visual Grammar & <br/>Tonal Logic</h2>
+                                    <h2 className="text-xl sm:text-2xl md:text-3xl sm:text-4xl lg:text-5xl font-black font-manrope tracking-tighter mb-6 text-white leading-tight">Visual Grammar & <br/>Tonal Logic</h2>
                                     <p className="text-[#B1C5FF]/70 leading-relaxed text-base sm:text-lg font-medium max-w-none lg:max-w-[90%]">
                                         Exploration into the structural integrity of user interfaces. We define how "Architectural Tones" establish focus without the noise of traditional 1px borders. This lesson covers the "Curator's Sweep" technique for clean typography hierarchy.
                                     </p>
@@ -118,7 +119,7 @@ const LearnerCoursePlayerPage = () => {
 
                             <div className="lg:col-span-4 bg-[#DAE2FF]/5 border border-white/5 rounded-[2rem] lg:rounded-[3rem] p-6 sm:p-8 lg:p-10 flex flex-col items-center text-center">
                                 <div className="w-16 h-16 bg-[#57FAE9] rounded-[1.5rem] flex items-center justify-center text-[#001946] mb-6 shadow-2xl shadow-[#57FAE9]/20">
-                                    <span className="material-symbols-outlined text-3xl">lightbulb</span>
+                                    <span className="material-symbols-outlined text-xl sm:text-2xl md:text-3xl">lightbulb</span>
                                 </div>
                                 <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-[#57FAE9] mb-4">Architectural Protip</h4>
                                 <p className="text-sm text-[#B1C5FF]/80 leading-relaxed font-medium italic">
@@ -193,7 +194,7 @@ const LearnerCoursePlayerPage = () => {
                     </div>
 
                     {/* Fixed Module Footer */}
-                    <div className="p-8 bg-[#001946]/40 border-t border-white/5">
+                    <div className="px-4 py-6 sm:px-6 lg:p-8 bg-[#001946]/40 border-t border-white/5">
                         <button className="w-full bg-[#57FAE9] text-[#001946] py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-2xl shadow-[#57FAE9]/20 hover:scale-[1.02] active:scale-95 transition-all border-none cursor-pointer flex items-center justify-center gap-3">
                             <span className="material-symbols-outlined font-black">east</span>
                             Advance to Next Module
@@ -201,6 +202,7 @@ const LearnerCoursePlayerPage = () => {
                     </div>
                 </aside>
             </div>
+            <BottomNav />
         </div>
     );
 };

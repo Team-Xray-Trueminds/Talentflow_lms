@@ -98,7 +98,7 @@ export default function SignUpPage() {
                 Curated Growth
               </span>
             </div>
-            <h2 className="text-5xl font-extrabold text-white leading-tight mb-6 tracking-tight font-headline animate-fade-in-up">
+            <h2 className="text-xl sm:text-2xl md:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-6 tracking-tight font-headline animate-fade-in-up">
               Master the architecture of digital spaces.
             </h2>
             <p className="text-white/80 text-xl font-light leading-relaxed max-w-lg mb-8 animate-fade-in-up animate-stagger-1 text-[#DAE2FF]">
@@ -132,7 +132,7 @@ export default function SignUpPage() {
         <div className="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-24 bg-surface">
           <div className="w-full max-w-md">
             <div className="mb-10">
-              <h1 className="text-3xl font-extrabold text-on-surface mb-2 tracking-tight font-headline">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-on-surface mb-2 tracking-tight font-headline">
                 Create your account
               </h1>
               <p className="text-on-surface-variant font-medium">

@@ -123,62 +123,93 @@ const LandingPage: React.FC = () => {
         }
       />
       <main className="pt-24 transition-colors duration-300">
-        {/* Hero Section */}
-        <section className="relative max-w-7xl mx-auto px-8 min-h-[calc(100vh-6rem)] grid lg:grid-cols-2 gap-16 items-center">
-          <div className="pointer-events-none absolute inset-x-0 top-8 h-64 bg-[radial-gradient(circle_at_top,rgba(87,250,233,0.16),transparent_42%)] opacity-0 blur-3xl transition-opacity duration-300 dark:opacity-100"></div>
-          <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 rounded-full bg-[#D0E1FB] px-4 py-1.5 animate-fade-in-up transition-colors duration-300 dark:border dark:border-[#57FAE9]/20 dark:bg-[#08172E]/80 dark:shadow-[0_0_40px_rgba(87,250,233,0.08)]">
-              <span className="material-symbols-outlined text-[#00327D] text-sm dark:text-[#57FAE9]" style={{ fontVariationSettings: "'FILL' 1" }}>architecture</span>
-              <span className="p-2 rounded-full text-sm font-bold tracking-wide uppercase text-[#38485D] dark:text-[#D2DEFF]">Premier Growth Platform</span>
+        {/* Premium Hero Section */}
+        <section className="relative max-w-7xl mx-auto px-4 sm:px-8 min-h-[calc(100vh-6rem)] flex flex-col lg:grid lg:grid-cols-2 gap-12 lg:gap-16 items-center pt-12 pb-24 lg:py-0">
+          <div className="pointer-events-none absolute inset-0 overflow-hidden flex justify-center items-center -z-10">
+             <div className="w-[800px] h-[800px] bg-gradient-to-tr from-[#57FAE9]/10 via-[#0047AB]/5 to-transparent rounded-full blur-[100px] dark:from-[#57FAE9]/20 dark:via-[#0A5BFF]/10 opacity-70 animate-pulse-slow"></div>
+          </div>
+          
+          <div className="space-y-6 sm:space-y-8 z-10 w-full mt-4 lg:mt-0">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#0047AB]/10 bg-white/50 backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 shadow-sm animate-fade-in-up transition-all duration-300 dark:border-[#57FAE9]/20 dark:bg-[#021223]/80">
+              <span className="material-symbols-outlined text-[#0047AB] text-[14px] sm:text-base dark:text-[#57FAE9]">vital_signs</span>
+              <span className="text-[10px] sm:text-xs font-black tracking-[0.15em] uppercase text-[#002C70] dark:text-[#D2DEFF]">Platform 3.0 Live</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#57FAE9] animate-pulse ml-1"></span>
             </div>
-            <h1 className="text-6xl font-extrabold text-[#191C1E] leading-[1.1] font-headline tracking-tighter animate-fade-in-up animate-stagger-1 transition-colors duration-300 dark:text-[#F5F9FF]">
-              Architecting the future of <span className="text-[#0047AB] italic dark:text-[#57FAE9]">career mentorship</span> and growth.
+            
+            <h1 className="text-[2.75rem] leading-[1.05] sm:text-6xl lg:text-[4.5rem] xl:text-[5rem] lg:leading-[1] font-extrabold text-[#191C1E] font-headline tracking-tighter animate-fade-in-up animate-stagger-1 transition-colors duration-300 dark:text-white">
+              Architecting the future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0047AB] to-[#00A3FF] dark:from-[#57FAE9] dark:to-[#3B82F6]">career mentorship</span>.
             </h1>
-            <p className="text-xl text-[#434653] leading-relaxed max-w-lg animate-fade-in-up animate-stagger-2 transition-colors duration-300 dark:text-[#A8B7D8]">
+            
+            <p className="text-base sm:text-lg lg:text-xl text-[#434653] leading-relaxed max-w-lg animate-fade-in-up animate-stagger-2 transition-colors duration-300 dark:text-[#9FB2D1]">
               TalentFlow provides the blueprints for professional evolution. We connect visionaries with curated expertise to build the next generation of global industry leaders.
             </p>
-            <div className="flex flex-col sm:flex-row items-center gap-4 pt-4 animate-fade-in-up animate-stagger-3">
-              <Link to="/signup" className="w-full sm:w-auto inline-flex items-center justify-center rounded-lg bg-[#002C70] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl active:scale-95 dark:bg-[linear-gradient(135deg,#6A8FDB,#7CE5DC)] dark:text-[#122032]">
-                Get Started
+            
+            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 pt-2 sm:pt-4 animate-fade-in-up animate-stagger-3">
+              <Link to="/signup" className="w-full sm:w-auto relative group overflow-hidden inline-flex items-center justify-center rounded-2xl bg-[#002C70] px-8 py-4 text-sm sm:text-base font-black text-white shadow-[0_10px_30px_rgba(0,44,112,0.2)] transition-all hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(0,44,112,0.3)] active:translate-y-0 dark:bg-white dark:text-[#021223] dark:shadow-[0_10px_30px_rgba(255,255,255,0.1)]">
+                <span className="relative z-10">Start Your Journey</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer dark:via-[#0047AB]/10"></div>
               </Link>
-              <button className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-lg px-8 py-4 font-bold text-[#002C70] transition-colors hover:bg-[#E6E8EA] dark:text-[#DCE8FF] dark:hover:bg-[#22374F]">
-                <span className="material-symbols-outlined">play_circle</span>
-                The TalentFlow Vision
+              <button className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-2xl border border-[#E0E3E5] px-8 py-4 text-sm sm:text-base font-bold text-[#002C70] transition-colors hover:bg-slate-50 dark:border-[#2559BD]/30 dark:text-[#DCE8FF] dark:hover:bg-[#0A1930]">
+                <span className="material-symbols-outlined text-[20px]">play_circle</span>
+                Platform Tour
               </button>
             </div>
-
-          </div>
-          <div className="relative">
-            {/* Architectural Visual (Bento/Card Mashup) */}
-            <div className="relative z-10 grid grid-cols-2 gap-4">
-              <div className="space-y-4">
-                <div className="h-64 rounded-xl overflow-hidden shadow-2xl">
-                  <img className="w-full h-full object-cover" alt="Modern architectural glass building reflecting a blue sky with sharp geometric lines and premium corporate aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk5utjN07mkZOhvtLZIyLzTlvKn2L4iPZCxU2HE03HITuSyf687NvYeKy1N3BB3ni_PXK6x68sbgc75rNQ2L2yaSJm-G8klfuPjgpLJwHX36NoMakdz6P_Z2afHIAebaZV13Q7a3n9L2hbMhTqfjyw74ubS7f51FH_QDX66YnHaXq9NSQwc_7KrIjpQkDJ-Yp3aaAhNu-vnGsNf7SIO4uN_S4bTdHe0MSfe9aqNGnaSUESsnPKSC5Ebl9BWs9kMIL9tpe4Ug-K6OI" />
+            
+            <div className="pt-6 sm:pt-8 flex items-center gap-4 animate-fade-in-up animate-stagger-3 opacity-80">
+                <div className="flex -space-x-3">
+                    <img className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-white dark:border-[#021223] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk5utjN07mkZOhvtLZIyLzTlvKn2L4iPZCxU2HE03HITuSyf687NvYeKy1N3BB3ni_PXK6x68sbgc75rNQ2L2yaSJm-G8klfuPjgpLJwHX36NoMakdz6P_Z2afHIAebaZV13Q7a3n9L2hbMhTqfjyw74ubS7f51FH_QDX66YnHaXq9NSQwc_7KrIjpQkDJ-Yp3aaAhNu-vnGsNf7SIO4uN_S4bTdHe0MSfe9aqNGnaSUESsnPKSC5Ebl9BWs9kMIL9tpe4Ug-K6OI" alt="" />
+                    <img className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-white dark:border-[#021223] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB06ZF4rJWSKN23zp2wWsqwcW2AAK2QkSoDP8VJd3XcOmygrHupDSMRzlmq1pV7oIZmyGUWmoHieax_B0EhzWAKlA3mVAirTYUI7btKWWdLkEFw7NS5SmkEjHY-urpnaWWOzby9uwXtVCfd0xjLeIluwlQol8d9sOChqyuzLcu8hwIJZKuYVi7WMjsB_7DuwjZ7MBOWgf9H2W7DOYgCqdKZeTdDRVZqyp5Ox8q3TvJ3ndRGc5lXidkY5yfCJZDARcfbOl7kxPydQ1M" alt="" />
+                    <img className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-white dark:border-[#021223] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLL-eI_6hjBET-j-aXGvez0pwWeELvWYe_5jfy0gaOF4ADAu4QbR5SDrFYKeCDzQZMSvId2k71MyXlAOnfl6Fk06kGEdo4dya2ZJ4GyPLV5toPUcgwDuw7BT2NCFybf7WO67PyMLV2eLnbIJPD4ECBvCYMpuy5CaklZiQ_tmt-slgj6_ajR_Lw_U9ELFyGqA2x0rYJ8FIlqOoIRpiVWL16mSif1Uuw6SpQirBo-Wj_kKK6O7M3uX6kU94Vzfcmd0hqTYVPXckdDyI" alt="" />
                 </div>
-                <div className="rounded-xl bg-surface-container-lowest p-6 shadow-lg transition-colors duration-300 dark:border dark:border-[#8AB4FF]/15 dark:bg-[#09172B]">
+                <div>
+                   <div className="flex items-center text-[#F2C94C] text-[14px]">
+                       <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                       <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                       <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                       <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                       <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                   </div>
+                   <p className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-[#434653] mt-0.5 dark:text-[#A8B7D8]">From 15,000+ Alumni</p>
+                </div>
+            </div>
+          </div>
+          
+          <div className="relative w-full max-w-[500px] lg:max-w-none mx-auto opacity-0 animate-scale-in" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
+            {/* Dynamic Glass Bento Mashup */}
+            <div className="relative z-10 grid grid-cols-2 gap-3 sm:gap-4 lg:-ml-12 xl:-ml-20">
+              <div className="space-y-3 sm:space-y-4 translate-y-6">
+                <div className="h-48 sm:h-64 rounded-3xl overflow-hidden shadow-2xl ring-1 ring-[#0047AB]/5 dark:ring-[#57FAE9]/10">
+                  <img className="w-full h-full object-cover saturate-150" alt="Modern architectural glass building" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk5utjN07mkZOhvtLZIyLzTlvKn2L4iPZCxU2HE03HITuSyf687NvYeKy1N3BB3ni_PXK6x68sbgc75rNQ2L2yaSJm-G8klfuPjgpLJwHX36NoMakdz6P_Z2afHIAebaZV13Q7a3n9L2hbMhTqfjyw74ubS7f51FH_QDX66YnHaXq9NSQwc_7KrIjpQkDJ-Yp3aaAhNu-vnGsNf7SIO4uN_S4bTdHe0MSfe9aqNGnaSUESsnPKSC5Ebl9BWs9kMIL9tpe4Ug-K6OI" />
+                </div>
+                <div className="rounded-3xl bg-white/80 backdrop-blur-xl p-5 sm:p-6 shadow-xl ring-1 ring-black/5 transition-colors duration-300 dark:border dark:border-[#57FAE9]/15 dark:bg-[#0A1526]/80 group hover:-translate-y-1 hover:shadow-2xl">
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="material-symbols-outlined text-tertiary-container" style={{ fontVariationSettings: "'FILL' 1" }}>trending_up</span>
-                    <span className="font-bold text-on-surface">Career Pathing</span>
+                    <div className="w-10 h-10 rounded-xl bg-[#EEF0FF] flex items-center justify-center text-[#0047AB] dark:bg-[#0D2748] dark:text-[#57FAE9] transition-transform group-hover:scale-110">
+                        <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>trending_up</span>
+                    </div>
                   </div>
-                  <p className="text-sm text-on-surface-variant italic">"The structural integrity of my career changed after just three sessions."</p>
+                  <h3 className="font-bold text-sm sm:text-base text-[#191C1E] dark:text-[#DCE8FF] mb-1">Career Velocity</h3>
+                  <p className="text-[10px] sm:text-xs text-[#74777F] dark:text-[#9FB2D1] line-clamp-2">"The structural integrity of my portfolio changed instantly."</p>
                 </div>
               </div>
-              <div className="space-y-4 pt-8">
-                <div className="relative overflow-hidden rounded-xl bg-primary bg-[#002C70] p-8 text-white shadow-2xl transition-colors duration-300 dark:bg-[linear-gradient(145deg,#071529,#0B315D)] dark:ring-1 dark:ring-[#57FAE9]/15">
+              <div className="space-y-3 sm:space-y-4">
+                <div className="relative overflow-hidden rounded-3xl bg-[#002C70] p-6 sm:p-8 text-white shadow-2xl transition-colors duration-300 dark:bg-gradient-to-br dark:from-[#071529] dark:to-[#0B315D] dark:ring-1 dark:ring-[#57FAE9]/20 group hover:-translate-y-1">
                   <div className="relative z-10">
-                    <span className="material-symbols-outlined text-4xl mb-4">hub</span>
-                    <h3 className="text-xl font-bold font-headline mb-2">Network Flow</h3>
-                    <p className="text-sm text-primary-fixed-dim dark:text-[#B8C9F5]">Integrated mentorship ecosystems for modern enterprises.</p>
+                    <span className="material-symbols-outlined text-xl sm:text-2xl md:text-3xl sm:text-4xl mb-4 text-[#57FAE9] group-hover:scale-110 transition-transform">model_training</span>
+                    <h3 className="text-lg sm:text-xl font-bold font-headline mb-2 leading-tight">Elite Mentorship</h3>
+                    <p className="text-[10px] sm:text-xs text-[#DAE2FF] dark:text-[#B8C9F5] line-clamp-2">Direct access to the top 1% of industry visionaries.</p>
                   </div>
-                  <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-primary-container rounded-full opacity-50 blur-3xl"></div>
+                  <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-[#57FAE9] rounded-full opacity-20 blur-3xl group-hover:opacity-40 transition-opacity"></div>
                 </div>
-                <div className="h-80 rounded-xl overflow-hidden shadow-2xl">
-                  <img className="w-full h-full object-cover" alt="Interior of a clean minimalist minimalist designer studio with expansive windows and soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB06ZF4rJWSKN23zp2wWsqwcW2AAK2QkSoDP8VJd3XcOmygrHupDSMRzlmq1pV7oIZmyGUWmoHieax_B0EhzWAKlA3mVAirTYUI7btKWWdLkEFw7NS5SmkEjHY-urpnaWWOzby9uwXtVCfd0xjLeIluwlQol8d9sOChqyuzLcu8hwIJZKuYVi7WMjsB_7DuwjZ7MBOWgf9H2W7DOYgCqdKZeTdDRVZqyp5Ox8q3TvJ3ndRGc5lXidkY5yfCJZDARcfbOl7kxPydQ1M" />
+                <div className="h-56 sm:h-80 rounded-3xl overflow-hidden shadow-2xl ring-1 ring-black/5 dark:ring-white/10 relative group">
+                  <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Interior designer studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB06ZF4rJWSKN23zp2wWsqwcW2AAK2QkSoDP8VJd3XcOmygrHupDSMRzlmq1pV7oIZmyGUWmoHieax_B0EhzWAKlA3mVAirTYUI7btKWWdLkEFw7NS5SmkEjHY-urpnaWWOzby9uwXtVCfd0xjLeIluwlQol8d9sOChqyuzLcu8hwIJZKuYVi7WMjsB_7DuwjZ7MBOWgf9H2W7DOYgCqdKZeTdDRVZqyp5Ox8q3TvJ3ndRGc5lXidkY5yfCJZDARcfbOl7kxPydQ1M" />
+                  <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                      <div className="flex items-center gap-2">
+                        <span className="p-1 px-2 rounded bg-white/20 backdrop-blur text-[8px] font-black uppercase text-white tracking-widest border border-white/20">Live Workshop</span>
+                      </div>
+                  </div>
                 </div>
               </div>
             </div>
-            {/* Background Accent Elements */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary-container/5 rounded-full blur-[100px] -z-10"></div>
           </div>
         </section>
         {/* Trusted Partners & Stats Section */}
@@ -191,19 +222,19 @@ const LandingPage: React.FC = () => {
           <ScrollReveal className="max-w-7xl mx-auto px-8 relative z-10" threshold={0.5}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-20 border-b border-white/10 pb-20">
               <div className="text-center space-y-2">
-                <div className="text-4xl md:text-6xl font-black font-headline tracking-tight">
+                <div className="text-2xl sm:text-3xl md:text-4xl md:text-6xl font-black font-headline tracking-tight">
                   <CountUp end={15} suffix="k+" />
                 </div>
                 <div className="text-blue-100/60 font-bold uppercase tracking-[0.2em] text-xs">Global Mentors</div>
               </div>
               <div className="text-center space-y-2">
-                <div className="text-4xl md:text-6xl font-black font-headline tracking-tight">
+                <div className="text-2xl sm:text-3xl md:text-4xl md:text-6xl font-black font-headline tracking-tight">
                   <CountUp end={94} suffix="%" />
                 </div>
                 <div className="text-blue-100/60 font-bold uppercase tracking-[0.2em] text-xs">Growth Rate</div>
               </div>
               <div className="text-center space-y-2">
-                <div className="text-4xl md:text-6xl font-black font-headline tracking-tight">
+                <div className="text-2xl sm:text-3xl md:text-4xl md:text-6xl font-black font-headline tracking-tight">
                   <CountUp end={200} suffix="+" />
                 </div>
                 <div className="text-blue-100/60 font-bold uppercase tracking-[0.2em] text-xs">Enterprises</div>
@@ -223,8 +254,8 @@ const LandingPage: React.FC = () => {
         {/* Bento Highlights Section */}
         <section className="max-w-7xl mx-auto px-8 py-24">
           <ScrollReveal className="text-center mb-16">
-            <h2 className="mb-4 text-4xl font-bold font-headline transition-colors duration-300 dark:text-[#F5F9FF]">Precision Engineering for Potential</h2>
-            <p className="mx-auto max-w-2xl animate-stagger-1 text-[#434653] transition-colors duration-300 dark:text-[#9FB2D1]">We replace generic advice with architectural precision, ensuring every career move is supported by data and world-class mentorship.</p>
+            <h2 className="mb-4 text-xl sm:text-2xl md:text-3xl sm:text-4xl md:text-5xl font-bold font-headline transition-colors duration-300 dark:text-[#F5F9FF]">Precision Engineering for Potential</h2>
+            <p className="mx-auto max-w-2xl text-sm sm:text-base animate-stagger-1 text-[#434653] transition-colors duration-300 dark:text-[#9FB2D1]">We replace generic advice with architectural precision, ensuring every career move is supported by data and world-class mentorship.</p>
           </ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Large Feature Card */}
@@ -246,7 +277,7 @@ const LandingPage: React.FC = () => {
             {/* Vertical Card */}
             <ScrollReveal className="animate-stagger-1 flex flex-col justify-between rounded-xl bg-[#003732] p-10 text-white shadow-sm transition-colors duration-300 dark:bg-[linear-gradient(180deg,#03221F,#0B3F3A)]">
               <div>
-                <span className="material-symbols-outlined text-4xl text-on-tertiary-container mb-6">workspace_premium</span>
+                <span className="material-symbols-outlined text-2xl sm:text-3xl md:text-4xl text-on-tertiary-container mb-6">workspace_premium</span>
                 <h3 className="text-2xl font-bold font-headline mb-4">Elite Global Network</h3>
                 <p className="text-white/80 leading-relaxed">Direct access to the top 1% of industry experts who have architected global successes.</p>
               </div>
@@ -274,8 +305,8 @@ const LandingPage: React.FC = () => {
         {/* Featured Courses Section */}
         <section className="max-w-7xl mx-auto px-8 pb-24">
           <ScrollReveal className="text-center mb-16">
-            <h2 className="mb-4 text-4xl font-bold font-headline transition-colors duration-300 dark:text-[#F5F9FF]">Featured Curriculums</h2>
-            <p className="mx-auto max-w-2xl text-[#434653] transition-colors duration-300 dark:text-[#9FB2D1]">Preview the blueprints crafted by our top 1% industry mentors.</p>
+            <h2 className="mb-4 text-xl sm:text-2xl md:text-3xl sm:text-4xl md:text-5xl font-bold font-headline transition-colors duration-300 dark:text-[#F5F9FF]">Featured Curriculums</h2>
+            <p className="mx-auto max-w-2xl text-sm sm:text-base text-[#434653] transition-colors duration-300 dark:text-[#9FB2D1]">Preview the blueprints crafted by our top 1% industry mentors.</p>
           </ScrollReveal>
           
           {loadingCourses ? (
@@ -321,8 +352,8 @@ const LandingPage: React.FC = () => {
             <div className="absolute top-1/2 left-1/4 w-[60%] h-[60%] bg-blue-400 rounded-full blur-[140px]"></div>
           </div>
           
-          <ScrollReveal className="max-w-4xl mx-auto px-8 relative z-10 text-center">
-            <h2 className="text-4xl md:text-5xl font-black font-headline tracking-tighter mb-6">Architect Your Legacy: Become a Mentor</h2>
+          <ScrollReveal className="max-w-4xl mx-auto px-4 sm:px-8 relative z-10 text-center">
+            <h2 className="text-[2rem] sm:text-4xl md:text-5xl font-black font-headline tracking-tighter mb-4 sm:mb-6 leading-tight">Architect Your Legacy: Become a Mentor</h2>
             <p className="text-xl text-blue-100/80 mb-10 leading-relaxed font-medium">
               Join our elite network of global visionaries. Share your expertise, shape the next generation of industry leaders, and architect the future of professional growth.
             </p>
@@ -379,7 +410,7 @@ const LandingPage: React.FC = () => {
             ) : (
               <div className="text-center py-8">
                 <div className="w-20 h-20 bg-[#57FAE9]/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <span className="material-symbols-outlined text-[#0047AB] text-4xl dark:text-[#57FAE9]">mark_email_read</span>
+                  <span className="material-symbols-outlined text-[#0047AB] text-2xl sm:text-3xl md:text-4xl dark:text-[#57FAE9]">mark_email_read</span>
                 </div>
                 <h3 className="text-2xl font-bold font-headline mb-4 dark:text-white">Interest Logged</h3>
                 <p className="text-[#434653] mb-8 dark:text-[#A8B7D8]">

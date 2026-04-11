@@ -12,10 +12,10 @@ export default function NotFoundPage() {
         
         <div className="relative z-10 flex flex-col items-center">
           <div className="w-24 h-24 bg-[#F2F4F6] rounded-full flex items-center justify-center mb-8 border border-white shadow-sm">
-            <span className="material-symbols-outlined text-4xl text-[#00419E]">explore</span>
+            <span className="material-symbols-outlined text-2xl sm:text-3xl md:text-4xl text-[#00419E]">explore</span>
           </div>
           
-          <h1 className="text-6xl font-black text-[#191C1E] tracking-tighter mb-2">404</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl sm:text-5xl lg:text-6xl font-black text-[#191C1E] tracking-tighter mb-2">404</h1>
           <h2 className="text-xl font-bold text-[#191C1E] mb-4">Location Not Found</h2>
           <p className="text-[#74777F] mb-10 leading-relaxed text-sm">
             The destination you are trying to reach does not exist within the current architecture. It may have been relocated or removed.

@@ -127,9 +127,9 @@ const InstructorCourseBuilder = () => {
                 </aside>
 
                 {/* 5. MAIN CONTENT WORKSPACE */}
-                <main className="flex-1 space-y-10">
+                <main className="flex-1 space-y-10 pb-24 lg:pb-8">
                     <header>
-                        <h1 className="text-3xl md:text-4xl font-black tracking-tighter text-[#1C1B1F] font-manrope mb-2">Course Identity</h1>
+                        <h1 className="text-xl sm:text-2xl md:text-3xl md:text-4xl font-black tracking-tighter text-[#1C1B1F] font-manrope mb-2">Course Identity</h1>
                         <p className="text-[#434653] text-[15px] font-medium leading-relaxed max-w-xl">
                             Establish the structural foundation. Define your title, classification, and visual identity for the curriculum.
                         </p>
@@ -208,7 +208,7 @@ const InstructorCourseBuilder = () => {
                 <aside className="w-full xl:w-80 shrink-0 space-y-8">
                     
                     {/* Visual Identity Card */}
-                    <div className="bg-white rounded-[2.5rem] p-8 shadow-[0px_12px_32px_rgba(25,28,30,0.04)] ring-1 ring-[#E0E3E5]/30 group">
+                    <div className="bg-white rounded-[2.5rem] px-4 py-6 sm:px-6 lg:p-8 shadow-[0px_12px_32px_rgba(25,28,30,0.04)] ring-1 ring-[#E0E3E5]/30 group">
                          <div className="flex items-center justify-between mb-8">
                              <h4 className="text-[10px] font-black uppercase tracking-[0.25em] text-[#737784]">Visual Identity</h4>
                              <span className="material-symbols-outlined text-[#737784]">photo_camera</span>
@@ -233,7 +233,7 @@ const InstructorCourseBuilder = () => {
                     </div>
 
                     {/* Architect's Tip card */}
-                    <div className="bg-[#191C1E] rounded-[2.5rem] p-8 text-white relative overflow-hidden group shadow-2xl">
+                    <div className="bg-[#191C1E] rounded-[2.5rem] px-4 py-6 sm:px-6 lg:p-8 text-white relative overflow-hidden group shadow-2xl">
                         <div className="relative z-10">
                             <span className="material-symbols-outlined text-[#57FAE9] mb-6">architecture</span>
                             <h3 className="text-xl font-black font-manrope leading-tight mb-4 tracking-tight">Identity Strategy</h3>

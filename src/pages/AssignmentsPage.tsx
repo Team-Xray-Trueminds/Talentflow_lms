@@ -42,11 +42,11 @@ export default function AssignmentsPage() {
   return (
     <div className="flex min-h-screen bg-[radial-gradient(circle_at_top_left,_#dff5ff_0%,_#f7f9fb_48%,_#eef2ff_100%)] font-body text-[#191C1E]">
       <Sidebar />
-      <main className="grow px-6 py-8 lg:px-10 pb-32 lg:pb-8">
+      <main className="grow px-6 py-8 lg:px-10 pb-24 lg:pb-8">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-10 rounded-[32px] border border-white/70 bg-white/75 p-8 shadow-[0_24px_80px_rgba(0,50,125,0.12)] backdrop-blur-xl">
+          <div className="mb-10 rounded-[32px] border border-white/70 bg-white/75 px-4 py-6 sm:px-6 lg:p-8 shadow-[0_24px_80px_rgba(0,50,125,0.12)] backdrop-blur-xl">
             <p className="text-xs font-black uppercase tracking-[0.3em] text-[#64748B]">Curator Portal</p>
-            <h1 className="mt-4 text-4xl font-black tracking-tight text-[#0F172A]">Assignments</h1>
+            <h1 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-[#0F172A]">Assignments</h1>
             <p className="mt-4 max-w-2xl text-sm font-medium leading-7 text-[#475569]">
               Keep every active brief, due date, and review milestone in one focused space.
             </p>
@@ -71,7 +71,7 @@ export default function AssignmentsPage() {
             ))}
           </div>
 
-          <section className="mt-10 rounded-[32px] border border-white/80 bg-white/85 p-8 shadow-[0_18px_55px_rgba(15,23,42,0.08)]">
+          <section className="mt-10 rounded-[32px] border border-white/80 bg-white/85 px-4 py-6 sm:px-6 lg:p-8 shadow-[0_18px_55px_rgba(15,23,42,0.08)]">
             <p className="text-xs font-black uppercase tracking-[0.3em] text-[#64748B]">Assignment Flow</p>
             <div className="mt-6 grid gap-5">
               {assignmentFlow.map((item) => (

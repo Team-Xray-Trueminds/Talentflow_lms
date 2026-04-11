@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Sidebar from '../components/Sidebar';
+import BottomNav from '../components/layout/BottomNav';
 
 interface Assignment {
     title: string;
@@ -80,7 +81,7 @@ const InstructorGradebookPage = () => {
         <div className="flex bg-[#F7F9FB] min-h-screen font-inter text-[#191C1E]">
             <Sidebar />
             
-            <main className="flex-1 flex flex-col min-w-0">
+            <main className="flex-1 flex flex-col min-w-0 pb-24 lg:pb-8">
                 {/* 1. GLASS HEADER */}
                 <header className="h-20 bg-[#F7F9FB]/80 backdrop-blur-xl sticky top-0 z-50 flex items-center justify-between px-10 border-b border-[#E0E3E5]/20">
                     <div className="flex items-center gap-4 text-[11px] font-black uppercase tracking-[0.2em] text-[#434653]">
@@ -102,11 +103,11 @@ const InstructorGradebookPage = () => {
                     </div>
                 </header>
 
-                <div className="p-10 max-w-[1600px] w-full mx-auto space-y-12">
+                <div className="px-4 py-6 sm:px-6 lg:p-10 max-w-[1600px] w-full mx-auto space-y-8 md:space-y-12">
                     {/* 2. PAGE OVERVIEW */}
                     <header className="flex flex-col md:flex-row md:items-end justify-between gap-8">
                         <div>
-                            <h1 className="text-5xl font-black font-manrope tracking-tighter text-[#1C1B1F] mb-3">Academic Performance</h1>
+                            <h1 className="text-xl sm:text-2xl md:text-3xl sm:text-4xl lg:text-5xl font-black font-manrope tracking-tighter text-[#1C1B1F] mb-3">Academic Performance</h1>
                             <p className="text-[#434653] font-medium text-lg leading-relaxed max-w-xl">
                                 Real-time monitoring of learner achievement and intervention signals throughout the architecture curriculum.
                             </p>
@@ -126,7 +127,7 @@ const InstructorGradebookPage = () => {
                                 </div>
                                 <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#737784] mb-2">{m.label}</p>
                                 <div className="flex items-baseline gap-3">
-                                    <h3 className="text-3xl font-black text-[#191C1E]">{m.value}</h3>
+                                    <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-[#191C1E]">{m.value}</h3>
                                     <span className="text-[11px] font-bold text-[#005049]">{m.trend}</span>
                                 </div>
                             </div>
@@ -157,7 +158,40 @@ const InstructorGradebookPage = () => {
                                 </div>
                             </div>
 
-                            <div className="bg-white rounded-[3rem] shadow-[0px_12px_40px_rgba(0,0,0,0.02)] ring-1 ring-[#E0E3E5]/30 overflow-hidden">
+                            {/* Mobile Card View */}
+                            <div className="md:hidden flex flex-col gap-4 mt-6">
+                                {students.map((student) => (
+                                    <div 
+                                        key={student.id} 
+                                        className={`bg-white rounded-3xl p-5 shadow-sm ring-1 ring-[#E0E3E5]/30 flex flex-col gap-4 transition-all ${selectedStudent?.id === student.id ? 'ring-2 ring-[#00327D]' : ''}`}
+                                        onClick={() => setSelectedStudent(student)}
+                                    >
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-14 h-14 rounded-2xl overflow-hidden relative shrink-0 shadow-sm border border-[#F2F4F6]">
+                                                <img src={(student.thumbnailUrl || student.img)} className="w-full h-full object-cover" alt="" />
+                                                {student.status === 'Attention Needed' && (
+                                                    <div className="absolute top-0 right-0 w-3 h-3 bg-[#BA1A1A] rounded-full border-2 border-white ring-1 ring-[#BA1A1A]/20"></div>
+                                                )}
+                                            </div>
+                                            <div className="grow min-w-0">
+                                                <p className="text-base font-black text-[#191C1E] truncate">{student.name}</p>
+                                                <p className="text-[10px] font-bold text-[#737784] uppercase tracking-widest mt-1">Latest: {student.lastActive}</p>
+                                            </div>
+                                        </div>
+                                        <div className="bg-[#F7F9FB] rounded-2xl p-4 flex justify-between items-center border border-[#E0E3E5]/20">
+                                            <div>
+                                                <p className="text-[10px] font-bold text-[#737784] uppercase tracking-widest mb-1">Path</p>
+                                                <p className="text-xs font-black text-[#434653] leading-tight">{student.program}</p>
+                                            </div>
+                                            <div className="flex flex-col items-end">
+                                                <span className={`text-sm font-black ${student.progress > 80 ? 'text-[#00327D]' : 'text-[#BA1A1A]'}`}>{student.grade} ({student.progress}%)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="hidden md:block bg-white rounded-[3rem] shadow-[0px_12px_40px_rgba(0,0,0,0.02)] ring-1 ring-[#E0E3E5]/30 overflow-hidden">
                                 <table className="w-full border-collapse">
                                     <thead>
                                         <tr className="bg-[#F2F4F6]/50">
@@ -270,7 +304,7 @@ const InstructorGradebookPage = () => {
                                             
                                             {selectedStudent.assignments.length === 0 && (
                                                 <div className="py-12 flex flex-col items-center justify-center text-center opacity-30">
-                                                    <span className="material-symbols-outlined text-4xl mb-2">empty_dashboard</span>
+                                                    <span className="material-symbols-outlined text-2xl sm:text-3xl md:text-4xl mb-2">empty_dashboard</span>
                                                     <p className="text-[10px] font-black uppercase tracking-widest">No activities detected</p>
                                                 </div>
                                             )}
@@ -286,6 +320,7 @@ const InstructorGradebookPage = () => {
                     </div>
                 </div>
             </main>
+            <BottomNav />
         </div>
     );
 };

@@ -55,7 +55,7 @@ const MessagesPage: React.FC = () => {
   });
 
   const [inputText, setInputText] = useState('');
-  const [isListOpen, setIsListOpen] = useState(false);
+  const [isListOpen, setIsListOpen] = useState(true);
   const activeContact = contacts.find(c => c.id === activeContactId) || contacts[0];
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -89,11 +89,11 @@ const MessagesPage: React.FC = () => {
   return (
     <div className="flex bg-[#F7F9FB] min-h-screen font-body text-[#191C1E]">
       <Sidebar />
-      <main className="grow flex min-h-screen xl:h-screen overflow-hidden">
+      <main className="grow flex min-h-screen xl:h-screen overflow-hidden pb-24 lg:pb-8">
         {/* Left: Contact List */}
         <div className={`${isListOpen ? 'flex' : 'hidden'} xl:flex w-full max-w-full xl:w-96 border-r border-[#C3C6D5]/20 bg-white flex-col shrink-0`}>
           <div className="p-4 sm:p-6 xl:p-8 pb-4">
-            <h1 className="text-3xl font-black font-headline tracking-tighter mb-6">Messages</h1>
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-black font-headline tracking-tighter mb-6">Messages</h1>
             <div className="relative">
               <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#74777F]">search</span>
               <input 
@@ -135,10 +135,17 @@ const MessagesPage: React.FC = () => {
         </div>
 
         {/* Right: Chat Window */}
-        <div className={`${isListOpen ? 'hidden xl:flex' : 'flex'} grow min-w-0 flex-col relative bg-[#F7F9FB]`}>
+        <div className={`${isListOpen ? 'hidden xl:flex' : 'flex'} fixed inset-0 z-[100] xl:static xl:z-auto grow min-w-0 flex-col bg-[#F7F9FB]`}>
           {/* Top Bar */}
           <div className="p-4 sm:p-6 bg-white border-b border-[#C3C6D5]/20 flex justify-between items-center gap-3 relative z-10 shadow-sm">
              <div className="flex items-center gap-4">
+                <button 
+                   className="xl:hidden p-2 -ml-2 text-[#434653] cursor-pointer hover:bg-[#F2F4F6] rounded-xl transition-all" 
+                   onClick={() => setIsListOpen(true)}
+                   title="Back to Messages"
+                >
+                   <span className="material-symbols-outlined">arrow_back</span>
+                </button>
                 <img src={(activeContact.thumbnailUrl || activeContact.img)} className="w-10 h-10 rounded-xl object-cover shadow-sm transition-all" alt="" />
                 <div>
                    <h2 className="font-black text-sm">{activeContact.name}</h2>

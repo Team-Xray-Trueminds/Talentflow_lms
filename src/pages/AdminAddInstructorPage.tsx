@@ -30,12 +30,12 @@ const AdminAddInstructorPage = () => {
         return (
             <div className="bg-[#F8FAFC] text-on-surface min-h-screen">
                 <Sidebar />
-                <main className="pl-0 lg:pl-80 min-h-screen pb-24 md:pb-0 flex items-center justify-center p-6">
-                    <div className="max-w-md w-full bg-white rounded-[2rem] p-10 shadow-2xl text-center animate-in zoom-in duration-500">
+                <main className="pl-0 lg:pl-80 min-h-screen flex items-center justify-center p-6 pb-24 lg:pb-8">
+                    <div className="max-w-md w-full bg-white rounded-[2rem] px-4 py-6 sm:px-6 lg:p-10 shadow-2xl text-center animate-in zoom-in duration-500">
                         <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-8 text-primary">
-                            <span className="material-symbols-outlined text-5xl">mark_email_read</span>
+                            <span className="material-symbols-outlined text-xl sm:text-2xl md:text-3xl sm:text-4xl lg:text-5xl">mark_email_read</span>
                         </div>
-                        <h2 className="text-3xl font-black italic mb-4 tracking-tighter">Instructor Provisioned</h2>
+                        <h2 className="text-xl sm:text-2xl md:text-3xl font-black italic mb-4 tracking-tighter">Instructor Provisioned</h2>
                         <p className="text-on-surface-variant font-medium mb-10 leading-relaxed">
                             A welcome email has been dispatched to <span className="text-primary font-bold">{email}</span>. The new instructor will be required to verify their access and establish a permanent credential upon first entry.
                         </p>
@@ -65,7 +65,7 @@ const AdminAddInstructorPage = () => {
             {/* Navigation Components */}
             <Sidebar />
             
-            <main className="pl-0 lg:pl-80 min-h-screen pb-24 md:pb-0">
+            <main className="pl-0 lg:pl-80 min-h-screen pb-24 lg:pb-8">
                 <TopBar />
                 
                 <div className="p-6 md:p-8 max-w-5xl mx-auto">
@@ -76,7 +76,7 @@ const AdminAddInstructorPage = () => {
                                 <span className="material-symbols-outlined text-sm">arrow_back</span>
                                 Back to Directory
                             </Link>
-                            <h1 className="text-4xl font-black tracking-tighter text-on-surface mb-2 italic">Provision Instructor</h1>
+                            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter text-on-surface mb-2 italic">Provision Instructor</h1>
                             <p className="text-on-surface-variant font-medium leading-relaxed max-w-xl">
                                 Onboard a new architectural visionary to the TalentFlow LMS mentorship core. Credentials and permissions are precision-engineered for professional excellence.
                             </p>
@@ -92,7 +92,7 @@ const AdminAddInstructorPage = () => {
                     {/* Form Sections - Bento Style */}
                     <form className="grid grid-cols-1 md:grid-cols-12 gap-8" onSubmit={handleSubmit}>
                         {/* Primary Credentials Section */}
-                        <div className="md:col-span-8 bg-surface-container-low p-8 rounded-3xl animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100">
+                        <div className="md:col-span-8 bg-surface-container-low px-4 py-6 sm:px-6 lg:p-8 rounded-3xl animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100">
                             <h2 className="text-xl font-bold mb-8 flex items-center gap-3">
                                 <span className="material-symbols-outlined text-primary">badge</span>
                                 Profile Essentials
@@ -141,7 +141,7 @@ const AdminAddInstructorPage = () => {
 
                         {/* Access & Level Section */}
                         <div className="md:col-span-4 space-y-8">
-                            <div className="bg-surface-container-low p-8 rounded-3xl animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200">
+                            <div className="bg-surface-container-low px-4 py-6 sm:px-6 lg:p-8 rounded-3xl animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200">
                                 <h2 className="text-xl font-bold mb-6 flex items-center gap-3">
                                     <span className="material-symbols-outlined text-secondary">verified_user</span>
                                     Access Level
@@ -166,7 +166,7 @@ const AdminAddInstructorPage = () => {
                                 </div>
                             </div>
 
-                            <div className="bg-primary/5 p-8 rounded-3xl animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300">
+                            <div className="bg-primary/5 px-4 py-6 sm:px-6 lg:p-8 rounded-3xl animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300">
                                 <div className="flex items-center gap-4 mb-6">
                                     <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                                         <span className="material-symbols-outlined text-xl">rocket_launch</span>

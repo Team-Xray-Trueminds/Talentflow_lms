@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
+import BottomNav from '../components/layout/BottomNav';
 
 const LearnerCoursePreviewPage = () => {
     const navigate = useNavigate();
@@ -29,7 +30,7 @@ const LearnerCoursePreviewPage = () => {
         <div className="flex bg-[#F7F9FB] min-h-screen font-inter text-[#191C1E]">
             <Sidebar />
             
-            <main className="flex-1 flex flex-col min-w-0">
+            <main className="flex-1 flex flex-col min-w-0 pb-24 lg:pb-8">
                 {/* 1. HERO SECTION */}
                 <section className="relative h-[600px] w-full overflow-hidden shrink-0">
                     <img src={((courseData as any).thumbnailUrl || courseData.img)} className="absolute inset-0 w-full h-full object-cover" alt="Hero" />
@@ -56,7 +57,7 @@ const LearnerCoursePreviewPage = () => {
                            </div>
                         </div>
                         
-                        <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black font-manrope tracking-tighter text-white mb-6 leading-[0.95]">
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl sm:text-5xl lg:text-7xl font-black font-manrope tracking-tighter text-white mb-6 leading-[0.95]">
                             {courseData.title}
                         </h1>
                         
@@ -147,12 +148,12 @@ const LearnerCoursePreviewPage = () => {
                     <div className="lg:col-span-4">
                         <div className="sticky top-6 lg:top-[100px] bg-white rounded-[2.5rem] lg:rounded-[3rem] p-6 sm:p-8 lg:p-10 shadow-[0px_32px_80px_rgba(25,28,30,0.06)] ring-1 ring-[#E0E3E5]/40 flex flex-col items-center text-center">
                             <div className="w-20 h-20 bg-[#F2F4F6] rounded-[2rem] flex items-center justify-center text-[#00327D] mb-8">
-                                <span className="material-symbols-outlined text-4xl fill-1">verified</span>
+                                <span className="material-symbols-outlined text-2xl sm:text-3xl md:text-4xl fill-1">verified</span>
                             </div>
                             
                             <h3 className="text-sm font-black uppercase tracking-[0.3em] text-[#737784] mb-2">Platform Access</h3>
                             <div className="flex items-baseline gap-2 mb-10">
-                                <span className="text-4xl font-black font-manrope">$420</span>
+                                <span className="text-2xl sm:text-3xl md:text-4xl font-black font-manrope">$420</span>
                                 <span className="text-xs font-bold text-[#737784] line-through">$890</span>
                                 <span className="text-xs font-black text-[#BA1A1A] uppercase tracking-tighter">53% Off</span>
                             </div>
@@ -189,6 +190,7 @@ const LearnerCoursePreviewPage = () => {
 
                 </div>
             </main>
+            <BottomNav />
         </div>
     );
 };
