@@ -86,6 +86,9 @@ const InstructorContentUploadPage = () => {
             <header className="h-20 bg-[#F7F9FB]/80 backdrop-blur-xl sticky top-0 z-50 flex items-center justify-between px-4 sm:px-6 lg:px-10 w-full shrink-0">
                 <div className="flex items-center gap-12">
                     <div className="flex items-center gap-3">
+                        <Link to="/instructor/courses" className="lg:hidden w-8 h-8 flex items-center justify-center text-[#434653] hover:text-[#00327D] hover:bg-black/5 rounded-full transition-colors mr-1 cursor-pointer">
+                            <span className="material-symbols-outlined text-[20px]">arrow_back</span>
+                        </Link>
                         <div className="w-10 h-10 bg-gradient-to-tr from-[#00327D] to-[#2559BD] rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
                             <span className="material-symbols-outlined text-white text-2xl">layers</span>
                         </div>
@@ -110,17 +113,17 @@ const InstructorContentUploadPage = () => {
                     </nav>
                 </div>
                 
-                <div className="flex items-center gap-6">
-                    <button className="text-xs font-bold text-[#434653] hover:text-[#191C1E] bg-transparent border-none cursor-pointer transition-colors uppercase tracking-widest">Save Draft</button>
-                    <button className="bg-gradient-to-r from-[#00327D] to-[#2559BD] text-white px-8 py-3 rounded-xl font-bold text-xs hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-primary/20 border-none cursor-pointer">
+                <div className="flex items-center gap-3 sm:gap-6">
+                    <button className="hidden sm:block text-xs font-bold text-[#434653] hover:text-[#191C1E] bg-transparent border-none cursor-pointer transition-colors uppercase tracking-widest shrink-0">Save Draft</button>
+                    <button className="bg-gradient-to-r from-[#00327D] to-[#2559BD] text-white px-5 sm:px-8 py-2.5 sm:py-3 rounded-xl font-bold text-xs hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-primary/20 border-none cursor-pointer shrink-0">
                         Publish Course
                     </button>
                 </div>
             </header>
 
             {/* 2. PROGRESS STEPPER (Stitch Node Reference) */}
-            <section className="bg-white border-b border-[#E0E3E5]/40 py-4 px-4 sm:px-6 lg:px-10">
-                <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <section className="bg-white border-b border-[#E0E3E5]/40 py-4 px-4 sm:px-6 lg:px-10 overflow-x-auto scrollbar-hide">
+                <div className="min-w-fit md:max-w-7xl md:mx-auto flex items-center justify-start xl:justify-between gap-6 xl:gap-0">
                     {[
                         { label: 'Details', icon: 'info', status: 'COMPLETE' },
                         { label: 'Curriculum', icon: 'account_tree', status: 'COMPLETE' },
@@ -151,10 +154,10 @@ const InstructorContentUploadPage = () => {
             </section>
 
             {/* 3. LAYOUT WRAPPER */}
-            <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-10 flex gap-12 flex-1 pt-12 pb-24">
+            <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-10 flex flex-col xl:flex-row gap-8 xl:gap-12 flex-1 pt-8 xl:pt-12 pb-24">
                 
                 {/* 4. LEFT NAVIGATION SIDEBAR */}
-                <aside className="w-56 shrink-0 space-y-10">
+                <aside className="w-full xl:w-56 shrink-0 space-y-6 xl:space-y-10">
                     <div>
                         <h3 className="text-[10px] font-black uppercase tracking-[0.25em] text-[#737784] mb-6">Talent Flow Builder</h3>
                         <nav className="space-y-1">
@@ -278,17 +281,17 @@ const InstructorContentUploadPage = () => {
                             </section>
                         ))}
 
-                        <div className="flex items-center justify-between pt-10">
+                        <div className="flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-4 sm:gap-0 pt-10">
                             <button 
                                 onClick={() => navigate('/instructor/curriculum-builder')} 
-                                className="flex items-center gap-3 text-[#434653] font-bold text-[11px] bg-white px-6 py-3 rounded-xl shadow-sm hover:translate-x-[-4px] transition-all border-none cursor-pointer uppercase tracking-widest"
+                                className="flex items-center justify-center w-full sm:w-auto gap-3 text-[#434653] font-bold text-[11px] bg-white px-6 py-4 sm:py-3 rounded-xl shadow-sm hover:translate-x-[-4px] transition-all border-none cursor-pointer uppercase tracking-widest"
                             >
                                 <span className="material-symbols-outlined text-lg">west</span>
                                 Module Structure
                             </button>
                             <button 
                                 onClick={() => navigate('/instructor/assignment-builder')} 
-                                className="bg-gradient-to-r from-[#00327D] to-[#2559BD] text-white px-4 sm:px-6 lg:px-10 py-4 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 flex items-center gap-4 hover:translate-x-[4px] transition-all border-none cursor-pointer group"
+                                className="w-full sm:w-auto justify-center bg-gradient-to-r from-[#00327D] to-[#2559BD] text-white px-4 sm:px-6 lg:px-10 py-4 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 flex items-center gap-4 hover:translate-x-[4px] transition-all border-none cursor-pointer group"
                             >
                                 Build Assignment
                                 <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform text-lg">arrow_forward</span>
@@ -298,7 +301,7 @@ const InstructorContentUploadPage = () => {
                 </main>
 
                 {/* 6. RIGHT CONTEXTUAL SIDEBAR */}
-                <aside className="w-80 shrink-0 space-y-8">
+                <aside className="w-full xl:w-80 shrink-0 space-y-8 mt-4 xl:mt-0">
                     
                     {/* Media Guidelines Card */}
                     <div className="bg-[#191C1E] rounded-[2.5rem] px-4 py-6 sm:px-6 lg:p-8 text-white relative overflow-hidden group shadow-2xl">

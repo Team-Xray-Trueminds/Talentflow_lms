@@ -42,6 +42,9 @@ const InstructorCurriculumBuilder = () => {
             <header className="h-20 bg-[#F7F9FB]/80 backdrop-blur-xl sticky top-0 z-50 flex items-center justify-between px-4 sm:px-6 lg:px-10 w-full shrink-0">
                 <div className="flex items-center gap-12">
                     <div className="flex items-center gap-3">
+                        <Link to="/instructor/courses" className="lg:hidden w-8 h-8 flex items-center justify-center text-[#434653] hover:text-[#00327D] hover:bg-black/5 rounded-full transition-colors mr-1 cursor-pointer">
+                            <span className="material-symbols-outlined text-[20px]">arrow_back</span>
+                        </Link>
                         <div className="w-10 h-10 bg-gradient-to-tr from-[#00327D] to-[#2559BD] rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
                             <span className="material-symbols-outlined text-white text-2xl">layers</span>
                         </div>

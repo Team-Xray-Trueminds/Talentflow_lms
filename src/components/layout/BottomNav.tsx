@@ -32,25 +32,25 @@ const BottomNav = () => {
     const currentNavItems = navItemsByRole[role as keyof typeof navItemsByRole] || navItemsByRole.Learner;
 
     return (
-        <nav className="hidden">
+        <nav className="fixed md:hidden bottom-0 left-0 right-0 z-50 flex items-center justify-around h-[72px] sm:h-[80px] bg-white/90 backdrop-blur-xl border-t border-slate-200 shadow-[0_-4px_30px_rgba(0,0,0,0.05)] px-2 pb-safe">
             {currentNavItems.map((item) => {
                 const isActive = location.pathname.startsWith(item.href);
                 return (
                     <Link
                         key={item.label}
                         to={item.href}
-                        className={`min-w-0 flex-1 flex flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 text-center transition-all duration-300 ${
+                        className={`min-w-0 flex-1 flex flex-col items-center justify-center gap-1.5 h-full transition-all duration-300 ${
                             isActive
-                                ? 'bg-[#0047AB]/8 text-[#0047AB]'
-                                : 'text-slate-500 dark:text-slate-400'
+                                ? 'text-[#00327D]'
+                                : 'text-[#74777F] hover:text-[#00327D]/70'
                         }`}
                     >
                         <span
-                            className={`material-symbols-outlined text-[22px] sm:text-[24px] leading-none transition-all ${isActive ? 'fill-1 scale-105' : ''}`}
+                            className={`material-symbols-outlined text-[24px] sm:text-[26px] leading-none transition-all ${isActive ? 'fill-1 scale-110' : ''}`}
                         >
                             {item.icon}
                         </span>
-                        <span className={`max-w-full truncate px-1 text-[10px] sm:text-[11px] font-bold leading-none ${isActive ? 'opacity-100' : 'opacity-75'}`}>
+                        <span className={`text-[10px] sm:text-[11px] font-bold tracking-wide ${isActive ? 'opacity-100' : 'opacity-70'}`}>
                             {item.label}
                         </span>
                     </Link>

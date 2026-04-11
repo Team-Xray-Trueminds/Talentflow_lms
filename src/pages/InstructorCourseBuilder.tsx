@@ -35,6 +35,9 @@ const InstructorCourseBuilder = () => {
             <header className="h-16 md:h-20 bg-[#F7F9FB]/80 backdrop-blur-xl sticky top-0 z-50 flex items-center justify-between px-4 md:px-10 w-full shrink-0 border-b border-[#E0E3E5]/20">
                 <div className="flex items-center gap-4 md:gap-12">
                     <div className="flex items-center gap-2 md:gap-3">
+                        <Link to="/instructor/courses" className="lg:hidden w-8 h-8 flex items-center justify-center text-[#434653] hover:text-[#00327D] hover:bg-black/5 rounded-full transition-colors mr-1 cursor-pointer">
+                            <span className="material-symbols-outlined text-[20px]">arrow_back</span>
+                        </Link>
                         <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-tr from-[#00327D] to-[#2559BD] rounded-lg md:rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
                             <span className="material-symbols-outlined text-white text-xl md:text-2xl">layers</span>
                         </div>
@@ -50,8 +53,8 @@ const InstructorCourseBuilder = () => {
             </header>
 
             {/* ... Stepper ... */}
-            <section className="bg-white border-b border-[#E0E3E5]/40 py-4 px-4 md:px-10 overflow-x-auto no-scrollbar">
-                <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 min-w-[600px] md:min-w-0">
+            <section className="bg-white border-b border-[#E0E3E5]/40 py-4 px-4 sm:px-6 lg:px-10 overflow-x-auto scrollbar-hide">
+                <div className="min-w-fit md:max-w-7xl md:mx-auto flex items-center justify-start xl:justify-between gap-6 xl:gap-0">
                     {[
                         { label: 'Details', icon: 'info', status: 'ACTIVE' },
                         { label: 'Curriculum', icon: 'account_tree', status: 'PENDING' },
@@ -172,7 +175,7 @@ const InstructorCourseBuilder = () => {
                              <div className="space-y-4">
                                 <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#737784]">Editorial Description</label>
                                 <div className="bg-[#F2F4F6] rounded-2xl overflow-hidden">
-                                     <div className="px-4 py-3 bg-[#E0E3E5]/40 flex items-center gap-4 border-b border-[#E0E3E5]/20">
+                                     <div className="px-4 py-3 bg-[#E0E3E5]/40 flex flex-wrap items-center gap-4 border-b border-[#E0E3E5]/20">
                                          {['format_bold', 'format_italic', 'format_list_bulleted', 'link'].map(cmd => (
                                              <button 
                                                 key={cmd}
