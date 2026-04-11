@@ -63,15 +63,20 @@ export default function InstructorDashboard() {
             <span className="text-[#C3C6D5]">/</span>
             <span>Studio</span>
           </div>
-          <div className="flex items-center justify-between gap-4 md:justify-end">
-             <div className="text-right">
-                <p className="text-sm font-black text-[#191C1E]">Instructor Julian</p>
-                <p className="text-[10px] font-bold text-[#434653] uppercase tracking-wider">Senior Instructor</p>
-             </div>
-             <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-md">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOob43RVwc0CW12KB2DOBUtlHf-ew8BT46J0LkWSlklYMWRvTXlfGxTj8f_hGk8DCjxYTFV0FYgMSdkIchWPU2n2hN7odES9Y79DF2NjAD-N8AdXIh5Jqwuyr3gqbeQ6gQO9lHGathfnZ8t7xnUX7qARnkKnypxwL4TgPHwGE30jrZpU1GLNKHnIrF5FFm7Q1ZpHlQVl4KPpTMjINcfIXSwtWpEM4tMy34N59zfkcEZQrDOxVXaSd1q8rnaMb9573149iRc69wJQw" alt="Avatar" className="w-full h-full object-cover" />
-             </div>
-          </div>
+          <Link
+            to="/settings/instructor-setup"
+            className="flex items-center justify-between gap-4 rounded-full px-1 py-1 transition-all hover:bg-white/70 hover:shadow-sm md:justify-end"
+            aria-label="Open settings"
+            title="Open settings"
+          >
+            <div className="text-right">
+              <p className="text-sm font-black text-[#191C1E]">Instructor Julian</p>
+              <p className="text-[10px] font-bold text-[#434653] uppercase tracking-wider">Senior Instructor</p>
+            </div>
+            <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-md">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOob43RVwc0CW12KB2DOBUtlHf-ew8BT46J0LkWSlklYMWRvTXlfGxTj8f_hGk8DCjxYTFV0FYgMSdkIchWPU2n2hN7odES9Y79DF2NjAD-N8AdXIh5Jqwuyr3gqbeQ6gQO9lHGathfnZ8t7xnUX7qARnkKnypxwL4TgPHwGE30jrZpU1GLNKHnIrF5FFm7Q1ZpHlQVl4KPpTMjINcfIXSwtWpEM4tMy34N59zfkcEZQrDOxVXaSd1q8rnaMb9573149iRc69wJQw" alt="Avatar" className="w-full h-full object-cover" />
+            </div>
+          </Link>
         </div>
 
         {/* Hero Welcome */}
